@@ -1,0 +1,25 @@
+{
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "importOrder": [
+        "^@",
+        "^[./]",
+        "^@ui/(.*)$",
+        "^@server/(.*)$",
+        "^@core/(.*)$"
+    ],
+    "importOrderBuiltinModulesToTop": true,
+    "importOrderCaseInsensitive": true,
+    "importOrderParserPlugins": [
+        "typescript",
+        "jsx",
+        "decorators-legacy"
+    ],
+    "importOrderMergeDuplicateImports": true,
+    "importOrderCombineTypeAndValueImports": true,
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}
