@@ -1,6 +1,6 @@
 # dogs-shop
 
-# install if you have yarn
+# install if don't you have yarn
 npm install --global yarn
 
 # install depends
