@@ -1,7 +1,31 @@
-import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import { Layout } from './components'
+import { AboutUs, Main, Register } from './screens'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    errorElement: <div>Oops!</div>,
+    children: [
+      {
+        index: true,
+        element: <Main />,
+      },
+      {
+        path: 'about-us',
+        element: <AboutUs />,
+      },
+    ],
+  },
+  {
+    path: 'register',
+    element: <Register />,
+    errorElement: <div>Oops!</div>,
+  },
+])
 
 export const App = () => {
-  return (
-    <div>App</div>
-  )
+  return <RouterProvider router={router} />
 }

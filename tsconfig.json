@@ -45,8 +45,8 @@
       "@typess/*": [
         "./src/types/*"
       ],
-      "@pages/*": [
-        "./src/pages/*"
+      "@screens/*": [
+        "./src/screens/*"
       ],
     }
   },

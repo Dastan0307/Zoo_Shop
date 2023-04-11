@@ -2,14 +2,14 @@
     "semi": false,
     "singleQuote": true,
     "printWidth": 80,
-    "tabWidth": 4,
+    "tabWidth": 2,
     "trailingComma": "all",
     "importOrder": [
+        "^@ui/(.*)$",
         "^@",
         "^[./]",
-        "^@ui/(.*)$",
-        "^@server/(.*)$",
-        "^@core/(.*)$"
+        "^@core/(.*)$",
+        "^@server/(.*)$"
     ],
     "importOrderBuiltinModulesToTop": true,
     "importOrderCaseInsensitive": true,
