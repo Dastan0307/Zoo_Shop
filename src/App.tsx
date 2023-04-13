@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from './components'
-import { AboutUs, Main, Register } from './screens'
+import { AboutUs, Main, Register, ProfilePage } from './screens'
 
 const router = createBrowserRouter([
   {
@@ -17,13 +17,17 @@ const router = createBrowserRouter([
         path: 'about-us',
         element: <AboutUs />,
       },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
+      }
     ],
   },
   {
     path: 'register',
     element: <Register />,
     errorElement: <div>Oops!</div>,
-  },
+  }
 ])
 
 export const App = () => {
