@@ -12,9 +12,10 @@ import storage from 'redux-persist/lib/storage'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
+import authSlice from './features/auth/authSlice'
 
 const rootReducer = combineReducers({
-  // [ItemDetail.reducerPath]: ItemDetail.reducer,
+  auth: authSlice,
 })
 
 const persistConfig = { key: 'root', storage, version: 1 }
