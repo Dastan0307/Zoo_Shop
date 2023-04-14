@@ -1,7 +1,15 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from './components'
-import { AboutUs, Login, Main, Recovery, RecoveryFinish, Register } from './screens'
+import {
+  AboutUs,
+  Login,
+  Main,
+  ProfilePage,
+  Recovery,
+  RecoveryFinish,
+  Register,
+} from './screens'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: 'about-us',
         element: <AboutUs />,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
       },
     ],
   },
@@ -38,7 +50,7 @@ const router = createBrowserRouter([
     path: 'recovery_finish',
     element: <RecoveryFinish />,
     errorElement: <div>Oops!</div>,
-  }
+  },
 ])
 
 export const App = () => {
