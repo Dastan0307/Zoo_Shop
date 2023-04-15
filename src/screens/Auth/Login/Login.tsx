@@ -23,7 +23,7 @@ export const Login = () => {
     // redirect authenticated user to profile screen
     // if (userInfo) navigate('/user-profile')
     // redirect user to login page if registration was successful
-    if (userInfo) navigate('/')
+    // if (userInfo) navigate('/')
   }, [navigate, userInfo])
 
   const submitForm = (data: RegisterTypes) => {
@@ -76,6 +76,7 @@ export const Login = () => {
                   placeholder="Пароль"
                 />
               </Form.Item>
+              <Link to='/recovery'>Забыли пароль?</Link>
 
               <SubmitButton
                 type="primary"

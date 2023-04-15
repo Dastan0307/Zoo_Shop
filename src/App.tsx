@@ -1,4 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from 'react-router-dom'
 
 import { Layout } from './components'
 import {
@@ -11,48 +16,18 @@ import {
   Register,
 } from './screens'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <div>Oops!</div>,
-    children: [
-      {
-        index: true,
-        element: <Main />,
-      },
-      {
-        path: 'about-us',
-        element: <AboutUs />,
-      },
-      {
-        path: 'profile',
-        element: <ProfilePage />,
-      },
-    ],
-  },
-  {
-    path: 'register',
-    element: <Register />,
-    errorElement: <div>Oops!</div>,
-  },
-  {
-    path: 'login',
-    element: <Login />,
-    errorElement: <div>Oops!</div>,
-  },
-  {
-    path: 'recovery',
-    element: <Recovery />,
-    errorElement: <div>Oops!</div>,
-  },
-  {
-    path: 'recovery_finish',
-    element: <RecoveryFinish />,
-    errorElement: <div>Oops!</div>,
-  },
-])
-
 export const App = () => {
-  return <RouterProvider router={router} />
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Main />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Route>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/recovery" element={<Recovery />} />
+      <Route path="/recovery_finish" element={<RecoveryFinish />} />
+    </Routes>
+  )
 }
