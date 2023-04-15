@@ -1,4 +1,5 @@
-import axios, { AxiosError } from 'axios'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { AxiosError } from 'axios'
 
 import { AuthApi } from '@api/Auth/AuthApi'
 import { createAsyncThunk } from '@reduxjs/toolkit'
@@ -20,5 +21,3 @@ export const userLogin = createAsyncThunk(
     }
   },
 )
-
-

@@ -1,6 +1,7 @@
 import { Typography } from 'antd'
 import { Formik } from 'formik'
 import { Form, Input, SubmitButton } from 'formik-antd'
+import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -15,8 +16,8 @@ export const Register = () => {
   const submitForm = async (data: RegisterTypes) => {
     const res = await AuthApi.register(data)
     if (res?.status) {
-       toast.success('Регистрация успешно завершено')
-       return navigate('/login')
+      toast.success('Регистрация успешно завершено', { delay: 0.3 })
+      return navigate('/login')
     }
     return
   }
@@ -28,7 +29,13 @@ export const Register = () => {
     password_confirm: '',
   }
   return (
-    <div className="auth">
+    <motion.div
+      className="auth"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="auth-content">
         <div className="auth-content_wrapper">
           <Typography.Title level={3}>Zoo.Net</Typography.Title>
@@ -120,6 +127,6 @@ export const Register = () => {
         </div>
       </div>
       <div className="auth_background"></div>
-    </div>
+    </motion.div>
   )
 }

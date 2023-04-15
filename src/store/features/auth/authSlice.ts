@@ -4,9 +4,9 @@ import { AuthProps } from '@typess/types'
 import { userLogin } from './authActions'
 
 // initialize userToken from local storage
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
-  : null
+// const userToken = localStorage.getItem('userToken')
+//   ? localStorage.getItem('userToken')
+//   : null
 
 const initialState: AuthProps = {
   loading: false,

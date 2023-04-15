@@ -1,7 +1,8 @@
 import { Layout, Space, Typography } from 'antd'
 import { Formik } from 'formik'
 import { Form, Input, SubmitButton } from 'formik-antd'
-import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 
@@ -34,8 +35,15 @@ export const Login = () => {
     email: '',
     password: '',
   }
+
   return (
-    <div className="auth">
+    <motion.div
+      className="auth"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="auth-content">
         <div className="auth-content_wrapper">
           <Typography.Title level={3}>Zoo.Net</Typography.Title>
@@ -76,7 +84,7 @@ export const Login = () => {
                   placeholder="Пароль"
                 />
               </Form.Item>
-              <Link to='/recovery'>Забыли пароль?</Link>
+              <Link to="/recovery">Забыли пароль?</Link>
 
               <SubmitButton
                 type="primary"
@@ -100,6 +108,6 @@ export const Login = () => {
         </div>
       </div>
       <div className="auth_background"></div>
-    </div>
+    </motion.div>
   )
 }

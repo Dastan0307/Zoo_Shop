@@ -1,8 +1,8 @@
+import { AnimatePresence } from 'framer-motion'
 import {
-  createBrowserRouter,
   Route,
-  RouterProvider,
   Routes,
+  useLocation,
 } from 'react-router-dom'
 
 import { Layout } from './components'
@@ -17,17 +17,20 @@ import {
 } from './screens'
 
 export const App = () => {
+  const location = useLocation()
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Main />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/profile" element={<ProfilePage />} />
-      </Route>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/recovery" element={<Recovery />} />
-      <Route path="/recovery_finish" element={<RecoveryFinish />} />
-    </Routes>
+    <AnimatePresence>
+      <Routes key={location.pathname} location={location}>
+        <Route element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/recovery" element={<Recovery />} />
+        <Route path="/recovery_finish" element={<RecoveryFinish />} />
+      </Routes>
+    </AnimatePresence>
   )
 }
