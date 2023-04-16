@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from './components'
-import { AboutUs, Main, Register } from './screens'
+import { AboutUs, Main, Register, Announcements } from './screens'
+import NewAnnouncement from '@screens/Announcements/NewAnnouncement/NewAnnouncement'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,14 @@ const router = createBrowserRouter([
       {
         path: 'about-us',
         element: <AboutUs />,
+      },
+      {
+        path: '/announcement',
+        element: <Announcements />,
+      },
+      {
+        path: '/newannouncement',
+        element: <NewAnnouncement />,
       },
     ],
   },

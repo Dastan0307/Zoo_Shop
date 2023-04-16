@@ -11,10 +11,12 @@ import persistStore from 'redux-persist/es/persistStore'
 import storage from 'redux-persist/lib/storage'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { announcementApi } from './announcements/getAnnoun'
+// import announcements from './announcements'
 
 
 const rootReducer = combineReducers({
-  // [ItemDetail.reducerPath]: ItemDetail.reducer,
+  [announcementApi.reducerPath]: announcementApi.reducer
 })
 
 const persistConfig = { key: 'root', storage, version: 1 }
@@ -26,7 +28,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(announcementApi.middleware),
 })
 
 export const persistor = persistStore(store)

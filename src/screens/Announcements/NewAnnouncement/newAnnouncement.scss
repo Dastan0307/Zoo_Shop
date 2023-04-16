@@ -1,0 +1,17 @@
+.new-announcement {
+  margin: 50px 100px;
+
+  .uploads {
+    display: flex;
+    column-gap: 20px;
+
+    .upload {
+      width: 163px;
+      height: 163px;
+      background-color: #D9D9D9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
