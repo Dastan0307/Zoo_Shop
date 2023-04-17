@@ -5,4 +5,6 @@ export * from './Auth/Recovery/RecoveryFinish'
 export * from './Auth/Register/Register'
 export * from './Main/Main'
 export * from './ProfilePage/ProfilePage'
-
+export * from './Announcements/Announcement'
+export * from './Announcements/NewAnnouncement/NewAnnouncement'
+export * from './Announcements/NewAnnouncement/EditAnnouncement'

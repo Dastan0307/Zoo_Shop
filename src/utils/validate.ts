@@ -26,3 +26,10 @@ export const RecoveryFinishValidate = Yup.object({
   .required('Обязательно')
   .oneOf([Yup.ref('password')], 'Пароли не совпадают'),
 })
+
+export const AnnouncementValidate = Yup.object({
+  title: Yup.string().required('Обязательно'),
+  description: Yup.string().required('Обязательно'),
+  location: Yup.string().required('Обязательно'),
+  category: Yup.string().required('Обязательно'),
+})

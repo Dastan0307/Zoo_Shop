@@ -14,6 +14,9 @@ import {
   Recovery,
   RecoveryFinish,
   Register,
+  Announcements,
+  NewAnnouncement,
+  EditAnnouncement
 } from './screens'
 
 export const App = () => {
@@ -25,6 +28,9 @@ export const App = () => {
           <Route index element={<Main />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/announcement" element={<Announcements />} />
+          <Route path="/new-announcement" element={<NewAnnouncement />} />
+          <Route path='/edit-announcement' element={<EditAnnouncement />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
