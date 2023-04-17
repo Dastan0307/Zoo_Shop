@@ -1,6 +1,6 @@
 export interface AuthProps {
   loading?: boolean
-  userInfo?: object | null | unknown
+  userInfo?: UserData | null
   userToken?: string | null | unknown
   error?: string | null | unknown
   success?: boolean
@@ -21,4 +21,18 @@ export interface RegisterTypes {
 export interface loginProps {
   email: string
   password: string
+}
+
+export interface UserData {
+  about_user: string
+  access: string
+  date_joined: string
+  email: string
+  first_name: string
+  id: number
+  last_name: string
+  phone_number: string
+  refresh: string
+  telegram_url: string
+  username: string
 }

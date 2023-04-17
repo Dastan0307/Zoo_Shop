@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <PersistGate loading={false} persistor={persistor}>
         <ConfigProvider theme={theme}>
           <BrowserRouter>
-            <App/>
+            <App />
             <ToastContainer />
           </BrowserRouter>
         </ConfigProvider>

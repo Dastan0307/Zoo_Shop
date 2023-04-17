@@ -4,7 +4,7 @@ import { Form, Input, SubmitButton } from 'formik-antd'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
-import { AuthApi } from '@api/Auth/AuthApi'
+import { AuthApi } from '@api/AuthApi'
 import { RegisterTypes } from '@typess/types'
 import { errorHandler } from '@utils/errorHandler'
 import { EmailValidate } from '@utils/validate'

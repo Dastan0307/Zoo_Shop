@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AxiosError } from 'axios'
 
-import { AuthApi } from '@api/Auth/AuthApi'
+import { AuthApi } from '@api/AuthApi'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { RegisterTypes } from '@typess/types'
 
