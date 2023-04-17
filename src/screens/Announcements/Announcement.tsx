@@ -11,9 +11,8 @@ import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun';
 const { Sider } = Layout
 const { Title, Text, Paragraph } = Typography
 
-type A = string
 
-const arr: A[] = [
+const arr: string[] = [
   'https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png',
   'https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png',
   'https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png',
