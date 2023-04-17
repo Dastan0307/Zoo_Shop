@@ -1,17 +1,42 @@
-.new-announcement {
+.newannoun {
   margin: 50px 100px;
 
-  .uploads {
-    display: flex;
-    column-gap: 20px;
-
-    .upload {
-      width: 163px;
-      height: 163px;
-      background-color: #D9D9D9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .ant-select {
+    width: 438px;
+    display: block;
+    margin: 16px 0; 
   }
+
+  .ant-input {
+    width: 438px;
+    display: block;
+    height: 40px;
+    margin: 16px 0; 
+  }
+
+  label {
+    color: #828282;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .description {
+    min-width: 622px;
+    min-height: 250px;
+    text-align: start;
+  }
+
+  // .uploads {
+  //   display: flex;
+  //   column-gap: 20px;
+
+  //   .upload {
+  //     width: 163px;
+  //     height: 163px;
+  //     background-color: #D9D9D9;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //   }
+  // }
 }

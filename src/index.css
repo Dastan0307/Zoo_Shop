@@ -1,5 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@600&display=swap');
 
 * {
   transition: .3s ease;
+}
+
+input::placeholder {
+  color: #BDBDBD !important;
+  font-weight: 300
+}
+
+input {
+  color: #4F4F4F !important;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:checked,
+input:-webkit-autofill:focus-visible,
+input:-webkit-autofill:target,
+input:-webkit-autofill:focus-within,
+input:-webkit-autofill:visited,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  background-color: transparent;
 }

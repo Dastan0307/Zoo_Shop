@@ -14,7 +14,7 @@ export const OutlineButton: FC<ButtonProps> = (props) => {
     <Button
       {...props}
       type="primary"
-      style={{ background: 'transparent', border: '3px solid #96e7b7' }}
+      style={{ background: 'transparent', border: '3px solid #96e7b7',}}
     >
       {props.children}
     </Button>

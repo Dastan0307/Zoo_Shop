@@ -40,7 +40,7 @@
         "./src/utils/*"
       ],
       "@hooks/*": [
-        "./src/hooks/*"
+        "hooks/*"
       ],
       "@typess/*": [
         "./src/types/*"
@@ -48,13 +48,16 @@
       "@screens/*": [
         "./src/screens/*"
       ],
+      "@api/*": [
+        "./src/api/*"
+      ],
     }
   },
   "include": [
     "vite.config.ts",
     ".eslintrc",
     "src"
-  ],
+, "hooks"  ],
   "exclude": [
     "node_modules"
   ],

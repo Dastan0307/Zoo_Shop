@@ -1,40 +1,42 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import {
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom'
 
 import { Layout } from './components'
-import { AboutUs, Main, Register, Announcements } from './screens'
-import NewAnnouncement from '@screens/Announcements/NewAnnouncement/NewAnnouncement'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <div>Oops!</div>,
-    children: [
-      {
-        index: true,
-        element: <Main />,
-      },
-      {
-        path: 'about-us',
-        element: <AboutUs />,
-      },
-      {
-        path: '/announcement',
-        element: <Announcements />,
-      },
-      {
-        path: '/newannouncement',
-        element: <NewAnnouncement />,
-      },
-    ],
-  },
-  {
-    path: 'register',
-    element: <Register />,
-    errorElement: <div>Oops!</div>,
-  },
-])
+import {
+  AboutUs,
+  Login,
+  Main,
+  ProfilePage,
+  Recovery,
+  RecoveryFinish,
+  Register,
+  Announcements,
+  NewAnnouncement,
+  EditAnnouncement
+} from './screens'
 
 export const App = () => {
-  return <RouterProvider router={router} />
+  const location = useLocation()
+  return (
+    <AnimatePresence>
+      <Routes key={location.pathname} location={location}>
+        <Route element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/announcement" element={<Announcements />} />
+          <Route path="/new-announcement" element={<NewAnnouncement />} />
+          <Route path='/edit-announcement' element={<EditAnnouncement />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/recovery" element={<Recovery />} />
+        <Route path="/recovery_finish" element={<RecoveryFinish />} />
+      </Routes>
+    </AnimatePresence>
+  )
 }

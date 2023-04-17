@@ -11,7 +11,7 @@ import { PrimaryButton } from "@components/index"
 
 const { Title } = Typography
 
-export const NewAnnouncement = () => {
+export const EditAnnouncement = () => {
 
   const initialValues: AnnouncementTypes = {
     title: '',

@@ -1,0 +1,50 @@
+.auth {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  &-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &_wrapper {
+      max-width: 470px;
+      width: 100%;
+      height: 100vh;
+      padding: 30px 15px;
+      &_form {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &_item {
+    max-width: 438px;
+    margin-top: 15px;
+    &:first-of-type {
+      margin-top: 0px;
+    }
+    &_input {
+      border-bottom: 1px solid #e0e0e0 !important;
+      border-radius: 0;
+      font-size: 16px;
+      padding-bottom: 10px;
+    }
+  }
+  &_submit {
+    margin-top: 50px;
+  }
+  &_background {
+    flex: 1;
+    background: url('/auth/background.png');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    @media screen and (max-width: 750px) {
+      display: none;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { Button, Col, Layout, Row, Space, Typography, Image, Carousel, Divider } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { CarouselRef } from 'antd/es/carousel';
-import { useTypedDispatch, useTypedSelector } from '@hooks/index';
+// import { useTypedDispatch, useTypedSelector } from '@hooks/index';
 // import { getAnnoun } from '@store/announcements/getAnnoun';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons'
 import  './announcement.scss'

@@ -1,0 +1,13 @@
+.auth_background_reset {
+  flex: 1;
+  background: url('/auth/background2.png');
+  object-fit: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0 -80px;
+  height: 100%;
+  width: 100%;
+  @media screen and (max-width: 750px) {
+    display: none;
+  }
+}

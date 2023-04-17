@@ -12,11 +12,11 @@ import storage from 'redux-persist/lib/storage'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { announcementApi } from './announcements/getAnnoun'
-// import announcements from './announcements'
 
+import authSlice from './features/auth/authSlice'
 
 const rootReducer = combineReducers({
-  [announcementApi.reducerPath]: announcementApi.reducer
+  auth: authSlice,
 })
 
 const persistConfig = { key: 'root', storage, version: 1 }
