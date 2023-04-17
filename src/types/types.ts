@@ -22,3 +22,25 @@ export interface loginProps {
   email: string
   password: string
 }
+
+export interface AnnouncementTypes {
+  slug?: string,
+  user?: string,
+  photos?: [
+    {
+      id: number,
+      image: string,
+      announcement: string
+    }
+  ],
+  title: string,
+  price?: string,
+  description: string,
+  location: string,
+  created_at?: string,
+  updated_at?: string,
+  views_count?: number,
+  category: string
+}
+
+
