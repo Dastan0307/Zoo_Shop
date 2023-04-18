@@ -2,8 +2,8 @@ import { Layout, Space, Typography } from 'antd'
 import { Formik } from 'formik'
 import { Form, Input, SubmitButton } from 'formik-antd'
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 
 import { userLogin } from '@store/features/auth/authActions'
@@ -20,15 +20,12 @@ export const Login = () => {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    // redirect authenticated user to profile screen
-    // if (userInfo) navigate('/user-profile')
-    // redirect user to login page if registration was successful
-    // if (userInfo) navigate('/')
-  }, [navigate, userInfo])
-
-  const submitForm = (data: RegisterTypes) => {
+  const submitForm = async (data: RegisterTypes) => {
     dispatch(userLogin(data))
+    if (userInfo) {
+      navigate('/')
+      toast.success('вы вошли как:' + userInfo?.first_name)
+    }
   }
 
   const initValuies: RegisterTypes = {
@@ -40,8 +37,7 @@ export const Login = () => {
     <motion.div
       className="auth"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
       <div className="auth-content">
@@ -64,6 +60,7 @@ export const Login = () => {
                 showValidateSuccess={true}
               >
                 <Input
+                  type="email"
                   name="email"
                   bordered={false}
                   className="auth_item_input"

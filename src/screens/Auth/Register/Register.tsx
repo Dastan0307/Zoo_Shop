@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { AuthApi } from '@api/Auth/AuthApi'
+import { AuthApi } from '@api/AuthApi'
 import { RegisterTypes } from '@typess/types'
 import { RegisterValidate } from '@utils/validate'
 
@@ -32,9 +32,8 @@ export const Register = () => {
     <motion.div
       className="auth"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="auth-content">
         <div className="auth-content_wrapper">

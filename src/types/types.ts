@@ -1,6 +1,6 @@
 export interface AuthProps {
   loading?: boolean
-  userInfo?: object | null | unknown
+  userInfo?: UserData | null
   userToken?: string | null | unknown
   error?: string | null | unknown
   success?: boolean
@@ -23,3 +23,40 @@ export interface loginProps {
   password: string
 }
 
+<<<<<<< HEAD
+=======
+export interface UserData {
+  about_user: string
+  access: string
+  date_joined: string
+  email: string
+  first_name: string
+  id: number
+  last_name: string
+  phone_number: string
+  refresh: string
+  telegram_url: string
+  username: string
+}
+export interface AnnouncementTypes {
+  slug?: string,
+  user?: string,
+  photos?: [
+    {
+      id: number,
+      image: string,
+      announcement: string
+    }
+  ],
+  title: string,
+  price?: string,
+  description: string,
+  location: string,
+  created_at?: string,
+  updated_at?: string,
+  views_count?: number,
+  category: string
+}
+
+
+>>>>>>> 138b8154098270831fa9c213f3e8d5b8d7dcd099

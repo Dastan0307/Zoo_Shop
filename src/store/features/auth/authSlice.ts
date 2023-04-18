@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AuthProps } from '@typess/types'
+import { AuthProps, UserData } from '@typess/types'
 
 import { userLogin } from './authActions'
 
@@ -35,15 +35,12 @@ const authSlice = createSlice({
     builder.addCase(userLogin.pending, (state) => {
       state.loading = true
     })
-    builder.addCase(
-      userLogin.fulfilled,
-      (state, action: PayloadAction<{ userToken: string }>) => {
-        state.loading = false
-        state.userInfo = action.payload
-        state.userToken = action.payload.userToken
-        state.success = true
-      },
-    )
+    builder.addCase(userLogin.fulfilled, (state, action) => {
+      state.loading = false
+      state.userInfo = action.payload
+      // state.userToken = action.payload.userToken
+      state.success = true
+    })
     builder.addCase(userLogin.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload

@@ -11,6 +11,7 @@ import persistStore from 'redux-persist/es/persistStore'
 import storage from 'redux-persist/lib/storage'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { announcementApi } from './announcements/getAnnoun'
 
 import authSlice from './features/auth/authSlice'
 
@@ -27,7 +28,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(announcementApi.middleware),
 })
 
 export const persistor = persistStore(store)
