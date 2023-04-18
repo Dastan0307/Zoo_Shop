@@ -47,7 +47,7 @@ export interface AnnouncementTypes {
     }
   ],
   title: string,
-  price?: string,
+  price?: string | number,
   description: string,
   location: string,
   created_at?: string,

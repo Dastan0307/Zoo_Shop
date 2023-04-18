@@ -1,6 +1,5 @@
 .announcements {
   margin: 50px 100px;
-  display: flex;
 
   .title {
     display: flex;
@@ -14,10 +13,13 @@
 
   .main {
     display: flex;
+    margin: 0;
+    column-gap: 112px;
 
     .main__img {
+      width: 850px;
       .ant-col {
-        position: relative;
+        // position: relative;
 
         .anticon {
           position: absolute;
@@ -31,15 +33,14 @@
         }
 
         .anticon-right {
-          right: 20%;
+          right: 20px;
         }
       }
     }
   }
 
   .sider {
-    background-color: inherit;
-
+  
     .ant-typography {
       font-size: 24px;
       font-weight: 700;
@@ -58,6 +59,7 @@
       column-gap: 20px;
       align-items: center;
       margin: 40px 0 30px;
+      width: 255px;
 
       .ant-image-img {
         width: 60px;

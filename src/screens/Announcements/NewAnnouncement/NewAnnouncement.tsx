@@ -1,5 +1,5 @@
 import { Typography } from 'antd'
-import { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { Field, Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { useTypedSelector } from 'src/hooks'
@@ -8,14 +8,28 @@ import { PrimaryButton } from '@components/index'
 import { AnnouncementTypes } from '@typess/types'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
-
+import { useEffect, useState } from 'react'
 import api from '../../../api'
 
 import './newAnnouncement.scss'
 
 const { Title } = Typography
+type B = {
+  slug?: string,
+  title: string,
+  description?: string,
+  created_at?: string,
+  updated_at?: string
+}
+type A = {
+  count: number,
+  next?: string,
+  previous?: string,
+  results: B[]
+}
 
 export const NewAnnouncement = () => {
+  const [categorie, setCategories ] = useState<A | null>(null)
   const initialValues: AnnouncementTypes = {
     title: '',
     price: '',
@@ -24,19 +38,27 @@ export const NewAnnouncement = () => {
     category: '',
   }
 
+  async function getCategory(params:string): Promise<AxiosResponse<A | null>> {
+    const res = await api.get(params)
+    return res
+  }
+
+  // useEffect(() => {
+  //   setCategories(getCategory('/categories/'))
+  // }, [])
+
   const changePhoto = (e: any) => {
     // for(let key in e) {
     //   console.log(key)
     // }
   }
 
-  const tokens = useTypedSelector((state) => state.auth.userInfo)
+  fetch('http://104.199.175.143/categories/').then(res => res.json).then(data => console.log(data))
 
-  console.log(tokens)
 
   const categories: string[] = [
-    'Собаки',
-    'Кошки',
+    'sobaki',
+    'koshki',
     'Птицы',
     'Рыбки',
     'Грызуны',
@@ -56,17 +78,17 @@ export const NewAnnouncement = () => {
   ]
 
   const submitForm = async (data: AnnouncementTypes) => {
-    // const token = useTypedSelector((state) => state.auth.userToken)
-    // try {
-    //   await api.post('announcements/', data, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    // } catch (error: AxiosError | any) {
-    //   errorHandler(error)
-    // }
-    console.log(data)
+    const token = localStorage.getItem('access_token')
+    try {
+      await api.post('announcements/', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    } catch (error: AxiosError | any) {
+      errorHandler(error)
+    }
   }
 
   return (
@@ -108,14 +130,14 @@ export const NewAnnouncement = () => {
             <label htmlFor="price" id="price">
               Цена
             </label>
-            <Input name="price" placeholder="Введите цену" />
+            <Input type='number' name="price" placeholder="Введите цену" />
             <label>Не указывайте цену если отдаете питомца даром</label>
           </Form.Item>
           <Form.Item name="phone" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="phone" id="phone">
               Контакты
             </label>
-            <Input name="phone" placeholder="Номер телефона" />
+            <Input type='tel' name="phone" placeholder="Номер телефона" pattern="[0-9]{3} [0-9]{3} [0-9]{4}"/>
           </Form.Item>
           <Form.Item
             name="description"
@@ -163,6 +185,8 @@ export const NewAnnouncement = () => {
             </Select>
           </Form.Item>
           <SubmitButton type="primary">Опубликовать объявление</SubmitButton>
+          <Form.Item name='dawd'>
+          </Form.Item>
         </Form>
       </Formik>
     </div>

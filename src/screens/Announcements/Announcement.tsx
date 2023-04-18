@@ -50,33 +50,34 @@ export const Announcements: React.FC = () => {
 
   
   return (
-    <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
-      <Layout className='announcements'>
+      <div className='announcements'>
         <Row className='title'>
           <Title level={2}>Хороший добрый пес</Title>
           <Text>Редактировать</Text>
         </Row>
-        <Layout className='main'>
-          <Layout className='main__img'>
+        <div className='main'>
+          <div className='main__img'>
             <Row className='big-image'>
-              <Col>
-                <Carousel ref={carouselRef}>
+              <Row>
+                <Col>
+                  <Carousel ref={carouselRef}>
+                    {arr.map((src, index) => (
+                      <Image preview={false} key={index} src={src} />
+                    ))}
+                  </Carousel>
+                  <LeftOutlined onClick={handlePrev} />
+                  <RightOutlined onClick={handleNext} />
+                </Col>
+              </Row>
+              <Row className='slides__img'>
+                <Col>
                   {arr.map((src, index) => (
                     <Image preview={false} key={index} src={src} />
                   ))}
-                </Carousel>
-                <LeftOutlined onClick={handlePrev} />
-                <RightOutlined onClick={handleNext} />
-              </Col>
-              <Row className='slides__img'>
-              <Col>
-                {arr.map((src, index) => (
-                  <Image preview={false} key={index} src={src} />
-                ))}
-              </Col>
+                </Col>
               </Row>
             </Row>
-            <Layout className='description'>
+            <div className='description'>
               <Row>
                 <Col span={6}><Text className='gray-text'>Местоположение</Text></Col>
                 <Col span={12} className='middle-text'><Paragraph>Бишкек</Paragraph></Col>
@@ -92,19 +93,18 @@ export const Announcements: React.FC = () => {
                 <Col span={6}><Text className='gray-text'>Категория</Text></Col>
                 <Col span={12}><Paragraph className='middle-text'>Собаки</Paragraph></Col>
               </Row>
-            </Layout>
-          </Layout>
-          <Sider className='sider'>
+            </div>
+          </div>
+          <div className='sider'>
             <Text>5000 KGS</Text>
             <Row>
               <Image src='https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png'/>
               <Text>Владимир. Б</Text>
             </Row>
             <Button>Связаться</Button>
-          </Sider>
-        </Layout>
-      </Layout>
-    </Space>
+          </div>
+        </div>
+      </div>
   )
 }
 
