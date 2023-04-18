@@ -5,26 +5,27 @@ import Search from 'antd/es/transfer/search'
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 
-import { CategoryApi } from '@api/CategoryApi'
+import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
 
 import './main.scss'
 
 export const Main = () => {
   const [params, setParams] = useState<string>()
-  useEffect(() => {
-    CategoryApi.getCategories()
-  }, [])
+  const data = useGetCategoriesQuery('s')
+  const categories = data.currentData?.results
+  debounce
+
   return (
     <div className="main">
       <Search placeholder="Поиск" />
-      <Row className='main_type_wrapper'>
-        <Col span={11} >
-          <Card  className="main_type">
+      <Row className="main_type_wrapper">
+        <Col span={11}>
+          <Card className="main_type">
             <Typography.Title level={3}>Питомцы</Typography.Title>
             <Typography.Text>Выберите питомца по душе</Typography.Text>
           </Card>
         </Col>
-        <Col span={12} >
+        <Col span={12}>
           <Card className="main_type_2">
             <Typography.Title level={3}>Питомцы</Typography.Title>
             <Typography.Text>Выберите питомца по душе</Typography.Text>
@@ -37,14 +38,10 @@ export const Main = () => {
             <Col>
               <Typography.Title level={4}>Категории</Typography.Title>
               <List>
-                {[
-                  'Кошки',
-                  'Собаки',
-                  'Грызуны',
-                  'Сельскохозяйственные животные',
-                ].map((value, index) => (
-                  <List.Item key={index}>{value}</List.Item>
-                ))}
+                {categories &&
+                  categories.map((value, index) => (
+                    <List.Item key={index}>{value.title}</List.Item>
+                  ))}
               </List>
             </Col>
             <Col>

@@ -37,23 +37,36 @@ export interface UserData {
   username: string
 }
 export interface AnnouncementTypes {
-  slug?: string,
-  user?: string,
+  slug?: string
+  user?: string
   photos?: [
     {
-      id: number,
-      image: string,
+      id: number
+      image: string
       announcement: string
-    }
-  ],
-  title: string,
-  price?: string,
-  description: string,
-  location: string,
-  created_at?: string,
-  updated_at?: string,
-  views_count?: number,
+    },
+  ]
+  title: string
+  price?: string
+  description: string
+  location: string
+  created_at?: string
+  updated_at?: string
+  views_count?: number
   category: string
 }
 
+export type CategoriesType = {
+  count: number
+  next: null | number
+  previous: null | number
+  results: CategoryType[]
+}
 
+export interface CategoryType {
+  created_at: string
+  description: string
+  slug: string
+  title: string
+  updated_at: string
+}
