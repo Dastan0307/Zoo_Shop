@@ -23,8 +23,6 @@ export interface loginProps {
   password: string
 }
 
-<<<<<<< HEAD
-=======
 export interface UserData {
   about_user: string
   access: string
@@ -59,4 +57,3 @@ export interface AnnouncementTypes {
 }
 
 
->>>>>>> 138b8154098270831fa9c213f3e8d5b8d7dcd099
