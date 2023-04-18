@@ -23,6 +23,8 @@ export interface loginProps {
   password: string
 }
 
+<<<<<<< HEAD
+=======
 export interface UserData {
   about_user: string
   access: string
@@ -63,10 +65,3 @@ export type CategoriesType = {
   results: CategoryType[]
 }
 
-export interface CategoryType {
-  created_at: string
-  description: string
-  slug: string
-  title: string
-  updated_at: string
-}
