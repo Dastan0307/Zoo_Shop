@@ -23,7 +23,6 @@ export interface loginProps {
   password: string
 }
 
-<<<<<<< HEAD
 =======
 export interface UserData {
   about_user: string

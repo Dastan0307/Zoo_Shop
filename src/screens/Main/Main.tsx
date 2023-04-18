@@ -13,8 +13,7 @@ export const Main = () => {
   const [params, setParams] = useState<string>()
   const data = useGetCategoriesQuery('s')
   const categories = data.currentData?.results
-  debounce
-
+  
   return (
     <div className="main">
       <Search placeholder="Поиск" />
