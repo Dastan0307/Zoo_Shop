@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import api from '../../../api'
 
 import './newAnnouncement.scss'
+import { CategoryApi } from '@api/CategoryApi'
 
 const { Title } = Typography
 type B = {
@@ -44,9 +45,9 @@ export const NewAnnouncement = () => {
     return res
   }
 
-  // useEffect(() => {
-  //   setCategories(getCategory('/categories/'))
-  // }, [])
+  useEffect(() => {
+    console.log(CategoryApi.getCategories())
+  }, [])
 
   const changePhoto = (e: any) => {
     // for(let key in e) {
@@ -58,8 +59,8 @@ export const NewAnnouncement = () => {
 
 
   const categories: string[] = [
-    'sobaki',
-    'koshki',
+    'dogs',
+    'cats',
     'Птицы',
     'Рыбки',
     'Грызуны',
