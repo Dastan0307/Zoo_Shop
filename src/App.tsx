@@ -34,7 +34,7 @@ export const App = () => {
           <Route path="/new-announcement" element={<NewAnnouncement />} />
           <Route path='/edit-announcement' element={<EditAnnouncement />} />
           <Route path='/papers' element={<Papers />} />
-          <Route path='/paper' element={<Paper />} />
+          <Route path='/papers/:id' element={<Paper />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

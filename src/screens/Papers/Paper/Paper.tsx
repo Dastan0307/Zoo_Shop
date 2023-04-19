@@ -1,12 +1,15 @@
 import { Col, Row, Typography, Image } from 'antd'
 import './paper.scss'
+import { motion } from 'framer-motion'
 
 const { Title, Text, Paragraph } = Typography
 const arr: number[] = [1,2,3]
 
 export const Paper = () => {
   return (
-    <div className='paper'>
+    <motion.div initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{ duration: 0.5 }} className='paper'>
       <Title className='paper__title'>Статьи о животных</Title>
       <Row className='paper__start'>
         <Col>
@@ -64,7 +67,7 @@ export const Paper = () => {
         <Paragraph>Детальные рекомендации по уходу за собакой после процедуры иммунизации выдает лечащий ветеринар.
         </Paragraph>
       </Row>
-    </div>
+    </motion.div>
     
   )
 }

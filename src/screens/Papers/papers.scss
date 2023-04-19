@@ -58,6 +58,10 @@
   }
 
   @media (max-width: 1024px) {
+    .papers {
+      margin: 0;
+    }
+
     .papers__animals {
       grid-template-columns: 1fr 1fr;
     }

@@ -2,6 +2,7 @@ import { Col, Row, Typography, Image } from 'antd'
 import './papers.scss'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const { Title, Text, Paragraph } = Typography
 
@@ -19,7 +20,11 @@ export const Papers = () =>  {
   const arr: number[] = [1,1,1,2,3,4,5,6,7,8,9]
   
   return (
-    <div className='papers'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className='papers'>
       <Title className='papers__title'>Статьи о животных</Title>
         <Row className='papers__animals'>
           {
@@ -32,7 +37,7 @@ export const Papers = () =>  {
                     preview={false}
                     src='https://www.proplan.ru/sites/owners.proplan.ru/files/styles/article720x340/public/2020-03/shutterstock_155382377_2.jpg?itok=EBJQe5gN'
                   />
-                  {isHovering === index && <Link className='papers__link' to={`paper/${index}`}>Читать полностью</Link>}
+                  {isHovering === index && <Link className='papers__link' to={`/papers/${index}`}>Читать полностью</Link>}
                 </div>
                 <Text>Какие прививки ставить собакам</Text>
                 <Paragraph>В этой статье мы расскажем о том, какие прививки нужно ставить собакам чтобы они не болели</Paragraph>
@@ -40,6 +45,6 @@ export const Papers = () =>  {
             )})
           }
         </Row>
-    </div>
+    </motion.div>
   )
 }
