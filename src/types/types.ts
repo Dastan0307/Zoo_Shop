@@ -90,14 +90,14 @@ export interface AnnouncementApiCardType {
 }
 
 export interface AnnouncementCardType {
-  category: string
-  created_at: string
-  description: string
-  location: string
-  price: string
-  slug: string
-  title: string
-  updated_at: string
-  user: number
-  views_count: number
+  category?: string
+  created_at?: string
+  description?: string
+  location?: string
+  price?: string
+  slug?: string
+  title?: string
+  updated_at?: string
+  user?: number
+  views_count?: number
 }

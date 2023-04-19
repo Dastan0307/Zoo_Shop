@@ -1,6 +1,6 @@
 // import { AxiosError } from 'axios'
 
-// import { errorHandler } from '@utils/errorHandler'
+export {} // import { errorHandler } from '@utils/errorHandler'
 
 // import api from './index'
 
