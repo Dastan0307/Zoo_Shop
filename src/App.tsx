@@ -16,7 +16,9 @@ import {
   Register,
   Announcements,
   NewAnnouncement,
-  EditAnnouncement
+  EditAnnouncement,
+  Papers,
+  Paper,
 } from './screens'
 
 export const App = () => {
@@ -31,6 +33,8 @@ export const App = () => {
           <Route path="/announcement" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />
           <Route path='/edit-announcement' element={<EditAnnouncement />} />
+          <Route path='/papers' element={<Papers />} />
+          <Route path='/paper' element={<Paper />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
