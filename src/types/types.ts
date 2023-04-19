@@ -23,7 +23,6 @@ export interface loginProps {
   password: string
 }
 
-=======
 export interface UserData {
   about_user: string
   access: string
@@ -64,3 +63,41 @@ export type CategoriesType = {
   results: CategoryType[]
 }
 
+export interface CategoryType {
+  created_at: string
+  description: string
+  slug: string
+  title: string
+  updated_at: string
+}
+
+export interface AnnouncementFilterType {
+  titie?: string
+  location?: string
+  category?: string
+  lower_price?: number
+  higher_price?: number
+  search?: string
+  ordering?: string
+  page?: number
+}
+
+export interface AnnouncementApiCardType {
+  count: number
+  next: null | number | string
+  previous: null | number | string
+  results: AnnouncementCardType[]
+}
+
+export interface AnnouncementCardType {
+  category: string
+  created_at: string
+  description: string
+  location: string
+  price: string
+  slug: string
+  title: string
+  updated_at: string
+  user: number
+  views_count: number
+}
