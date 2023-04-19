@@ -50,6 +50,7 @@ export interface AnnouncementTypes {
   price?: string | number,
   description: string,
   location: string,
+  phone_number: string,
   created_at?: string,
   updated_at?: string,
   views_count?: number,

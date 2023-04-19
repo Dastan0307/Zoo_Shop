@@ -36,6 +36,7 @@ export const NewAnnouncement = () => {
     description: '',
     location: '',
     category: '',
+    phone_number: '',
   }
 
   async function getCategory(params:string): Promise<AxiosResponse<A | null>> {
@@ -133,11 +134,11 @@ export const NewAnnouncement = () => {
             <Input type='number' name="price" placeholder="Введите цену" />
             <label>Не указывайте цену если отдаете питомца даром</label>
           </Form.Item>
-          <Form.Item name="phone" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="phone" id="phone">
+          <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone" placeholder="Номер телефона" pattern="[0-9]{3} [0-9]{3} [0-9]{4}"/>
+            <Input type='tel' name="phone_number" placeholder="Номер телефона"/>
           </Form.Item>
           <Form.Item
             name="description"

@@ -7,15 +7,8 @@ import { motion } from 'framer-motion'
 const { Title, Text, Paragraph } = Typography
 
 export const Papers = () =>  {
-  const [isHovering, setIsHovering] = useState<boolean | number | null>(false);
+  const [isHovering, setIsHovering] = useState<number | null>(null);
 
-  const handleMouseEnter = () => {
-    setIsHovering(true);
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovering(false);
-  }
 
   const arr: number[] = [1,1,1,2,3,4,5,6,7,8,9]
   
@@ -31,7 +24,7 @@ export const Papers = () =>  {
             arr &&
             arr.map((item, index) => {
               return (
-              <Col onMouseLeave={() => setIsHovering(null)} onMouseEnter={() => setIsHovering(index)} key={index}>
+              <Col xl={{span: 24}} onMouseLeave={() => setIsHovering(null)} onMouseEnter={() => setIsHovering(index)} key={index}>
                 <div className='papers__img' >
                   <Image
                     preview={false}
