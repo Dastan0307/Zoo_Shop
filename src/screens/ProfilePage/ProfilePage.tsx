@@ -1,9 +1,10 @@
-import { Card, Typography, Col, Row } from 'antd';
-import avatar from '../../assets/A.png';
-import { RootState } from '../../store/store';
+import { Card, Col, Row,Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import { setCredentials } from '../../store/features/auth/authSlice';
+
+import avatar from '../../assets/A.png';
 import  Cards  from '../../components/Card/Card';
+import { setCredentials } from '../../store/features/auth/authSlice';
+import { RootState } from '../../store/store';
 
 const { Title, Text, Link } = Typography;
 
