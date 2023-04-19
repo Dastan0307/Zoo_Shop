@@ -3,7 +3,7 @@ import { Button, Card, Col, Row, Typography } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons'
 import { AnnouncementCardType } from '@typess/types'
 
-const { Title, Text, Paragraph } = Typography
+const { Title, Text, Paragraph,  } = Typography
 const Cards = (value: AnnouncementCardType) => {
   return (
     <>
