@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CardTypes } from "@typess/types";
+import { AnnouncementCardType } from "@typess/types";
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -8,10 +8,12 @@ const api = axios.create({
 });
 
 
+
   export const cardApi = {
-    async fetchTodos(): Promise<CardTypes[]> {
+    async fetchTodos(): Promise<AnnouncementCardType[]> {
       const response = await api.get('/products');
       return response.data;
+      
     },
   };
 

@@ -37,36 +37,77 @@ export interface UserData {
   username: string
 }
 export interface AnnouncementTypes {
-  slug?: string,
-  user?: string,
+  slug?: string
+  user?: string
   photos?: [
     {
-      id: number,
-      image: string,
+      id: number
+      image: string
       announcement: string
-    }
-  ],
-  title: string,
-  price?: string,
-  description: string,
-  location: string,
-  created_at?: string,
-  updated_at?: string,
-  views_count?: number,
+    },
+  ]
+  title: string
+  price?: string
+  description: string
+  location: string
+  created_at?: string
+  updated_at?: string
+  views_count?: number
   category: string
 }
 
-export interface CardTypes {
-  id?: number;
-  title?: string;
-  price?: number
-  ageGender?: string
-  description?: string;
-  img?: string;
+
+export type CategoriesType = {
+  count: number
+  next: null | number
+  previous: null | number
+  results: CategoryType[]
+}
+
+export interface CategoryType {
+  created_at: string
+  description: string
+  slug: string
+  title: string
+  updated_at: string
+}
+
+export interface AnnouncementFilterType {
+  titie?: string
+  location?: string
+  category?: string
+  lower_price?: number
+  higher_price?: number
+  search?: string
+  ordering?: string
+  page?: number
+}
+
+export interface AnnouncementApiCardType {
+  count: number
+  next: null | number | string
+  previous: null | number | string
+  results: AnnouncementCardType[]
+}
+
+export interface AnnouncementCardType {
+  category?: string
+  created_at?: string
+  description?: string
+  location?: string
+  price?: string
+  slug?: string
+  title?: string
+  updated_at?: string
+  user?: number
+  views_count?: number
+  id?: number
+  img?: string
+  ageGender: string
 }
 
 export interface CardsState {
-  data: CardTypes[];
+  data: AnnouncementCardType[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }

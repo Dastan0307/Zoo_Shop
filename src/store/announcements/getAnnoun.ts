@@ -18,16 +18,19 @@
 // )
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { AnnouncementTypes } from '@typess/types'
+import { AnnouncementApiCardType, AnnouncementTypes } from '@typess/types'
 
 export const announcementApi = createApi({
-  reducerPath: 'api/announcements',
+  reducerPath: 'announcementsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://104.199.175.143/' }),
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string>({
-      query: (id) => `announcements/${id}`,
+      query: (id) => `/announcements/${id}`,
+    }),
+    getAnnouncements: builder.query<AnnouncementApiCardType, string>({
+      query: () => `/announcements/`,
     }),
   }),
 })
 
-export const { useGetAnnouncementQuery } = announcementApi
+export const { useGetAnnouncementQuery,useGetAnnouncementsQuery } = announcementApi

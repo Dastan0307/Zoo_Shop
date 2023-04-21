@@ -6,7 +6,7 @@ import { CardsState }  from '../../../types/types';
 
 export const fetchCards = createAsyncThunk('card/fetchCards', async () => {
   const data = await cardApi.fetchTodos();
-  return data;
+  return data
 });
 
 
