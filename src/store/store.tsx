@@ -14,9 +14,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { announcementApi } from './announcements/getAnnoun'
 
 import authSlice from './features/auth/authSlice'
+import cardsSlice from './features/details/detailsSlice';
 
 const rootReducer = combineReducers({
   auth: authSlice,
+  card: cardsSlice,
 })
 
 const persistConfig = { key: 'root', storage, version: 1 }

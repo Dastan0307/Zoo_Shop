@@ -12,7 +12,7 @@ export const ProfilePage = () => {
   const user = payload.auth.userInfo;
 
   return (
-    <div style={{  background: 'white', display: 'flex', justifyContent: 'center', paddingTop: 40 }}>
+    <div style={{ maxWidth: '100%', margin: '0 auto' , background: 'white', display: 'flex', justifyContent: 'center', paddingTop: 40, paddingBottom: 80 }}>
       <Row>
         <Col span={8}>
           <Card
@@ -49,10 +49,7 @@ export const ProfilePage = () => {
           </Card>
         </Col>
         <Col span={16}>
-          <Cards/>
-          <Cards/>
-          <Cards/>
-          <Cards/>
+          <Cards />
         </Col>
       </Row>
     </div>

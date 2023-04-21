@@ -23,8 +23,6 @@ export interface loginProps {
   password: string
 }
 
-<<<<<<< HEAD
-=======
 export interface UserData {
   about_user: string
   access: string
@@ -58,5 +56,17 @@ export interface AnnouncementTypes {
   category: string
 }
 
+export interface CardTypes {
+  id?: number;
+  title?: string;
+  price?: number
+  ageGender?: string
+  description?: string;
+  img?: string;
+}
 
->>>>>>> 138b8154098270831fa9c213f3e8d5b8d7dcd099
+export interface CardsState {
+  data: CardTypes[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
