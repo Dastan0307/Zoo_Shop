@@ -1,0 +1,60 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Хороший добрый пес",
+            "price": 500,
+            "ageGender": "2 года девочка",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 2,
+            "title": "Очень добрый пес",
+            "price": 400,
+            "ageGender": "1 года мальчик",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 3,
+            "title": "Хороший добрый пес",
+            "price": 200,
+            "ageGender": "2 года девочка",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 4,
+            "title": "Добрый пес",
+            "price": 600,
+            "ageGender": "1 года девочка",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 5,
+            "title": "Хороший добрый пес",
+            "price": 800,
+            "ageGender": "2 года мальчик",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 6,
+            "title": "Хороший сильный пес",
+            "price": 350,
+            "ageGender": "2 года девочка",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        },
+        {
+            "id": 7,
+            "title": "Хороший пес",
+            "price": 1220,
+            "ageGender": "2 года мальчик",
+            "description": "Хороший и послушный пес. Охраняет двор. Знает несколько команд, например: сидеть, лежать и место. Любит детей",
+            "img": "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        }
+    ]
+}

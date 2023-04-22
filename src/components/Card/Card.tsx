@@ -106,6 +106,18 @@ const Cards = ({ value, type }: CardType) => {
                 Изменить
               </Button>
             )}
+            <Text strong style={{ fontSize: 18 }}>
+              {value.price} ₸
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                color: '#BDBDBD',
+                display: 'block',
+                marginBottom: 5,
+              }}
+            >{value.category}</Text>
+            <Paragraph style={{ maxWidth: '100%', width: '556px' }}>{value.description}</Paragraph>
           </Col>
         </Row>
       </Card>

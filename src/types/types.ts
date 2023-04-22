@@ -56,6 +56,7 @@ export interface AnnouncementTypes {
   category: string
 }
 
+
 export type CategoriesType = {
   count: number
   next: null | number
@@ -100,4 +101,13 @@ export interface AnnouncementCardType {
   updated_at?: string
   user?: number
   views_count?: number
+  id?: number
+  img?: string
+  ageGender: string
+}
+
+export interface CardsState {
+  data: AnnouncementCardType[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
 }
