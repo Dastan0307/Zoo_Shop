@@ -5,7 +5,12 @@ import { Outlet } from 'react-router-dom'
 
 import { Footer, Header } from '..'
 
-export const Layout = () => {
+type LayoutProps = {
+  header?: boolean
+  footer?: boolean
+}
+
+export const Layout = ({ footer = true, header = true }: LayoutProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -14,11 +19,11 @@ export const Layout = () => {
     >
       <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
         <LayoutWrapper>
-          <Header />
+          {header && <Header />}
           <Content>
             <Outlet />
           </Content>
-          <Footer />
+          {footer && <Footer />}
         </LayoutWrapper>
       </Space>
     </motion.div>

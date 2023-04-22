@@ -1,0 +1,18 @@
+.newannoun {
+  margin: 50px 100px;
+}
+.newannoun .ant-select {
+  width: 438px;
+  display: block;
+  margin: 16px 0;
+}
+.newannoun label {
+  color: #828282;
+  font-weight: 400;
+  font-size: 14px;
+}
+.newannoun .description {
+  min-width: 622px;
+  min-height: 250px;
+  text-align: start;
+}/*# sourceMappingURL=newAnnouncement.css.map */

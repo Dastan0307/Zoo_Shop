@@ -2873,6 +2873,11 @@ react-toastify@^9.1.2:
   dependencies:
     clsx "^1.1.1"
 
+react-use-websocket@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-use-websocket/-/react-use-websocket-4.3.1.tgz#13cd2fd2e0fb90010482ab2858f8ae81f2ce85c2"
+  integrity sha512-zHPLWrgcqydJaak2O5V9hiz4q2dwkwqNQqpgFVmSuPxLZdsZlnDs8DVHy3WtHH+A6ms/8aHIyX7+7ulOcrnR0Q==
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
@@ -3374,6 +3379,11 @@ vite@^4.2.0:
     rollup "^3.18.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+websocket-ts@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/websocket-ts/-/websocket-ts-1.1.1.tgz#de482da5e0c714ebc58a43fe94157e5a855f2828"
+  integrity sha512-rm+S60J74Ckw5iizzgID12ju+OfaHAa6dhXhULIOrXkl0e05RzxfY42/vMStpz5jWL3iz9mkyjPcFUY1IgI0fw==
 
 which-boxed-primitive@^1.0.2:
   version "1.0.2"

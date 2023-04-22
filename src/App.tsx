@@ -1,7 +1,9 @@
 import { AnimatePresence } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
 
-import { Layout } from './components'
+import { Chat } from '@screens/Chat/Chat'
+
+import { Header, Layout } from './components'
 import {
   AboutUs,
   Announcements,
@@ -27,6 +29,9 @@ export const App = () => {
           <Route path="/announcement" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />
           <Route path="/edit-announcement" element={<EditAnnouncement />} />
+        </Route>
+        <Route element={<Layout footer={false}  />}>
+          <Route path="/chat" element={<Chat />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

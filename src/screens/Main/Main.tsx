@@ -25,7 +25,7 @@ import './main.scss'
 
 export const Main = () => {
   const [params, setParams] = useState<AnnouncementFilterType>({})
-  const {currentData,refetch} = useGetCategoriesQuery('s')
+  const { currentData, refetch } = useGetCategoriesQuery('s')
   const categories = currentData?.results
   const res = useGetAnnouncementsQuery('')
   const announ = res.currentData?.results
@@ -80,18 +80,27 @@ export const Main = () => {
       <Layout style={{ display: 'flex', gap: '30px' }}>
         <Sider className="sideBar">
           <Row>
-            <Col>
-              <Typography.Title level={4}>Категории</Typography.Title>
+            <Col style={{ width: '100%' }}>
+              <Row className="sideBar_title">
+                <div>
+                  <Typography.Title level={4}>Категории</Typography.Title>
+                </div>
+                <Typography.Text onClick={() => setParams({})}>
+                  Очистить
+                </Typography.Text>
+              </Row>
               <List>
                 {categories &&
                   categories.map((value, index) => (
                     <List.Item
+                      className="category_list_item active"
+                      style={{ border: 'none' }}
                       onClick={debouncedOnClick}
                       data-key="category"
                       data-value={value.slug}
                       key={index}
                     >
-                      {value.title}
+                      <span>{value.title}</span>
                     </List.Item>
                   ))}
               </List>
@@ -109,6 +118,7 @@ export const Main = () => {
                   'Зооняни',
                 ].map((value, index) => (
                   <List.Item
+                    style={{ border: 'none' }}
                     data-key="category"
                     data-value={value}
                     key={index}
@@ -147,6 +157,7 @@ export const Main = () => {
                 onChange={debouncedOnChange}
               /> */}
               <Select
+                
                 className="select"
                 style={{ width: '100%' }}
                 placeholder="select one country"
@@ -165,7 +176,9 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {announ &&
-            announ.map((value) => <Cards {...value} key={value.slug} />)}
+            announ.map((value) => (
+              <Cards value={value} type="main" key={value.slug} />
+            ))}
         </Content>
       </Layout>
     </div>
