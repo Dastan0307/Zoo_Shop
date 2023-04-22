@@ -32,7 +32,7 @@ const styleLink: React.CSSProperties = {
 
 export const Footer = () => {
   return (
-    <FooterWrapper style={{ width: 1535, height: 290, background: "#FAFAFA", display: 'flex', justifyContent: 'center', alignItems: 'center', paddingLeft: 100 }}>
+    <FooterWrapper style={{  height: 290, background: "#FAFAFA", display: 'flex', justifyContent: 'center', alignItems: 'center', paddingLeft: 100 }}>
       <Row gutter={[20, 30]}>
         <Col className="gutter-row" span={8}>
           <div style={style}>

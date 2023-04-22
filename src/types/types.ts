@@ -37,24 +37,69 @@ export interface UserData {
   username: string
 }
 export interface AnnouncementTypes {
-  slug?: string,
-  user?: string,
+  slug?: string | undefined
+  user?: string | undefined
   photos?: [
     {
-      id: number,
-      image: string,
-      announcement: string
-    }
-  ],
-  title: string,
-  price?: string | number,
-  description: string,
-  location: string,
-  phone_number: string,
-  created_at?: string,
-  updated_at?: string,
-  views_count?: number,
-  category: string
+      id: number | undefined
+      image: string | undefined
+      announcement: string | undefined
+      image_url: string | undefined
+    },
+  ]
+  title: string | undefined
+  price?: string | undefined
+  description: string | undefined
+  phone_number: string | undefined
+  location: string | undefined
+  created_at?: string | undefined
+  updated_at?: string | undefined
+  views_count?: number | undefined
+  category: string | undefined
 }
 
+export type CategoriesType = {
+  count: number
+  next: null | number
+  previous: null | number
+  results: CategoryType[]
+}
 
+export interface CategoryType {
+  created_at: string
+  description: string
+  slug: string
+  title: string
+  updated_at: string
+}
+
+export interface AnnouncementFilterType {
+  titie?: string
+  location?: string
+  category?: string
+  lower_price?: number
+  higher_price?: number
+  search?: string
+  ordering?: string
+  page?: number
+}
+
+export interface AnnouncementApiCardType {
+  count: number
+  next: null | number | string
+  previous: null | number | string
+  results: AnnouncementCardType[]
+}
+
+export interface AnnouncementCardType {
+  category?: string
+  created_at?: string
+  description?: string
+  location?: string
+  price?: string
+  slug?: string
+  title?: string
+  updated_at?: string
+  user?: number
+  views_count?: number
+}

@@ -1,4 +1,7 @@
 export * from './AboutUs/AboutUs'
+export * from './Announcements/Announcement'
+export * from './Announcements/NewAnnouncement/EditAnnouncement'
+export * from './Announcements/NewAnnouncement/NewAnnouncement'
 export * from './Auth/Login/Login'
 export * from './Auth/Recovery/Recovery'
 export * from './Auth/Recovery/RecoveryFinish'

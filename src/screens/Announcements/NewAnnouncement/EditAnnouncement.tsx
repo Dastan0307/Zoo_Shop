@@ -1,64 +1,64 @@
-import { Typography } from 'antd'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import { Button, Typography, message, Popconfirm, PopconfirmProps } from 'antd'
+import { AxiosError, AxiosResponse } from 'axios'
 import { Field, Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
-import { useTypedSelector } from 'src/hooks'
-
-import { PrimaryButton } from '@components/index'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AnnouncementTypes } from '@typess/types'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
-import { useEffect, useState } from 'react'
 import api from '../../../api'
-
 import './newAnnouncement.scss'
+import { useGetAnnouncementQuery, useGetAnnouncementsQuery } from '@store/announcements/getAnnoun'
+import { motion } from 'framer-motion'
 
 const { Title } = Typography
-type B = {
-  slug?: string,
-  title: string,
-  description?: string,
-  created_at?: string,
-  updated_at?: string
-}
-type A = {
-  count: number,
-  next?: string,
-  previous?: string,
-  results: B[]
-}
 
 export const EditAnnouncement = () => {
-  const [categorie, setCategories ] = useState<A | null>(null)
-  const initialValues: AnnouncementTypes = {
-    title: '',
-    price: '',
-    description: '',
-    location: '',
-    category: '',
-    phone_number: ''
-  }
+  const { announcement } = useParams()
+  const {data, error, isLoading} = useGetAnnouncementQuery(announcement)
+  const photo = data?.photos
+  const categoryes = useGetAnnouncementsQuery('dogs')
+  const navigate = useNavigate()
 
-  async function getCategory(params:string): Promise<AxiosResponse<A | null>> {
-    const res = await api.get(params)
-    return res
-  }
-
-  // useEffect(() => {
-  //   setCategories(getCategory('/categories/'))
-  // }, [])
-
-  const changePhoto = (e: any) => {
-    // for(let key in e) {
-    //   console.log(key)
+  const confirm = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);s
+    
+    // async () => {
+    //   const token = localStorage.getItem('access_token')
+    //   try {
+    //     await api.delete(`announcements/${data?.slug}/`, {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`
+    //       }
+    //     })
+    //   } catch (error: AxiosError | any) {
+    //     errorHandler(error)
+    //   }
     // }
-  }
+    message.success(`Вы удалили объявление ${data?.title}`);
+    // setTimeout(() => {
+    //   navigate('/')
+    // }, 3000)
+  };
+  
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error('Отменено!');
+  };
 
-  fetch('http://104.199.175.143/categories/').then(res => res.json).then(data => console.log(data))
+
+  const initialValues: AnnouncementTypes = {
+    title: data?.title,
+    price: data?.price,
+    description: data?.description,
+    location: data?.location,
+    category: data?.category,
+    phone_number: data?.phone_number,
+  }
 
 
   const categories: string[] = [
-    'sobaki',
+    'dogs',
     'koshki',
     'Птицы',
     'Рыбки',
@@ -79,9 +79,10 @@ export const EditAnnouncement = () => {
   ]
 
   const submitForm = async (data: AnnouncementTypes) => {
+    console.log(data);
     const token = localStorage.getItem('access_token')
     try {
-      await api.post('announcements/', data, {
+      await api.patch(`announcements/${announcement}/`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
@@ -93,13 +94,15 @@ export const EditAnnouncement = () => {
   }
 
   return (
-    <div className="newannoun">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="newannoun">
       <Title level={2}>Новое объявление</Title>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          console.log('click')
-
           submitForm(values)
           setSubmitting(false)
         }}
@@ -108,7 +111,7 @@ export const EditAnnouncement = () => {
         <Form>
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
-            <Select name="category" defaultValue="Собаки">
+            <Select name="category" defaultValue={data?.category}>
               {categories.map((category) => {
                 return (
                   <Select.Option key={category} value={category}>
@@ -117,9 +120,6 @@ export const EditAnnouncement = () => {
                 )
               })}
             </Select>
-            {/* <Field 
-              name='category'
-            /> */}
           </Form.Item>
           <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="title" id="title">
@@ -134,11 +134,11 @@ export const EditAnnouncement = () => {
             <Input type='number' name="price" placeholder="Введите цену" />
             <label>Не указывайте цену если отдаете питомца даром</label>
           </Form.Item>
-          <Form.Item name="phone" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="phone" id="phone">
+          <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone" placeholder="Номер телефона" pattern="[0-9]{3} [0-9]{3} [0-9]{4}"/>
+            <Input type='tel' name="phone_number" placeholder="Номер"/>
           </Form.Item>
           <Form.Item
             name="description"
@@ -163,7 +163,6 @@ export const EditAnnouncement = () => {
               type="file"
               name="photo"
               placeholder="Описание"
-              onChange={(e) => changePhoto(e.target.files)}
             />
             <label>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
@@ -175,7 +174,7 @@ export const EditAnnouncement = () => {
             showValidateSuccess={true}
             hasFeedback={true}
           >
-            <Select name="location" placement="bottomRight">
+            <Select defaultValue={data?.location} name="location" placement="bottomRight">
               {locations.map((loc) => {
                 return (
                   <Select.Option key={loc} value={loc}>
@@ -185,11 +184,19 @@ export const EditAnnouncement = () => {
               })}
             </Select>
           </Form.Item>
-          <SubmitButton type="primary">Опубликовать объявление</SubmitButton>
-          <Form.Item name='dawd'>
-          </Form.Item>
+          <SubmitButton type="primary">Редактировать</SubmitButton>
         </Form>
       </Formik>
-    </div>
+      <Popconfirm
+        title="УДАЛЕНИЕ"
+        description="Хотите удалить объявление?"
+        onConfirm={confirm}
+        onCancel={cancel}
+        okText="Удалить"
+        cancelText="Отменить"
+      >
+        <Button className='delete-btn'>Удалить</Button>
+      </Popconfirm>
+    </motion.div>
   )
 }

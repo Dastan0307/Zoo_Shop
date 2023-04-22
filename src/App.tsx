@@ -1,22 +1,18 @@
 import { AnimatePresence } from 'framer-motion'
-import {
-  Route,
-  Routes,
-  useLocation,
-} from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 
 import { Layout } from './components'
 import {
   AboutUs,
+  Announcements,
+  EditAnnouncement,
   Login,
   Main,
+  NewAnnouncement,
   ProfilePage,
   Recovery,
   RecoveryFinish,
   Register,
-  Announcements,
-  NewAnnouncement,
-  EditAnnouncement,
   Papers,
   Paper,
 } from './screens'
@@ -32,7 +28,7 @@ export const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/announcement" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />
-          <Route path='/edit-announcement' element={<EditAnnouncement />} />
+          <Route path='/edit-announcement/:announcement' element={<EditAnnouncement />} />
           <Route path='/papers' element={<Papers />} />
           <Route path='/papers/:id' element={<Paper />} />
         </Route>

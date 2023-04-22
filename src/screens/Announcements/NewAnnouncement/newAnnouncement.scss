@@ -46,4 +46,29 @@
   //     align-items: center;
   //   }
   // }
+
+  .delete-btn {
+    margin-top: 20px;
+    color: white;
+    background-color: rgb(230, 28, 28);
+    width: 157px;
+  }
+
+  
+}
+
+.ant-popover-inner {
+  .ant-btn:first-child {
+    background-color: rgb(242, 240, 240);
+  }
+  .ant-btn:first-child:hover {
+    background-color: rgb(242, 240, 240);
+    color: black;
+  }
+  .ant-btn:last-child {
+    background-color: rgb(230, 28, 28);
+  }
+  .ant-popconfirm-description {
+    color: #000000;
+  }
 }

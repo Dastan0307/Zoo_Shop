@@ -1,62 +1,40 @@
 import { Typography } from 'antd'
-import axios, { AxiosError, AxiosResponse } from 'axios'
-import { Field, Formik } from 'formik'
+import { AxiosError } from 'axios'
+import { Formik } from 'formik'
+import { useState } from 'react'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
-import { useTypedSelector } from 'src/hooks'
-
-import { PrimaryButton } from '@components/index'
-import { AnnouncementTypes } from '@typess/types'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
-import { useEffect, useState } from 'react'
 import api from '../../../api'
-
 import './newAnnouncement.scss'
-import { CategoryApi } from '@api/CategoryApi'
 
 const { Title } = Typography
-type B = {
-  slug?: string,
-  title: string,
-  description?: string,
-  created_at?: string,
+type PostAnnouncementTypes = {
+  slug?: string
+  user?: string
+  photos?: File[]
+  title: string
+  price?: string
+  description: string
+  phone_number: string
+  location: string
+  created_at?: string
   updated_at?: string
-}
-type A = {
-  count: number,
-  next?: string,
-  previous?: string,
-  results: B[]
+  views_count?: number
+  category: string
 }
 
 export const NewAnnouncement = () => {
-  const [categorie, setCategories ] = useState<A | null>(null)
-  const initialValues: AnnouncementTypes = {
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const initialValues: PostAnnouncementTypes = {
     title: '',
     price: '',
     description: '',
     location: '',
     category: '',
+    photos: [],
     phone_number: '',
   }
-
-  async function getCategory(params:string): Promise<AxiosResponse<A | null>> {
-    const res = await api.get(params)
-    return res
-  }
-
-  useEffect(() => {
-    console.log(CategoryApi.getCategories())
-  }, [])
-
-  const changePhoto = (e: any) => {
-    // for(let key in e) {
-    //   console.log(key)
-    // }
-  }
-
-  fetch('http://104.199.175.143/categories/').then(res => res.json).then(data => console.log(data))
-
 
   const categories: string[] = [
     'dogs',
@@ -78,8 +56,24 @@ export const NewAnnouncement = () => {
     'Талас',
     'Джалал-Абад',
   ]
+  const photos: File[] = []
+  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(e.target.files);
+    }
+    if(!selectedFiles){
+      return
+    }
 
-  const submitForm = async (data: AnnouncementTypes) => {
+    for (let i = 0; i < selectedFiles.length; i++) {
+      photos.push(selectedFiles[i])
+    }
+  }
+
+  console.log(photos);
+  
+
+  const submitForm = async (data: PostAnnouncementTypes) => {
     const token = localStorage.getItem('access_token')
     try {
       await api.post('announcements/', data, {
@@ -118,9 +112,6 @@ export const NewAnnouncement = () => {
                 )
               })}
             </Select>
-            {/* <Field 
-              name='category'
-            /> */}
           </Form.Item>
           <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="title" id="title">
@@ -155,16 +146,16 @@ export const NewAnnouncement = () => {
               placeholder="Расскажите о питомце"
             />
           </Form.Item>
-          <Form.Item name="photo" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="photo" id="photo">
+          <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="photos" id="photos">
               фотографии
             </label>
             <Input
               multiple
               type="file"
-              name="photo"
+              name="photos"
               placeholder="Описание"
-              onChange={(e) => changePhoto(e.target.files)}
+              onChange={photoChange}
             />
             <label>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
@@ -194,3 +185,145 @@ export const NewAnnouncement = () => {
     </div>
   )
 }
+
+
+
+
+// import { Typography } from 'antd'
+// import { AxiosError } from 'axios'
+// import { useState } from 'react'
+// import { Formik } from 'formik'
+// import { Form, Input, Select, SubmitButton } from 'formik-antd'
+// import { errorHandler } from '@utils/errorHandler'
+// import { AnnouncementValidate } from '@utils/validate'
+// import api from '../../../api'
+// import './newAnnouncement.scss'
+
+// const { Title } = Typography
+// type PostAnnouncementTypes = {
+//   slug?: string
+//   user?: string
+//   photos?: File[]
+//   title: string
+//   price?: string
+//   description: string
+//   phone_number: string
+//   location: string
+//   created_at?: string
+//   updated_at?: string
+//   views_count?: number
+//   category: string
+// }
+
+// export const NewAnnouncement = () => {
+//   const initialValues: PostAnnouncementTypes = {
+//     title: '',
+//     price: '',
+//     description: '',
+//     location: '',
+//     category: '',
+//     photos: [],
+//     phone_number: '',
+//   }
+
+//   const categories: string[] = [
+//     'dogs',
+//     'cats',
+//     'Птицы',
+//     'Рыбки',
+//     'Грызуны',
+//     'Рептилии и амфибии',
+//     'Насекомые',
+//     'Паукообразные',
+//     'Сельскохозяйственные животные',
+//   ]
+//   const locations: string[] = [
+//     'Бишкек',
+//     'Ош',
+//     'Нарын',
+//     'Иссык-куль',
+//     'Баткен',
+//     'Талас',
+//     'Джалал-Абад',
+//   ]
+
+//   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  
+//   const [value, setValue] = useState({
+//     title: '',
+//     price: '',
+//     phone_number: '',
+//     description: '',
+//     category: '',
+//     location: ''
+//   })
+
+  
+
+//   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+//     setValue({
+//       ...value, [e.target.name]: e.target.value
+//     })
+//   }
+
+//   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     if (event.target.files) {
+//       setSelectedFiles(event.target.files);
+//     }
+//   };
+
+//   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+//     event.preventDefault();
+
+//     if (!selectedFiles) {
+//       return;
+//     }
+
+//     const photos: File[] = []
+//     const formData = new FormData();
+//     for (let i = 0; i < selectedFiles.length; i++) {
+//       photos.push(selectedFiles[i])
+//     }
+
+//     for (let i = 0; i < photos.length; i++) {
+//       formData.append('photos', photos[i]);
+//     }
+//     formData.append('category', value.category);
+//     formData.append('title', value.title);
+//     formData.append('price', value.price);
+//     formData.append('phone_number', value.phone_number);
+//     formData.append('description', value.description);
+//     formData.append('location', value.location);
+
+//     // Отправить formData на сервер с помощью axios или другой библиотеки
+//     try {
+//       const token = localStorage.getItem('access_token')
+//       await api.post('announcements/', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//     } catch (error: AxiosError | any) {
+//       errorHandler(error)
+//     }
+//   };
+
+
+//   return (
+//     <div className="newannoun">
+//       <Title level={2}>Новое объявление</Title>
+      
+//         <form onSubmit={handleSubmit} onChange={handleChange}>
+//           <input type="text" name="category" placeholder="Заголовок" />
+//           <input type="text" name="title" placeholder="Заголовок" />
+//           <input type="text" name="price" placeholder="price" />
+//           <input type="text" name="phone_number" placeholder="price" />
+//           <textarea name="description" placeholder="Описание"></textarea>
+//           <input type="file" multiple onChange={handleFileInputChange} />
+//           <input type="text" name="location" placeholder="Заголовок" />
+//           <button type="submit">Отправить</button>
+//         </form>
+//     </div>
+//   )
+// }

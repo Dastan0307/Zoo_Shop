@@ -2,12 +2,15 @@
   margin: 50px 100px;
 
   .title {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
+    width: 850px;
 
-    span {
-      margin-left: 181px;
-      height: inherit;
+    a {
+      font-weight: 400;
+      color: #828282;
+      cursor: pointer;
     }
   }
 
