@@ -37,23 +37,25 @@ export interface UserData {
   username: string
 }
 export interface AnnouncementTypes {
-  slug?: string
-  user?: string
+  slug?: string | undefined
+  user?: string | undefined
   photos?: [
     {
-      id: number
-      image: string
-      announcement: string
+      id: number | undefined
+      image: string | undefined
+      announcement: string | undefined
+      image_url: string | undefined
     },
   ]
-  title: string
-  price?: string
-  description: string
-  location: string
-  created_at?: string
-  updated_at?: string
-  views_count?: number
-  category: string
+  title: string | undefined
+  price?: string | undefined
+  description: string | undefined
+  phone_number: string | undefined
+  location: string | undefined
+  created_at?: string | undefined
+  updated_at?: string | undefined
+  views_count?: number | undefined
+  category: string | undefined
 }
 
 

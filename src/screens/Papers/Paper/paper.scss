@@ -1,0 +1,53 @@
+.paper {
+  margin: 50px 100px;
+
+  span.ant-typography {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 20px;
+  } 
+
+  // div.ant-typography {
+  //   margin-bottom: 30px;
+  // }
+
+  div.ant-typography, li {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+    display: block;
+  }
+
+  ol {
+    padding-left: 3px;
+  }
+
+  .paper__title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 50px;
+  }
+
+  .paper__start {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+
+    .ant-image-img {
+      height: 380px;
+    }
+  }
+
+  .paper__main {
+    margin-right: 558px;
+  }
+
+  .paper__footer {
+    margin-right: 558px;
+  }
+
+  .block {
+    width: 100%;
+  }
+}

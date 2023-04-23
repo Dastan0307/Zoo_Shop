@@ -26,8 +26,8 @@ export const announcementApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://104.199.175.143/' }),
 
   endpoints: (builder) => ({
-    getAnnouncement: builder.query<AnnouncementTypes, string>({
-      query: (id) => `/announcements/${id}`,
+    getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
+      query: (id) => `/announcements/${id}/`,
     }),
     getAnnouncements: builder.query<AnnouncementApiCardType, AnnouncementFilterType>({
       query: (body) => ({
