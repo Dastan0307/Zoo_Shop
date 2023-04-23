@@ -21,7 +21,6 @@ export const EditAnnouncement = () => {
   const navigate = useNavigate()
 
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e);s
     
     // async () => {
     //   const token = localStorage.getItem('access_token')
