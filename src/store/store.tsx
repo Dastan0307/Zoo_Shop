@@ -15,10 +15,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { announcementApi } from './announcements/getAnnoun'
 // import { announcementApi } from './announcements/getAnnoun'
 import authSlice from './features/auth/authSlice'
+import cardsSlice from './features/details/detailsSlice'
 import { categoryApi } from './features/category/categorySevice'
 
 const rootReducer = combineReducers({
   auth: authSlice,
+  card: cardsSlice,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [announcementApi.reducerPath]: announcementApi.reducer,
 })
