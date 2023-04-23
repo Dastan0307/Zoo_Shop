@@ -33,6 +33,7 @@ export const App = () => {
           <Route path='/edit-announcement/:announcement' element={<EditAnnouncement />} />
           <Route path='/papers' element={<Papers />} />
           <Route path='/papers/:id' element={<Paper />} />
+          <Route path='/papers/:id' element={<AboutUs />} />
         </Route>
         <Route element={<Layout footer={false}  />}>
           <Route path="/chats" element={<Chat />} />
