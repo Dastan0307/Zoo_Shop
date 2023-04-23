@@ -1,5 +1,5 @@
+import { Col, Row,Typography } from 'antd';
 import { Footer as FooterWrapper } from "antd/es/layout/layout";
-import { Typography, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 

@@ -90,6 +90,7 @@ export interface AnnouncementApiCardType {
   results: AnnouncementCardType[]
 }
 
+
 export interface AnnouncementCardType {
   category?: string
   created_at?: string

@@ -1,4 +1,5 @@
 import { Button, Card, Col, Image, Row, Typography } from 'antd'
+import { motion } from 'framer-motion'
 import moment from 'moment'
 
 import { ClockCircleOutlined } from '@ant-design/icons'
@@ -24,12 +25,22 @@ const Cards = ({ value, type }: CardType) => {
     views_count,
   } = value
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Card
         hoverable
-        style={{ width: '100%', border: 'none', height: 235, padding: 0, background: '#ffffff' }}
+        style={{
+          width: '100%',
+          border: 'none',
+          height: 235,
+          padding: 0,
+          background: '#ffffff',
+        }}
       >
-        <Row gutter={30}>
+        <Row gutter={30} style={{ display: 'flex' }}>
           <Col>
             <Image
               className="card-image"
@@ -66,7 +77,7 @@ const Cards = ({ value, type }: CardType) => {
             >
               {value.description}
             </Paragraph>
-            {type !== 'main' ? (
+            {type == 'main' ? (
               <div style={{ display: 'flex', gap: '7px' }}>
                 <Image src="/holand.png" />
                 <div
@@ -106,22 +117,10 @@ const Cards = ({ value, type }: CardType) => {
                 Изменить
               </Button>
             )}
-            <Text strong style={{ fontSize: 18 }}>
-              {value.price} ₸
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#BDBDBD',
-                display: 'block',
-                marginBottom: 5,
-              }}
-            >{value.category}</Text>
-            <Paragraph style={{ maxWidth: '100%', width: '556px' }}>{value.description}</Paragraph>
           </Col>
         </Row>
       </Card>
-    </>
+    </motion.div>
   )
 }
 

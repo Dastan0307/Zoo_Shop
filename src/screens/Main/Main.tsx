@@ -18,26 +18,25 @@ import { AnnouncementApi } from '@api/AnnouncementApi'
 import Cards from '@components/Card/Card'
 import { useGetAnnouncementsQuery } from '@store/announcements/getAnnoun'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
-import { AnnouncementFilterType } from '@typess/types'
+import { AnnouncementFilterType, CategoryType } from '@typess/types'
 import { debounce } from '@utils/debounce'
 
 import './main.scss'
 
 export const Main = () => {
   const [params, setParams] = useState<AnnouncementFilterType>({})
-  const { currentData, refetch } = useGetCategoriesQuery('s')
+  const { currentData } = useGetCategoriesQuery('2')
+  const [type, setType] = useState<'pets' | 'org'>('pets')
   const categories = currentData?.results
-  const res = useGetAnnouncementsQuery('')
-  const announ = res.currentData?.results
-  console.log(announ)
+  const res = useGetAnnouncementsQuery(params)
+  const announ = res.currentData
+  console.log(res)
   // refetch()
   // AnnouncementApi.getAnnouncement(params)
 
   const handleSetParamsValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      e.target.dataset.key == 'lower_price' ||
-      e.target.dataset.key == 'lower_price'
-    ) {
+    // res.refetch()
+    if (e.target.dataset.key == 'lower_price' || e.target.dataset.key == 'lower_price') {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return setParams({
         ...params,
@@ -47,16 +46,14 @@ export const Main = () => {
 
     setParams({ ...params, [e.target.name]: e.target.value })
   }
-  const handleSetParamsValue2 = (e: React.ChangeEvent<HTMLDivElement>) => {
+  const handleSetParamsValue2 = (value: CategoryType) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    setParams({ ...params, [e.target.dataset.key!]: e.target.dataset.value })
+    setParams({ ...params, category: value.slug })
   }
   const handlePriceButton = () =>
     setParams({ ...params, lower_price: -1, higher_price: -1 })
-  const setSelectLocation = (location: string) =>
-    setParams({ ...params, location })
+  const setSelectLocation = (location: string) => setParams({ ...params, location })
   const debouncedOnChange = debounce(handleSetParamsValue, 500)
-  const debouncedOnClick = debounce(handleSetParamsValue2, 300)
 
   return (
     <div className="main">
@@ -85,9 +82,7 @@ export const Main = () => {
                 <div>
                   <Typography.Title level={4}>Категории</Typography.Title>
                 </div>
-                <Typography.Text onClick={() => setParams({})}>
-                  Очистить
-                </Typography.Text>
+                <Typography.Text onClick={() => setParams({})}>Очистить</Typography.Text>
               </Row>
               <List>
                 {categories &&
@@ -95,9 +90,9 @@ export const Main = () => {
                     <List.Item
                       className="category_list_item active"
                       style={{ border: 'none' }}
-                      onClick={debouncedOnClick}
-                      data-key="category"
-                      data-value={value.slug}
+                      onClick={() => handleSetParamsValue2(value)}
+                      // data-key="category"
+                      // data-value={value.slug}
                       key={index}
                     >
                       <span>{value.title}</span>
@@ -106,50 +101,31 @@ export const Main = () => {
               </List>
             </Col>
             <Col>
-              <Typography.Title level={5}>
-                Дополнительные категории
-              </Typography.Title>
-              <List>
-                {[
-                  'Частные лица',
-                  'Ветеринарные клиники',
-                  'Зоомагазины',
-                  'Хостелы/приюты',
-                  'Зооняни',
-                ].map((value, index) => (
-                  <List.Item
-                    style={{ border: 'none' }}
-                    data-key="category"
-                    data-value={value}
-                    key={index}
-                    onClick={debouncedOnClick}
-                  >
-                    {value}
-                  </List.Item>
-                ))}
-              </List>
-            </Col>
-            <Col>
               <Typography.Title level={5}>Цена</Typography.Title>
-              <div style={{ display: 'flex' }}>
+              <div style={{ display: 'flex', gap: '7px' }}>
                 <Input
                   type="number"
+                  style={{ height: '42px' }}
                   placeholder="От"
                   name="lower_price"
                   onChange={debouncedOnChange}
                 />
                 <Input
                   type="number"
+                  style={{ height: '42px' }}
                   placeholder="До"
                   name="higher_price"
                   onChange={debouncedOnChange}
                 />
               </div>
-              <Button style={{ width: '100%' }} onClick={handlePriceButton}>
+              <Button
+                style={{ width: '100%', height: '42px', marginTop: '7px' }}
+                onClick={handlePriceButton}
+              >
                 Договорная
               </Button>
             </Col>
-            <Col>
+            <Col style={{ width: '100%' }}>
               <Typography.Title level={5}>Город/Регион</Typography.Title>
               {/* <Input
                 placeholder="Весь Кыргызстан"
@@ -157,11 +133,12 @@ export const Main = () => {
                 onChange={debouncedOnChange}
               /> */}
               <Select
-                
                 className="select"
                 style={{ width: '100%' }}
-                placeholder="select one country"
+                size={'large'}
+                placeholder="Весь Кыргызстан"
                 onChange={setSelectLocation}
+                mode="multiple"
                 optionLabelProp="label"
               >
                 <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
@@ -176,9 +153,7 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {announ &&
-            announ.map((value) => (
-              <Cards value={value} type="main" key={value.slug} />
-            ))}
+            announ.map((value) => <Cards value={value} type="main" key={value.slug} />)}
         </Content>
       </Layout>
     </div>
