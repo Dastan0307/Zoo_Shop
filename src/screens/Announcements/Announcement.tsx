@@ -26,14 +26,9 @@ const { Title, Text, Paragraph } = Typography
 export const Announcements: React.FC = () => {
   const { userInfo } = useTypedSelector((state) => state.auth)
   const { id } = useParams()
-  // const dispatch = useTypedDispatch()
-  // const data = useTypedSelector(state => state.announ.announcement)
-  // useEffect(() => {
-  //   dispatch(getAnnoun('2'))
-  // }, [])
+  
   const { data, isLoading, error } = useGetAnnouncementQuery(id)
   const photo = data?.photos
-  console.log(data)
 
   const carouselRef = useRef<CarouselRef>(null)
   const handlePrev = () => {
@@ -52,6 +47,7 @@ export const Announcements: React.FC = () => {
 
   return (
     <div className="announcements">
+      <button></button>
       <Row className="title">
         <Title level={2}>{data?.title}</Title>
         {userInfo?.id == data?.user ? (
@@ -130,7 +126,7 @@ export const Announcements: React.FC = () => {
             <Image src="https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png" />
             <Text>Владимир. Б</Text>
           </Row>
-          <Button>Связаться</Button>
+          <Button >Связаться</Button>
         </div>
       </div>
     </div>

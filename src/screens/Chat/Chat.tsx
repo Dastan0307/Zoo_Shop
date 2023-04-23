@@ -3,12 +3,7 @@ import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import { motion } from 'framer-motion'
 import moment from 'moment'
-import React, {
-  InputHTMLAttributes,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import React, { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import { useTypedSelector } from 'src/hooks'
 import { WebsocketBuilder } from 'websocket-ts'
@@ -31,23 +26,18 @@ export const Chat = () => {
   // new WebSocket(`ws://104.199.175.143/ws/chat`)
   const changeChat = (user: getChatsProps) => {
     console.log(user)
-
     setMessages([])
     setCurrentChat(user)
     if (ws) {
       ws.close()
     }
-    setWs(
-      new WebSocket(
-        `ws://104.199.175.143/ws/chat/${user.id}_${user.announcement}/`,
-      ),
-    )
+    setWs(new WebSocket(`ws://104.199.175.143/ws/chat/${user.id}_${user.announcement}/`))
   }
 
   if (ws) {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data)
-      //     console.log(data)
+          console.log(data)
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
     }
@@ -68,6 +58,7 @@ export const Chat = () => {
       if (data) {
         setChats(data?.data)
       }
+      return
     }
     getDataChats()
   }, [ws])
@@ -109,13 +100,16 @@ export const Chat = () => {
 
   return (
     <Layout className="chat">
+      <button onClick={() => changeChat({ id: '1', announcement: 'chat' })}>
+        chat
+      </button>
       <Sider className="chat-sidebar">
         <ul className="chat-sidebar_user">
           {chats.map((user, index) => (
-            <motion.li 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            <motion.li
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
               key={index}
               onClick={() => changeChat(user)}
               className="sidebar_user_item"
@@ -132,7 +126,7 @@ export const Chat = () => {
                   Владимир. Б {user.id}
                 </Typography.Title>
                 <Typography.Text className="sidebar_user_item_info_status">
-                  {user.last_message!.content}
+                  {user.last_message ? user.last_message.content : ''}
                 </Typography.Text>
               </div>
             </motion.li>
@@ -182,9 +176,7 @@ export const Chat = () => {
         <ul className="chat_message">
           {userChat ? (
             messages &&
-            messages.map((value, index) => (
-              <ChatMessage {...value} key={index} />
-            ))
+            messages.map((value, index) => <ChatMessage {...value} key={index} />)
           ) : (
             <div className="no-chat">Выберите чат</div>
           )}
@@ -195,11 +187,7 @@ export const Chat = () => {
             // onClick={(e) => handleInput()}
             onKeyDown={handleInput}
             suffix={
-              <Image
-                style={{ cursor: 'pointer' }}
-                src={SendIcon}
-                preview={false}
-              />
+              <Image style={{ cursor: 'pointer' }} src={SendIcon} preview={false} />
             }
           />
         </Row>

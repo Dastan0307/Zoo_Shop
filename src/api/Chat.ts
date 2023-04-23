@@ -25,7 +25,7 @@ export class ChatApi {
       })
       return data
     } catch (error: AxiosError | any) {
-      errorHandler(error)
+      return errorHandler(error)
     }
   }
 }

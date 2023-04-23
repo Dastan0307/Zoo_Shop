@@ -35,7 +35,7 @@ export const App = () => {
           <Route path='/papers/:id' element={<Paper />} />
         </Route>
         <Route element={<Layout footer={false}  />}>
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chats" element={<Chat />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
