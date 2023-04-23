@@ -37,7 +37,7 @@ export const announcementApi = createApi({
       }),
       keepUnusedDataFor: 30,
     }),
-    getOrganizarions: builder.query<AnnouncementApiCardType, AnnouncementFilterType>({
+    getOrganizarions: builder.query<AnnouncementApiCardType[], AnnouncementFilterType>({
       query: (body) => ({
         url: '/announcements/',
         method: 'GET',

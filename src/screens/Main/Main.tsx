@@ -13,6 +13,7 @@ import {
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { AnnouncementApi } from '@api/AnnouncementApi'
 import Cards from '@components/Card/Card'
@@ -153,7 +154,11 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {announ &&
-            announ.map((value) => <Cards value={value} type="main" key={value.slug} />)}
+            announ.map((value) => (
+              <Link to={`/announcement/${value.slug}`} key={value.slug}>
+                <Cards value={value} type="main" />
+              </Link>
+            ))}
         </Content>
       </Layout>
     </div>
