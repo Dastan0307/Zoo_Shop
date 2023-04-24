@@ -12,12 +12,7 @@ export const userLogin = createAsyncThunk(
       const data = await AuthApi.login(body)
       return data
     } catch (error: AxiosError | any) {
-      // return custom error message from API if any
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message)
-      } else {
-        return rejectWithValue(error.message)
-      }
+      return null
     }
   },
 )

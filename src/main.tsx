@@ -16,16 +16,14 @@ import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={false} persistor={persistor}>
-        <ConfigProvider theme={theme}>
-          <BrowserRouter>
-            <App />
-            <ToastContainer />
-          </BrowserRouter>
-        </ConfigProvider>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={false} persistor={persistor}>
+      <ConfigProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+          <ToastContainer />
+        </BrowserRouter>
+      </ConfigProvider>
+    </PersistGate>
+  </Provider>,
 )

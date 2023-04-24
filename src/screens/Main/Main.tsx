@@ -5,21 +5,25 @@ import {
   Input,
   Layout,
   List,
-  Radio,
   Row,
   Select,
   Typography,
 } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { AnnouncementApi } from '@api/AnnouncementApi'
 import Cards from '@components/Card/Card'
-import { useGetAnnouncementsQuery } from '@store/announcements/getAnnoun'
+import {
+  useGetAnnouncementsQuery,
+  useGetOrganizarionsQuery,
+} from '@store/announcements/getAnnoun'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
-import { AnnouncementFilterType, CategoryType } from '@typess/types'
+import {
+  AnnouncementFilterType,
+  CategoryType,
+} from '@typess/types'
 import { debounce } from '@utils/debounce'
 
 import './main.scss'
@@ -27,13 +31,12 @@ import './main.scss'
 export const Main = () => {
   const [params, setParams] = useState<AnnouncementFilterType>({})
   const { currentData } = useGetCategoriesQuery('2')
-  const [type, setType] = useState<'pets' | 'org'>('pets')
+  const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
+  const announ = useGetAnnouncementsQuery(params).data
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const orgs = useGetOrganizarionsQuery({}).data
+  
   const categories = currentData?.results
-  const res = useGetAnnouncementsQuery(params)
-  const announ = res.currentData
-  console.log(res)
-  // refetch()
-  // AnnouncementApi.getAnnouncement(params)
 
   const handleSetParamsValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     // res.refetch()
@@ -52,7 +55,7 @@ export const Main = () => {
     setParams({ ...params, category: value.slug })
   }
   const handlePriceButton = () =>
-    setParams({ ...params, lower_price: -1, higher_price: -1 })
+    setParams({ ...params, lower_price: "-1", higher_price: "-1" })
   const setSelectLocation = (location: string) => setParams({ ...params, location })
   const debouncedOnChange = debounce(handleSetParamsValue, 500)
 
@@ -61,13 +64,13 @@ export const Main = () => {
       <Input placeholder="Поиск" onChange={debouncedOnChange} name="search" />
       <Row className="main_type_wrapper">
         <Col span={12}>
-          <Card className="main_type">
+          <Card className="main_type" onClick={() => setMainType('announ')}>
             <Typography.Title level={3}>Питомцы</Typography.Title>
             <Typography.Text>Выберите питомца по душе</Typography.Text>
           </Card>
         </Col>
         <Col span={12}>
-          <Card className="main_type_2">
+          <Card className="main_type_2" onClick={() => setMainType('org')}>
             <Typography.Title level={3}>Организации</Typography.Title>
             <Typography.Text>
               Ветеринарные клиники, <br /> зоомагазины и приюты
@@ -153,12 +156,14 @@ export const Main = () => {
           </Row>
         </Sider>
         <Content className="main-content">
-          {announ &&
-            announ.map((value) => (
-              <Link to={`/announcement/${value.slug}`} key={value.slug}>
-                <Cards value={value} type="main" />
-              </Link>
-            ))}
+          {mainType == 'announ'
+            ? announ &&
+              announ.map((value) => (
+                <Link to={`/announcement/${value.slug}`} key={value.slug}>
+                  <Cards value={value} type="main" />
+                </Link>
+              ))
+            : orgs && orgs.map((value) => <div key={value.id}>213eds</div>)}
         </Content>
       </Layout>
     </div>

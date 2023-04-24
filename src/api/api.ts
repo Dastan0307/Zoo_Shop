@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AnnouncementCardType } from "@typess/types";
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://enactusanimals.com';
 
 const api = axios.create({
   baseURL: BASE_URL,

@@ -16,20 +16,22 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
-  AnnouncementApiCardType,
+  AnnouncementCardType,
   AnnouncementFilterType,
   AnnouncementTypes,
+  OrganizarionApiType,
+  OrganizarionParamsType,
 } from '@typess/types'
 
 export const announcementApi = createApi({
   reducerPath: 'announcementsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://104.199.175.143/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://enactusanimals.com' }),
 
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
       query: (id) => `/announcements/${id}/`,
     }),
-    getAnnouncements: builder.query<AnnouncementApiCardType, AnnouncementFilterType>({
+    getAnnouncements: builder.query<AnnouncementCardType[], AnnouncementFilterType>({
       query: (body) => ({
         url: '/announcements/',
         method: 'GET',
@@ -37,15 +39,19 @@ export const announcementApi = createApi({
       }),
       keepUnusedDataFor: 30,
     }),
-    getOrganizarions: builder.query<AnnouncementApiCardType[], AnnouncementFilterType>({
+    getOrganizarions: builder.query<OrganizarionApiType, OrganizarionParamsType>({
       query: (body) => ({
-        url: '/announcements/',
+        url: '/catalog/',
         method: 'GET',
         params: body,
       }),
-      keepUnusedDataFor: 30,
+      keepUnusedDataFor: 10,
     }),
   }),
 })
 
-export const { useGetAnnouncementQuery, useGetAnnouncementsQuery } = announcementApi
+export const {
+  useGetAnnouncementQuery,
+  useGetAnnouncementsQuery,
+  useGetOrganizarionsQuery,
+} = announcementApi
