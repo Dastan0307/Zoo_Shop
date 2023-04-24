@@ -1,23 +1,28 @@
 .announcements {
   margin: 50px 100px;
-  display: flex;
 
   .title {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
+    width: 850px;
 
-    span {
-      margin-left: 181px;
-      height: inherit;
+    a {
+      font-weight: 400;
+      color: #828282;
+      cursor: pointer;
     }
   }
 
   .main {
     display: flex;
+    margin: 0;
+    column-gap: 112px;
 
     .main__img {
+      width: 850px;
       .ant-col {
-        position: relative;
+        // position: relative;
 
         .anticon {
           position: absolute;
@@ -31,15 +36,14 @@
         }
 
         .anticon-right {
-          right: 20%;
+          right: 20px;
         }
       }
     }
   }
 
   .sider {
-    background-color: inherit;
-
+  
     .ant-typography {
       font-size: 24px;
       font-weight: 700;
@@ -58,6 +62,7 @@
       column-gap: 20px;
       align-items: center;
       margin: 40px 0 30px;
+      width: 255px;
 
       .ant-image-img {
         width: 60px;
@@ -68,6 +73,17 @@
       .ant-typography {
         font-size: 16px;
         font-weight: 500;
+      }
+    }
+
+    .phone {
+      display: grid;
+      column-gap: 10px;
+
+      .ant-typography:first-child {
+        font-size: 16px;
+        color: #828282;
+        font-weight: 400;
       }
     }
   }

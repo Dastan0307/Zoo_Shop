@@ -1,56 +1,103 @@
-import { AnnouncementTypes } from "@typess/types"
-import { AnnouncementValidate } from "@utils/validate"
-import { Form, Select, Typography, Input } from "antd"
-import { Field, Formik } from "formik"
+import { Button, Typography, message, Popconfirm, PopconfirmProps } from 'antd'
+import { AxiosError, AxiosResponse } from 'axios'
+import { Field, Formik } from 'formik'
+import { Form, Input, Select, SubmitButton } from 'formik-antd'
+import { useNavigate, useParams } from 'react-router-dom'
+import { AnnouncementTypes } from '@typess/types'
+import { errorHandler } from '@utils/errorHandler'
+import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
-import { AxiosError } from "axios"
-import { errorHandler } from "@utils/errorHandler"
-import { useTypedSelector } from "src/hooks"
 import './newAnnouncement.scss'
-import { PrimaryButton } from "@components/index"
+import { useGetAnnouncementQuery, useGetAnnouncementsQuery } from '@store/announcements/getAnnoun'
+import { motion } from 'framer-motion'
 
 const { Title } = Typography
 
 export const EditAnnouncement = () => {
+  const { announcement } = useParams()
+  const {data, error, isLoading} = useGetAnnouncementQuery(announcement)
+  const photo = data?.photos
+  const categoryes = useGetAnnouncementsQuery('dogs')
+  const navigate = useNavigate()
+
+  const confirm = (e: React.MouseEvent<HTMLElement>) => {
+    
+    // async () => {
+    //   const token = localStorage.getItem('access_token')
+    //   try {
+    //     await api.delete(`announcements/${data?.slug}/`, {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`
+    //       }
+    //     })
+    //   } catch (error: AxiosError | any) {
+    //     errorHandler(error)
+    //   }
+    // }
+    message.success(`Вы удалили объявление ${data?.title}`);
+    // setTimeout(() => {
+    //   navigate('/')
+    // }, 3000)
+  };
+  
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error('Отменено!');
+  };
+
 
   const initialValues: AnnouncementTypes = {
-    title: '',
-    price: '',
-    description: '',
-    location: '',
-    category: ''
+    title: data?.title,
+    price: data?.price,
+    description: data?.description,
+    location: data?.location,
+    category: data?.category,
+    phone_number: data?.phone_number,
   }
 
-  const changePhoto = (e: any) => {
-    // for(let key in e) {
-    //   console.log(key)
-    // }
-  }
 
-  const tokens = useTypedSelector(state => state.auth.userInfo)
-  
-  console.log(tokens);
-  
-  const categories: string[] = ['Собаки','Кошки','Птицы','Рыбки','Грызуны','Рептилии и амфибии','Насекомые','Паукообразные','Сельскохозяйственные животные']
-  const locations: string[] = ['Бишкек', 'Ош', 'Нарын', 'Иссык-куль', 'Баткен', 'Талас', 'Джалал-Абад']
-  
+  const categories: string[] = [
+    'dogs',
+    'koshki',
+    'Птицы',
+    'Рыбки',
+    'Грызуны',
+    'Рептилии и амфибии',
+    'Насекомые',
+    'Паукообразные',
+    'Сельскохозяйственные животные',
+  ]
+  const locations: string[] = [
+    'Бишкек',
+    'Ош',
+    'Нарын',
+    'Иссык-куль',
+    'Баткен',
+    'Талас',
+    'Джалал-Абад',
+  ]
+
   const submitForm = async (data: AnnouncementTypes) => {
-    const token = useTypedSelector(state => state.auth.userToken)
+    console.log(data);
+    const token = localStorage.getItem('access_token')
     try {
-      await api.post('announcements/', data, {
+      await api.patch(`announcements/${announcement}/`, data, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
         },
       })
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
-    
   }
 
-
-  return(
-    <div className="newannoun">
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="newannoun">
       <Title level={2}>Новое объявление</Title>
       <Formik
         initialValues={initialValues}
@@ -61,94 +108,94 @@ export const EditAnnouncement = () => {
         validationSchema={AnnouncementValidate}
       >
         <Form>
-          <Form.Item name='category'>
+          <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
-            <Select
-              placement="bottomLeft"
-              defaultValue='Собаки'
-            >
-              {
-                categories.map(category => {
-                  return (
-                    <Select.Option key={category} value={category}>
-                      {category}
-                    </Select.Option>
-                  );
-                })
-              }
+            <Select name="category" defaultValue={data?.category}>
+              {categories.map((category) => {
+                return (
+                  <Select.Option key={category} value={category}>
+                    {category}
+                  </Select.Option>
+                )
+              })}
             </Select>
-            {/* <Field 
-              name='category'
-            /> */}
           </Form.Item>
-          <Form.Item
-            name="title"
-          >
-            <label htmlFor="title" id="title">Название объявления</label>
-            <Input
-              name="title"
-              placeholder="Введите название"
-            />
+          <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="title" id="title">
+              Название объявления
+            </label>
+            <Input name="title" placeholder="Введите название" />
           </Form.Item>
-          <Form.Item
-            name="price"
-          >
-            <label htmlFor="price" id="price">Цена</label>
-            <Input
-              name="price"
-              placeholder="Введите цену"
-            />
+          <Form.Item name="price" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="price" id="price">
+              Цена
+            </label>
+            <Input type='number' name="price" placeholder="Введите цену" />
             <label>Не указывайте цену если отдаете питомца даром</label>
           </Form.Item>
-          <Form.Item
-            name="phone"
-          >
-            <label htmlFor="phone" id="phone">Контакты</label>
-            <Input
-              name="phone"
-              placeholder="Номер телефона"
-            />
+          <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="phone_number" id="phone_number">
+              Контакты
+            </label>
+            <Input type='tel' name="phone_number" placeholder="Номер"/>
           </Form.Item>
           <Form.Item
             name="description"
+            showValidateSuccess={true}
+            hasFeedback={true}
           >
-            <label htmlFor="description" id="description">Описание</label>
+            <label htmlFor="description" id="description">
+              Описание
+            </label>
             <Input.TextArea
               className="description"
               name="description"
               placeholder="Расскажите о питомце"
             />
           </Form.Item>
-          <Form.Item
-            name="photo"
-          >
-            <label htmlFor="photo" id="photo">фотографии</label>
+          <Form.Item name="photo" showValidateSuccess={true} hasFeedback={true}>
+            <label htmlFor="photo" id="photo">
+              фотографии
+            </label>
             <Input
               multiple
               type="file"
               name="photo"
               placeholder="Описание"
-              onChange={(e) => changePhoto(e.target.files)}
             />
-            <label>Вы можете загрузить до 10 фотографий в формате JPG или PNG.
-              Максимальный размер фото — 25MB.</label>
+            <label>
+              Вы можете загрузить до 10 фотографий в формате JPG или PNG.
+              Максимальный размер фото — 25MB.
+            </label>
           </Form.Item>
-          <Select
-          placement="bottomRight"
+          <Form.Item
+            name="location"
+            showValidateSuccess={true}
+            hasFeedback={true}
           >
-            {
-              locations.map(loc => {
+            <Select defaultValue={data?.location} name="location" placement="bottomRight">
+              {locations.map((loc) => {
                 return (
                   <Select.Option key={loc} value={loc}>
                     {loc}
                   </Select.Option>
-                );
-              })
-            }
-          </Select>
-          <PrimaryButton>Опубликовать объявление</PrimaryButton>
+                )
+              })}
+            </Select>
+          </Form.Item>
+          <SubmitButton type="primary">Редактировать</SubmitButton>
         </Form>
       </Formik>
-    </div>
+      <Popconfirm
+        title="УДАЛЕНИЕ"
+        description="Хотите удалить объявление?"
+        onConfirm={confirm}
+        onCancel={cancel}
+        okText="Удалить"
+        cancelText="Отменить"
+      >
+        <Button className='delete-btn'>Удалить</Button>
+      </Popconfirm>
+    </motion.div>
   )
 }

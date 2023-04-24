@@ -1,0 +1,114 @@
+.sidebar_user {
+  &_item {
+    cursor: pointer;
+    border: 0 !important;
+    display: flex;
+    justify-content: start !important;
+    gap: 7px;
+    &_image {
+      border-radius: 100%;
+    }
+    &_info {
+      display: flex;
+      flex-direction: column;
+      &_name {
+        margin: 0 !important;
+        font-size: 14px !important;
+        font-weight: 600;
+      }
+      &_status {
+        margin: 0 !important;
+        font-size: 12px !important;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.chat {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  &-sidebar {
+    border-right: 1px solid #f2f2f2 !important  ;
+    height: 85vh;
+    background: #ffffff !important;
+    min-width: 250px !important;
+  }
+  &_header {
+    border-bottom: 1px solid #f2f2f2;
+    padding-bottom: 26px;
+    padding-left: 20px;
+    .sidebar_user_item {
+      align-items: center;
+    }
+    .sidebar_user_item_info_name {
+      font-size: 18px !important;
+      font-weight: 700;
+    }
+    .sidebar_user_item_info_status {
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+}
+
+.image-card {
+  border-radius: 0;
+}
+
+.sidebar_user_item_info_name2 {
+  margin: 0 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important ;
+}
+
+.chat_content_input {
+  padding-left: 20px !important;
+}
+
+.chat_message {
+  padding-left: 20px;
+  flex: 1;
+  overflow-y: scroll;
+  // ascent-override: 'bottom';
+  // border: 1px solid red;
+  max-height: 70vh;
+  width: 100%;
+  &_item {
+    width: 100%;
+    border: 0 !important;
+    display: flex;
+    justify-content: start !important;
+    gap: 7px;
+    &_image {
+      border-radius: 100%;
+    }
+    &_info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      &_name {
+        margin: 0 !important;
+        font-size: 16px !important;
+        font-weight: 600;
+      }
+      &_status {
+        color: #333333 !important;
+        margin: 0 !important;
+        font-size: 16px !important;
+        font-weight: 400;
+      }
+      &_status2{
+        display: flex; 
+        align-items: center;
+        gap: 12px; 
+        span{
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}

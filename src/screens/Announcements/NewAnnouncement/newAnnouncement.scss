@@ -7,18 +7,24 @@
     margin: 16px 0; 
   }
 
+  .ant-input-affix-wrapper {
+    width: 438px;
+    height: 40px;
+    display: flex;
+  }
+
   // .ant-input {
   //   width: 438px;
-  //   display: block;
   //   height: 40px;
-  //   margin: 16px 0; 
   // }
   
 
   label {
     color: #828282;
+    display: block;
     font-weight: 400;
     font-size: 14px;
+    margin: 16px 0;
   }
 
   .description {
@@ -40,4 +46,29 @@
   //     align-items: center;
   //   }
   // }
+
+  .delete-btn {
+    margin-top: 20px;
+    color: white;
+    background-color: rgb(230, 28, 28);
+    width: 157px;
+  }
+
+  
+}
+
+.ant-popover-inner {
+  .ant-btn:first-child {
+    background-color: rgb(242, 240, 240);
+  }
+  .ant-btn:first-child:hover {
+    background-color: rgb(242, 240, 240);
+    color: black;
+  }
+  .ant-btn:last-child {
+    background-color: rgb(230, 28, 28);
+  }
+  .ant-popconfirm-description {
+    color: #000000;
+  }
 }

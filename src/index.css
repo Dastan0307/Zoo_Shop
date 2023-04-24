@@ -9,10 +9,18 @@ input::placeholder {
   font-weight: 300
 }
 
+body {
+  background: #ffffff;
+}
+
 input {
   color: #4F4F4F !important;
   font-weight: 300;
   cursor: pointer;
+}
+
+* {
+  font-family: 'Montserrat, sans-serif',
 }
 
 input:-webkit-autofill,
@@ -26,4 +34,10 @@ input:-webkit-autofill:visited,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
   background-color: transparent;
+}
+
+
+.card-image {
+  aspect-ratio: 3/2;
+  object-fit: cover;
 }

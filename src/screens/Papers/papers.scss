@@ -1,0 +1,123 @@
+.papers {
+  margin: 50px 100px;
+
+  .papers__title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 50px;
+  }
+
+  .papers__animals {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 50px;
+
+    .ant-col {
+      position: relative;
+      border-radius: 6px;
+
+      .papers__img {
+        position: relative;
+
+        .ant-image-img {
+          opacity: 1;
+          transition: opacity .4s ease;
+        }
+
+        .ant-image-img:hover {
+          opacity: .7;
+        }
+  
+        .papers__link {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 18px;
+        }
+      }
+      span.ant-typography {
+        display: block;
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 20px;
+        color: #333333;
+        margin: 20px 0 6px;
+      }
+
+      div.ant-typography {
+        font-size: 16px;
+        font-weight: 400;
+        color: #828282;
+      }
+      
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .papers {
+    margin: 0;
+  }
+
+  .papers__animals {
+    grid-template-columns: 1fr 1fr;
+  }
+  .papers__title {
+    font-size: 32px;
+  }
+}
+@media (max-width: 600px) {
+
+  .papers {
+    margin: 0;
+  }
+  .papers__animals {
+    grid-template-columns: 1fr;
+  }
+
+  .papers__title {
+    font-size: 28px;
+  }
+
+  span.ant-typography {
+    display: block;
+    font-size: 14px;
+  }
+}
+@media (max-width: 414px) {
+  .papers {
+    margin: 0;
+  }
+  .papers__animals {
+    grid-template-columns: 1fr;
+  }
+
+  .papers__title {
+    font-size: 26px;
+  }
+
+  span.ant-typography {
+    display: block;
+    font-size: 12px;
+  }
+}
+@media (max-width: 320px) {
+  .papers {
+    margin: 0;
+  }
+  .papers__animals {
+    grid-template-columns: 1fr;
+  }
+  .papers__title {
+    font-size: 24px;
+  }
+
+  span.ant-typography {
+    display: block;
+    font-size: 12px;
+  }
+}
