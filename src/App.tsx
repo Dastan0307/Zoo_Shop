@@ -14,6 +14,7 @@ import {
   RecoveryFinish,
   Register,
 } from './screens'
+import EditProfile from '@screens/Edit/EditProfile'
 
 export const App = () => {
   const location = useLocation()
@@ -27,6 +28,7 @@ export const App = () => {
           <Route path="/announcement" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />
           <Route path="/edit-announcement" element={<EditAnnouncement />} />
+          <Route path="/editProfile" element={<EditProfile />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

@@ -1,0 +1,95 @@
+.main__title {
+    width: 214px;
+    height: 29px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+    color: #333333;
+}
+
+.personal_data {
+    width: 714px;
+    height: 189px;
+
+    button {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.005em;
+        color: #80DBA6;
+        background-clip: text;
+        border: none;
+    }
+}
+
+.adress {
+    input {
+        width: 22px;
+    }
+    div {
+        .list {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            color: #333333;
+        }
+    }
+}
+
+.choice_place {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 611px;
+    height: 76px;
+    margin-top: 45px;
+
+    span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.005em;
+        color: #828282;
+    }
+    .inp {
+        width: 438px;
+        height: 40px;
+        left: 0px;
+        border: 1px solid #BDBDBD;
+        border-radius: 4px;
+        margin-right: 10px;
+        }
+    .btn {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 10px 25px;
+        gap: 10px;
+        width: 163px;
+        height: 40px;
+        background: linear-gradient(262.43deg, #80DBA6 -2.86%, #96E7B7 81.84%);
+        border-radius: 6px;
+        border: none;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.005em;
+        color: #FFFFFF;
+    }
+    .place {
+        display: flex;
+        margin-top: 20px;
+    }
+}
