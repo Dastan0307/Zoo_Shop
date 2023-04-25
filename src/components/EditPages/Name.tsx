@@ -7,18 +7,31 @@ import TomHoland from '../../assets/A.png'
 import { Typography } from 'antd';
 import { useState } from 'react';
 import { PrimaryButton } from '..';
+import { changeName } from '@store/EditUser/editSlice';
+import { useTypedDispatch } from 'src/hooks';
 
 
 const { Text } = Typography;
 
  
 const Name = ({ setNameCard, nameCard }: any) => {
+  const dispatch = useTypedDispatch();
 
   const { payload } = useSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
 
-  const [name, setName] = useState(user.first_name);
-  const [lastName, setLastName] = useState(user.lastName);
+  const [first_name, setName] = useState(user.first_name);
+  const [last_name, setLastName] = useState('');
+  
+  
+
+  const id = user.id;
+  
+
+  function handleName() {
+    dispatch(changeName({first_name, last_name, id}));
+  }
+
 
   return (
     <>
@@ -29,11 +42,11 @@ const Name = ({ setNameCard, nameCard }: any) => {
           <Text className="card_name">{user.first_name}</Text>
           <div className="nameIps">
             <Text>Имя</Text>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="text" value={first_name} onChange={(e) => setName(e.target.value)} />
             <Text>Фамилия</Text>
-            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }}>Сохранить</PrimaryButton>
+          <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={() => handleName()}>Сохранить</PrimaryButton>
           <button className='btn' onClick={() => setNameCard(false)}>Отменить</button>
         </Card>
       </div>

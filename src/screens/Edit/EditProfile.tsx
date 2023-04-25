@@ -11,7 +11,6 @@ import './editProfile.scss'
 import Name from '@components/EditPages/Name';
 import Description from '@components/EditPages/Description';
 import Password from '@components/EditPages/Password';
-import { ProfilePage } from '..';
 
 const { Title, Text } = Typography;
 

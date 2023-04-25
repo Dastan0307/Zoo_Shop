@@ -2,6 +2,7 @@ import { Col, Row,Typography } from 'antd';
 import { Footer as FooterWrapper } from "antd/es/layout/layout";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import './footer.scss'
 
 
 const { Text } = Typography;

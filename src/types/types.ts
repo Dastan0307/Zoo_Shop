@@ -114,3 +114,22 @@ export interface CardsState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
+
+interface PasswordState {
+  old_password: string;
+  new_password: string;
+  new_password_confirm: string;
+  data: [];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export const initialState: PasswordState = {
+  old_password: '',
+  new_password: '',
+  new_password_confirm: '',
+  data: [],
+  isLoading: false,
+  error: null,
+};
+
