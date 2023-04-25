@@ -55,7 +55,7 @@ export const ProfilePage = () => {
             <img alt="example" src={avatar} style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }} />
             <Title level={4}>{user.first_name}</Title>
 
-            <Text type="secondary">Г. Бишкек</Text>
+            <Text type="secondary">{user.location}</Text>
             <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user.about_user}</Text>
             
             <Row gutter={[20, 20]} style={{marginTop: 30}} className='links'>
