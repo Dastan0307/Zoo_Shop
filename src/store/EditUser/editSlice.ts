@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const api = 'http://104.199.175.143/account/';
+const api = 'https://enactusanimals.com/';
 const headers = {
     headers: { 'Content-Type': 'multipart/form-data' }
 };
@@ -11,7 +11,7 @@ export const changeDesc = createAsyncThunk(
   'desc/changeDesc',
   async ({ about_user, id }: { about_user: string, id: number }) => {
     try {
-        const response = await axios.patch(`${api}/${id}/`, { about_user });
+        const response = await axios.patch(`${api}${id}/`, { about_user });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -25,7 +25,7 @@ export const changeName = createAsyncThunk(
     'name/changeName',
     async ({ first_name, last_name, id }: { first_name: string, last_name: string, id: number }) => {
       try {
-        const response = await axios.patch(`${api}/${id}/`, { first_name, last_name });
+        const response = await axios.patch(`${api}${id}/`, { first_name, last_name });
         return response.data;
       } catch (error) {
         console.log(error);
