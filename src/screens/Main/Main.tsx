@@ -21,7 +21,7 @@ export const Main = () => {
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
   const announ = useGetAnnouncementsQuery(params).data
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const orgs = useGetOrganizarionsQuery().currentData?.results
+  const orgs = useGetOrganizarionsQuery({}).currentData?.results
 
   const categories = currentData?.results
 

@@ -26,10 +26,10 @@ import {
 export const announcementApi = createApi({
   reducerPath: 'announcementsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://enactusanimals.com' }),
-
+  // refetchOnFocus: true,
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
-      query: (id) => `/announcements/${id}/`,
+      query: (id) => `/announcements/${id}/`, 
     }),
     getAnnouncements: builder.query<AnnouncementCardType[], AnnouncementFilterType>({
       query: (body) => ({

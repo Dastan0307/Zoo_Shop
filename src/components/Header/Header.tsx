@@ -5,7 +5,7 @@ import { setCredentials } from '../../store/features/auth/authSlice';
 import TomHoland from '../../assets/A.png';
 import './header.scss'
 import { Col, Typography } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTypedDispatch } from 'src/hooks'
 
 import { logout } from '@store/features/auth/authSlice'
@@ -18,7 +18,6 @@ export const Header = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
 
-  const navigate = useNavigate();
   const dispatch = useTypedDispatch()
 
   return (
@@ -31,18 +30,21 @@ export const Header = () => {
         alignItems: 'center',
       }}
     >
-      <Text
-        style={{
-          color: '#333333',
-          fontSize: 24,
-          fontWeight: 700,
-          marginLeft: 70,
-          cursor: 'pointer',
-        }}
-        onClick={() => navigate('/')}
-      >
-        Zoo.Net
-      </Text>
+      <Link to={{
+        pathname: '/'
+      }}>
+        <Text
+          style={{
+            color: '#333333',
+            fontSize: 24,
+            fontWeight: 700,
+            marginLeft: 70,
+            cursor: 'pointer',
+          }}
+        >
+          Zoo.Net
+        </Text>
+      </Link>
       <Col>
         <Link
           to="/about-us"
@@ -76,12 +78,17 @@ export const Header = () => {
                 <Link to={'/login'} style={{ padding: '10px 25px', color: '#333333', background: 'transparent', marginRight: 20, border: '1px solid #828282', borderRadius: 6 }}>Войти</Link>
               )
             }
-        <PrimaryButton
-          onClick={() => dispatch(logout())}
-          style={{ color: '#FFFFFF', width: 212, height: 40, marginRight: 80 }}
+        <Link
+          to={{
+            pathname: '/new-announcement'
+          }}
         >
-          Новое объявление
-        </PrimaryButton>
+          <PrimaryButton
+            style={{ color: '#FFFFFF', width: 212, height: 40, marginRight: 80 }}
+          >
+            Новое объявление
+          </PrimaryButton>
+        </Link>
       </Col>
     </HeaderWrapper>
   )
