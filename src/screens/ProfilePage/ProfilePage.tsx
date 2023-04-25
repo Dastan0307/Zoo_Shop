@@ -1,5 +1,6 @@
 import { Card, Col, Row,Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import avatar from '../../assets/A.png';
 import { setCredentials } from '../../store/features/auth/authSlice';
@@ -8,12 +9,14 @@ import  Cards  from '../../components/Card/Card';
 import { useEffect } from 'react';
 import  { fetchCards }  from '../../store/features/details/detailsSlice';
 import { useTypedDispatch, useTypedSelector } from 'src/hooks';
+import './profile.scss'
 
-const { Title, Text, Link } = Typography;
+const { Title, Text } = Typography;
 
 export const ProfilePage = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
+  
 
   const dispatch = useTypedDispatch();
   const { data, status, error } = useTypedSelector((state: RootState) => state.card);
@@ -55,25 +58,18 @@ export const ProfilePage = () => {
             <Text type="secondary">Г. Бишкек</Text>
             <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user.about_user}</Text>
             
-            <Row gutter={[16, 16]} style={{marginTop: 30}}>
+            <Row gutter={[20, 20]} style={{marginTop: 30}} className='links'>
               <Col span={24}>
-                <Link
-                  href="#"
-                  type="success"
-                  underline
-                  style={{ color: '#80DBA6', fontWeight: 500 }}
-                >
-                  Мои объявления
-                </Link>
+                <NavLink to="/profile" >Мои объявления</NavLink>
               </Col>
               <Col span={24}>
-                <Text strong>Редактирование</Text>
+                <NavLink to="/editProfile" >Редактирование</NavLink>
               </Col>
               <Col span={24}>
-                <Text strong>Новое объявление</Text>
+                <NavLink to='/' >Новое объявление</NavLink>
               </Col>
               <Col span={24}>
-                <Text strong>Выход</Text>
+                <NavLink to='/' >Выход</NavLink>
               </Col>
             </Row>
           </Card>
@@ -81,14 +77,13 @@ export const ProfilePage = () => {
         <Col span={16}>
           {
             dataCount.map((card) => (
-              <Cards 
+              <Cards
                 key={card.id} 
                 title={card.title} 
                 created_at={time} 
                 description={card.description} 
                 price={card.price} 
-                img={card.img} 
-                category={card.ageGender} />
+                img={card.img}  />
             ))
           }
         </Col>

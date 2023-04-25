@@ -18,6 +18,7 @@ import {
   Papers,
   Paper,
 } from './screens'
+import EditProfile from '@screens/Edit/EditProfile'
 
 export const App = () => {
   const location = useLocation()
