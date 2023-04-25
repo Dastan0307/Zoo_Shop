@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+import "yup-phone-lite";
 
 export const RegisterValidate = Yup.object({
   first_name: Yup.string().required('Обязательно'),
@@ -33,4 +34,8 @@ export const AnnouncementValidate = Yup.object({
   location: Yup.string().required('Обязательно'),
   category: Yup.string().required('Обязательно'),
   price: Yup.number().required('Обязательно'),
+  phone_number: Yup.string()
+    .phone("KY", "Пожалуйста, введите действующий телефонный номер")
+    .required("Укажите номер телефона.")
 })
+

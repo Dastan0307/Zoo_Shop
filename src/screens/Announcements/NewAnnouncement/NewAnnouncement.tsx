@@ -35,19 +35,12 @@ export const NewAnnouncement = () => {
     location: '',
     category: '',
     photos: [],
-    phone_number: '',
+    phone_number: '+996 ',
   }
 
   const categories: string[] = [
     'dogs',
     'cats',
-    'Птицы',
-    'Рыбки',
-    'Грызуны',
-    'Рептилии и амфибии',
-    'Насекомые',
-    'Паукообразные',
-    'Сельскохозяйственные животные',
   ]
   const locations: string[] = [
     'Бишкек',
@@ -63,9 +56,6 @@ export const NewAnnouncement = () => {
       setSelectedFiles(e.target.files);
     }
   }
-
-  console.log(selectedFiles);
-  
 
   const submitForm = async (data: PostAnnouncementTypes) => {
     console.log(data);
@@ -107,8 +97,6 @@ export const NewAnnouncement = () => {
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
-
-    
   }
 
   return (
@@ -127,7 +115,7 @@ export const NewAnnouncement = () => {
         <Form>
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
-            <Select name="category" defaultValue="Собаки">
+            <Select name="category">
               {categories.map((category) => {
                 return (
                   <Select.Option key={category} value={category}>
@@ -148,13 +136,13 @@ export const NewAnnouncement = () => {
               Цена
             </label>
             <Input type='number' name="price" placeholder="Введите цену" />
-            <label>Не указывайте цену если отдаете питомца даром</label>
+            <label>Не указывайте цену, если отдаете питомца даром</label>
           </Form.Item>
           <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone_number" placeholder="Номер телефона"/>
+            <Input type='tel' name="phone_number" placeholder="+996(YYY)-XXX-XXX"/>
           </Form.Item>
           <Form.Item
             name="description"
