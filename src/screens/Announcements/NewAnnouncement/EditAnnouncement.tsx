@@ -19,7 +19,7 @@ export const EditAnnouncement = () => {
   const photo = data?.photos
   const navigate = useNavigate()
 
-  const confirm = async (e: React.MouseEvent<HTMLElement>) => {
+  const confirm = async () => {
       const token = localStorage.getItem('access_token')
       try {
         await api.delete(`announcements/${data?.slug}/`, {
@@ -36,8 +36,7 @@ export const EditAnnouncement = () => {
     }, 3000)
   };
 
-  const cancel = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e);
+  const cancel = () => {
     message.error('Отменено!');
   };
 

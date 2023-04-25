@@ -45,7 +45,7 @@ export const announcementApi = createApi({
         method: 'GET',
         params: body,
       }),
-      keepUnusedDataFor: 10,
+      keepUnusedDataFor: 0,
     }),
   }),
 })

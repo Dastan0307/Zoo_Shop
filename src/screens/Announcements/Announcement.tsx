@@ -23,7 +23,6 @@ const pohotos: string[] = [
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAAA1fB91VgHp3UJ3BLapwEbOedYJO2prDPrrcVf14tFAM6mjGPjIIjcUNbRuR2kkG7kE&usqp=CAU',
   'https://www.purina.co.uk/sites/default/files/2020-12/Dog_1098119012_Teaser.jpg',
   'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
-  'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
 ]
 
 export const Announcements: React.FC = () => {
