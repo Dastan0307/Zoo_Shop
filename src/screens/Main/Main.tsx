@@ -1,14 +1,4 @@
-import {
-  Button,
-  Card,
-  Col,
-  Input,
-  Layout,
-  List,
-  Row,
-  Select,
-  Typography,
-} from 'antd'
+import { Button, Card, Col, Input, Layout, List, Row, Select, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import React, { useState } from 'react'
@@ -20,10 +10,7 @@ import {
   useGetOrganizarionsQuery,
 } from '@store/announcements/getAnnoun'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
-import {
-  AnnouncementFilterType,
-  CategoryType,
-} from '@typess/types'
+import { AnnouncementFilterType, CategoryType } from '@typess/types'
 import { debounce } from '@utils/debounce'
 
 import './main.scss'
@@ -34,8 +21,8 @@ export const Main = () => {
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
   const announ = useGetAnnouncementsQuery(params).data
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const orgs = useGetOrganizarionsQuery({}).data
-  
+  const orgs = useGetOrganizarionsQuery().currentData?.results
+
   const categories = currentData?.results
 
   const handleSetParamsValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +42,7 @@ export const Main = () => {
     setParams({ ...params, category: value.slug })
   }
   const handlePriceButton = () =>
-    setParams({ ...params, lower_price: "-1", higher_price: "-1" })
+    setParams({ ...params, lower_price: '-1', higher_price: '-1' })
   const setSelectLocation = (location: string) => setParams({ ...params, location })
   const debouncedOnChange = debounce(handleSetParamsValue, 500)
 

@@ -135,4 +135,5 @@ export interface OrganizarionApiType {
 export interface OrganizarionParamsType {
   adress_type?: string
   location?: string
+  test?: string
 }

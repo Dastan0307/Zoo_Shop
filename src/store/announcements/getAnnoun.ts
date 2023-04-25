@@ -43,7 +43,7 @@ export const announcementApi = createApi({
       query: (body) => ({
         url: '/catalog/',
         method: 'GET',
-        params: body,
+        params: body && body,
       }),
       keepUnusedDataFor: 0,
     }),
