@@ -45,7 +45,7 @@ const Cards = ({ value, type }: CardType) => {
             <Image
               className="card-image"
               alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              src={value.img}
               style={{ width: 215, height: 195, borderRadius: 6 }}
             />
           </Col>
@@ -101,7 +101,7 @@ const Cards = ({ value, type }: CardType) => {
                       width={'10px'}
                       alt=""
                     />{' '}
-                    {location}
+                    {value.location}
                   </Typography.Text>
                 </div>
               </div>
