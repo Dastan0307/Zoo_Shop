@@ -1,4 +1,4 @@
-import { Button, Carousel, Col, Divider, Image, Row, Typography } from 'antd'
+import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -42,7 +42,7 @@ export const Announcements: React.FC = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-  };
+  }
 
   const carouselRef = useRef<CarouselRef>(null)
   const handlePrev = () => {
@@ -94,13 +94,16 @@ export const Announcements: React.FC = () => {
             </Row>
             <Row className="slides__img">
               <Col>
-                {
-                  pohotos.map((poho, index) => {
-                    return (
-                      <Image onClick={() => handlePhoto(index)} preview={false} key={poho} src={poho}/>
-                    )
-                  })
-                }
+                {pohotos.map((poho, index) => {
+                  return (
+                    <Image
+                      onClick={() => handlePhoto(index)}
+                      preview={false}
+                      key={poho}
+                      src={poho}
+                    />
+                  )
+                })}
               </Col>
             </Row>
           </Row>
