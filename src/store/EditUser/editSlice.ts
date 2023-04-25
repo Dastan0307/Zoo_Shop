@@ -43,7 +43,7 @@ export const changeName = createAsyncThunk(
         data.append(new_password, 'new_password');
         data.append(new_password_confirm, 'new_password_confirm');
 
-        const response = await axios.post(`${api}change_password/`, data);
+        const response = await axios.post(`${api}change_password/`, data, headers);
         return response.data;
       } catch (error) {
         console.log(error);

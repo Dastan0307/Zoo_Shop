@@ -1,4 +1,4 @@
-import { Typography } from 'antd'
+import { Typography, message } from 'antd'
 import { AxiosError } from 'axios'
 import { Formik } from 'formik'
 import { useState } from 'react'
@@ -7,12 +7,13 @@ import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
 import './newAnnouncement.scss'
+import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
 type PostAnnouncementTypes = {
   slug?: string
   user?: string
-  photos?: File[]
+  photos?: any
   title: string
   price?: string
   description: string
@@ -26,6 +27,7 @@ type PostAnnouncementTypes = {
 
 export const NewAnnouncement = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const navigate = useNavigate()
   const initialValues: PostAnnouncementTypes = {
     title: '',
     price: '',
@@ -33,19 +35,12 @@ export const NewAnnouncement = () => {
     location: '',
     category: '',
     photos: [],
-    phone_number: '',
+    phone_number: '+996 ',
   }
 
   const categories: string[] = [
     'dogs',
     'cats',
-    'Птицы',
-    'Рыбки',
-    'Грызуны',
-    'Рептилии и амфибии',
-    'Насекомые',
-    'Паукообразные',
-    'Сельскохозяйственные животные',
   ]
   const locations: string[] = [
     'Бишкек',
@@ -56,32 +51,49 @@ export const NewAnnouncement = () => {
     'Талас',
     'Джалал-Абад',
   ]
-  const photos: File[] = []
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setSelectedFiles(e.target.files);
     }
-    if(!selectedFiles){
-      return
-    }
-
-    for (let i = 0; i < selectedFiles.length; i++) {
-      photos.push(selectedFiles[i])
-    }
   }
 
-  console.log(photos);
-  
-
   const submitForm = async (data: PostAnnouncementTypes) => {
+    console.log(data);
+    
     const token = localStorage.getItem('access_token')
+    const photos: File[] = []
+    if(selectedFiles) {
+      for(let i = 0; i < selectedFiles?.length; i++) {
+        photos.push(selectedFiles[i])
+      }
+    }
+    const formData = new FormData()
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    formData.append('location', data.location)
+    formData.append('category', data.category)
+    formData.append('price', data.price!)
+    formData.append('phone_number', data.phone_number)
+    for(let i = 0; i<photos?.length; i++) {
+      formData.append(`photos`, photos[i], photos[i].name)
+    }
+    console.log(data);
+
+    data = {...data, photos: selectedFiles}
     try {
-      await api.post('announcements/', data, {
+      await api.post('announcements/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       })
+
+      message.success(`создал ${data.title}`)
+      console.log(data)
+      setTimeout(() => {
+        navigate(`/`)
+      }, 3000)
+
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
@@ -103,7 +115,7 @@ export const NewAnnouncement = () => {
         <Form>
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
-            <Select name="category" defaultValue="Собаки">
+            <Select name="category">
               {categories.map((category) => {
                 return (
                   <Select.Option key={category} value={category}>
@@ -124,13 +136,13 @@ export const NewAnnouncement = () => {
               Цена
             </label>
             <Input type='number' name="price" placeholder="Введите цену" />
-            <label>Не указывайте цену если отдаете питомца даром</label>
+            <label>Не указывайте цену, если отдаете питомца даром</label>
           </Form.Item>
           <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone_number" placeholder="Номер телефона"/>
+            <Input type='tel' name="phone_number" placeholder="+996(YYY)-XXX-XXX"/>
           </Form.Item>
           <Form.Item
             name="description"
@@ -178,8 +190,6 @@ export const NewAnnouncement = () => {
             </Select>
           </Form.Item>
           <SubmitButton type="primary">Опубликовать объявление</SubmitButton>
-          <Form.Item name='dawd'>
-          </Form.Item>
         </Form>
       </Formik>
     </div>
@@ -258,6 +268,10 @@ export const NewAnnouncement = () => {
 //     location: ''
 //   })
 
+
+//   console.log(value);
+  
+
   
 
 //   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -295,7 +309,7 @@ export const NewAnnouncement = () => {
 //     formData.append('description', value.description);
 //     formData.append('location', value.location);
 
-//     // Отправить formData на сервер с помощью axios или другой библиотеки
+//     // Отправить formData на сервер с помощью axios
 //     try {
 //       const token = localStorage.getItem('access_token')
 //       await api.post('announcements/', formData, {
@@ -315,13 +329,19 @@ export const NewAnnouncement = () => {
 //       <Title level={2}>Новое объявление</Title>
       
 //         <form onSubmit={handleSubmit} onChange={handleChange}>
-//           <input type="text" name="category" placeholder="Заголовок" />
-//           <input type="text" name="title" placeholder="Заголовок" />
-//           <input type="text" name="price" placeholder="price" />
-//           <input type="text" name="phone_number" placeholder="price" />
+//           <select className='data-select' name='category'>
+//             <option value={"dogs"}>dogs</option>
+//             <option value={"cats"}>cats</option>
+//           </select>
+//           <input className='data-input' type="text" name="title" placeholder="Заголовок" />
+//           <input className='data-input' type="text" name="price" placeholder="price" />
+//           <input className='data-input' type="text" name="phone_number" placeholder="price" />
 //           <textarea name="description" placeholder="Описание"></textarea>
-//           <input type="file" multiple onChange={handleFileInputChange} />
-//           <input type="text" name="location" placeholder="Заголовок" />
+//           <input className='data-input' type="file" multiple onChange={handleFileInputChange} />
+//           <select className='data-select' name='location'>
+//             <option value={"Бишкек"}>Бишкек</option>
+//             <option value={"Ош"}>Ош</option>
+//           </select>
 //           <button type="submit">Отправить</button>
 //         </form>
 //     </div>

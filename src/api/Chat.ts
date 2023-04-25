@@ -8,6 +8,7 @@ export type getChatsProps = {
   id?: number
   customer?: number
   announcement?: string
+  photo?: string
   last_message?: {
     content: string,
     author: number,

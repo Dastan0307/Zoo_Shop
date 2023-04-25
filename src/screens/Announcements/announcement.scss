@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    width: 850px;
+    width: 713px;
 
     a {
       font-weight: 400;
@@ -20,7 +20,14 @@
     column-gap: 112px;
 
     .main__img {
-      width: 850px;
+      width: 713px;
+
+      .ant-carousel{
+        .ant-image-img {
+          width: 713px;
+          height: 400px;
+        }
+      }
       .ant-col {
         // position: relative;
 
@@ -59,6 +66,7 @@
 
     .ant-row {
       display: flex;
+      flex-wrap: wrap;
       column-gap: 20px;
       align-items: center;
       margin: 40px 0 30px;
@@ -91,7 +99,7 @@
 
   .description {
     margin-top: 50px;
-    width: 850px;
+    width: 713px;
     font-size: 16px;
 
     .addressMap {
@@ -113,13 +121,18 @@
 
   .slides__img {
     margin-top: 20px;
+    width: 713px;
     
     .ant-col {
       display: flex;
       justify-content: space-between;
-      column-gap: 20px;
-      width: 850px;
-      
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .ant-image-img {
+      width: 163px;
+      height: 140px;
     }
   }
 }

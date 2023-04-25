@@ -56,7 +56,7 @@ export const Header = () => {
           О нас
         </Link>
         <Link
-          to="#"
+          to="papers"
           style={{
             color: '#333333',
             border: 'none',

@@ -17,31 +17,26 @@ export const EditAnnouncement = () => {
   const { announcement } = useParams()
   const {data, error, isLoading} = useGetAnnouncementQuery(announcement)
   const photo = data?.photos
-  const categoryes = useGetAnnouncementsQuery('dogs')
   const navigate = useNavigate()
 
-  const confirm = (e: React.MouseEvent<HTMLElement>) => {
-    
-    // async () => {
-    //   const token = localStorage.getItem('access_token')
-    //   try {
-    //     await api.delete(`announcements/${data?.slug}/`, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`
-    //       }
-    //     })
-    //   } catch (error: AxiosError | any) {
-    //     errorHandler(error)
-    //   }
-    // }
+  const confirm = async () => {
+      const token = localStorage.getItem('access_token')
+      try {
+        await api.delete(`announcements/${data?.slug}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      } catch (error: AxiosError | any) {
+        errorHandler(error)
+      }
     message.success(`Вы удалили объявление ${data?.title}`);
-    // setTimeout(() => {
-    //   navigate('/')
-    // }, 3000)
+    setTimeout(() => {
+      navigate('/')
+    }, 3000)
   };
-  
-  const cancel = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e);
+
+  const cancel = () => {
     message.error('Отменено!');
   };
 
@@ -90,6 +85,10 @@ export const EditAnnouncement = () => {
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
+    message.success('Классно отредактировали!!!)')
+    setTimeout(() => {
+      navigate(-1)
+    }, 3000)
   }
 
   return (
@@ -98,7 +97,7 @@ export const EditAnnouncement = () => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="newannoun">
-      <Title level={2}>Новое объявление</Title>
+      <Title level={2}>Редактировать</Title>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {

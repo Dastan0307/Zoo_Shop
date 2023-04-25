@@ -1,34 +1,11 @@
 .paper {
   margin: 50px 100px;
 
-  span.ant-typography {
-    font-size: 24px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 20px;
-  } 
-
-  // div.ant-typography {
-  //   margin-bottom: 30px;
-  // }
-
-  div.ant-typography, li {
-    font-size: 16px;
-    font-weight: 400;
-    color: #333333;
-    display: block;
-  }
-
-  ol {
-    padding-left: 3px;
-  }
-
   .paper__title {
-    font-size: 36px;
+    font-size: 66px;
     font-weight: 600;
     margin-bottom: 50px;
   }
-
   .paper__start {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -37,6 +14,25 @@
     .ant-image-img {
       height: 380px;
     }
+  }
+
+  span.ant-typography {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 20px;
+  } 
+
+  div.ant-typography, li {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+    display: block;
+    width: 100%;
+  }
+
+  ol {
+    padding-left: 3px;
   }
 
   .paper__main {
@@ -50,4 +46,113 @@
   .block {
     width: 100%;
   }
+}
+
+@media (max-width: 1024px) {
+  .paper {
+    margin: 25px 50px;
+
+    .paper__title {
+      font-size: 36px;
+    }
+
+    .paper__start {
+  
+      .ant-image-img {
+        height: 280px;
+        align-self: start;
+      }
+    }
+
+    span.ant-typography {
+      font-size: 20px;
+    }
+
+    .paper__main {
+      margin-right: 0;
+    }
+  
+    .paper__footer {
+      margin-right:0;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .paper {
+    margin: 25px 50px;
+
+    span.ant-typography {
+      font-size: 18px;
+    }
+
+    .paper__start {
+      grid-template-columns: 1fr;
+
+      .ant-image-img {
+        height: 250px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .paper__main {
+      margin-right: 0;
+    }
+
+    .paper__footer {
+      margin-right: 0;
+    }
+  }
+
+  
+}
+@media (max-width: 414px) {
+  .paper {
+    margin: 25px 50px;
+
+    span.ant-typography {
+      font-size: 18px;
+    }
+
+    .paper__start {
+      .ant-image-img {
+        height: 230px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .paper__main {
+      margin-right: 0;
+    }
+
+    .paper__footer {
+      margin-right:0;
+    }
+  }
+  
+}
+@media (max-width: 320px) {
+  .paper {
+    margin: 0;
+
+    .paper__start {
+
+      .ant-image-img {
+        height: 200px;
+        margin-bottom: 20px;
+      }
+    }
+
+    span.ant-typography {
+      font-size: 18px;
+    }
+
+    .paper__main {
+      margin-right: 0;
+    }
+
+    .paper__footer {
+      margin-right: 0;
+    }
+  }
+  
 }

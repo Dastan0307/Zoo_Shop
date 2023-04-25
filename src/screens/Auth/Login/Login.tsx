@@ -13,16 +13,14 @@ import { LoginValidate } from '@utils/validate'
 import '../auth.scss'
 
 export const Login = () => {
-  const { loading, userInfo, error, success } = useTypedSelector(
-    (state) => state.auth,
-  )
+  const { loading, userInfo, error, success } = useTypedSelector((state) => state.auth)
   const dispatch = useTypedDispatch()
 
   const navigate = useNavigate()
 
   const submitForm = async (data: RegisterTypes) => {
     dispatch(userLogin(data))
-    if (userInfo) {
+    if (userInfo?.access) {
       navigate('/')
       toast.success('вы вошли как:' + userInfo?.first_name)
     }
@@ -93,12 +91,8 @@ export const Login = () => {
               >
                 Войти
               </SubmitButton>
-              <Link
-                to="/register"
-                style={{ color: '#828282', textAlign: 'center' }}
-              >
-                Нет аккаунта?{' '}
-                <span style={{ color: '#80DBA6' }}>Зарегистрируйтесь</span>
+              <Link to="/register" style={{ color: '#828282', textAlign: 'center' }}>
+                Нет аккаунта? <span style={{ color: '#80DBA6' }}>Зарегистрируйтесь</span>
               </Link>
             </Form>
           </Formik>

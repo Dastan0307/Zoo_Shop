@@ -1,7 +1,7 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
@@ -13,20 +13,35 @@ import {
 
 import './announcement.scss'
 
+import { toast } from 'react-toastify'
+
 const { Sider } = Layout
 const { Title, Text, Paragraph } = Typography
 
+const pohotos: string[] = [
+  'https://thumbs.dreamstime.com/b/golden-retriever-dog-21668976.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAAA1fB91VgHp3UJ3BLapwEbOedYJO2prDPrrcVf14tFAM6mjGPjIIjcUNbRuR2kkG7kE&usqp=CAU',
+  'https://www.purina.co.uk/sites/default/files/2020-12/Dog_1098119012_Teaser.jpg',
+  'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
+]
+
 export const Announcements: React.FC = () => {
+  const navigate = useNavigate()
   const [isPhone, setIsPhone] = useState<boolean>(false)
+  const [clikcPhoto, setClickPhoto] = useState(0)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const { id } = useParams()
-  // const dispatch = useTypedDispatch()
-  // const data = useTypedSelector(state => state.announ.announcement)
-  // useEffect(() => {
-  //   dispatch(getAnnoun('2'))
-  // }, [])
+
   const { data, isLoading, error } = useGetAnnouncementQuery(id)
   const photo = data?.photos
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+  }
 
   const carouselRef = useRef<CarouselRef>(null)
   const handlePrev = () => {
@@ -41,6 +56,10 @@ export const Announcements: React.FC = () => {
     if (carouselRef.current) {
       carouselRef.current.next()
     }
+  }
+
+  const handlePhoto = (i: number) => {
+    setClickPhoto(i)
   }
 
   return (
@@ -58,12 +77,12 @@ export const Announcements: React.FC = () => {
             <Row>
               <Col>
                 <Carousel ref={carouselRef}>
-                  {photo &&
-                    photo.map((photo) => (
+                  {pohotos &&
+                    pohotos.map((photo) => (
                       <Image
                         preview={false}
-                        key={photo.id}
-                        src={photo.image_url}
+                        key={photo}
+                        src={photo}
                         alt="carousel_photo"
                       />
                     ))}
@@ -74,15 +93,16 @@ export const Announcements: React.FC = () => {
             </Row>
             <Row className="slides__img">
               <Col>
-                {photo &&
-                  photo.map((photo) => (
+                {pohotos.map((poho, index) => {
+                  return (
                     <Image
+                      onClick={() => handlePhoto(index)}
                       preview={false}
-                      key={photo.id}
-                      src={photo.image_url}
-                      alt="animal_photos"
+                      key={poho}
+                      src={poho}
                     />
-                  ))}
+                  )
+                })}
               </Col>
             </Row>
           </Row>
@@ -124,7 +144,25 @@ export const Announcements: React.FC = () => {
             <Image src="https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png" />
             <Text>Владимир. Б</Text>
           </Row>
-          <Button>Связаться</Button>
+          {isPhone && (
+            <Row className="phone">
+              <Text>Номер телефона</Text>
+              <Text>{data?.phone_number}</Text>
+            </Row>
+          )}
+          <Button
+            onClick={() => {
+              if (userInfo?.access) {
+                console.log(userInfo)
+
+                navigate('/chats', { state: { anoun: data?.slug, id: userInfo.id } })
+              } else {
+                toast.warning('авторизуйтесь')
+              }
+            }}
+          >
+            Связаться
+          </Button>
         </div>
       </div>
     </div>

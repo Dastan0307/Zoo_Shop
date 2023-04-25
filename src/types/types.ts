@@ -58,7 +58,6 @@ export interface AnnouncementTypes {
   category: string | undefined
 }
 
-
 export type CategoriesType = {
   count: number
   next: null | number
@@ -92,7 +91,6 @@ export interface AnnouncementApiCardType {
   results: AnnouncementCardType[]
 }
 
-
 export interface AnnouncementCardType {
   category?: string
   created_at?: string
@@ -106,7 +104,7 @@ export interface AnnouncementCardType {
   views_count?: number
   id?: number
   img?: string
-  ageGender: string
+  ageGender?: string
 }
 
 export interface CardsState {
@@ -133,3 +131,28 @@ export const initialState: PasswordState = {
   error: null,
 };
 
+
+export interface OrganizarionType {
+  id: number
+  user: string
+  adress: string
+  adress_type: string
+  title: string
+  verified_adress: boolean
+  image: string
+  phone_number: string
+  location: string
+}
+
+export interface OrganizarionApiType {
+  count: number
+  next: string,
+  previous:string,
+  results: OrganizarionType[]
+}
+
+export interface OrganizarionParamsType {
+  adress_type?: string
+  location?: string
+  test?: string
+}

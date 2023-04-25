@@ -4,6 +4,7 @@ import Sider from 'antd/es/layout/Sider'
 import { motion } from 'framer-motion'
 import moment from 'moment'
 import React, { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import { useTypedSelector } from 'src/hooks'
 import { WebsocketBuilder } from 'websocket-ts'
@@ -18,39 +19,63 @@ import './chat.scss'
 type Message = { date: string; id: string; name: string; text: string }
 
 export const Chat = () => {
+  const params = useLocation()
+
   const id = useTypedSelector((state) => state.auth.userInfo?.id)
   const [currentChat, setCurrentChat] = useState<getChatsProps>({})
   const [chats, setChats] = useState<getChatsProps[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [ws, setWs] = useState<WebSocket | null>(null)
+  console.log(ws)
+
   // new WebSocket(`ws://104.199.175.143/ws/chat`)
   const changeChat = (user: getChatsProps) => {
-    console.log(user)
-    setMessages([])
-    setCurrentChat(user)
     if (ws) {
       ws.close()
+      setMessages([])
     }
-    setWs(new WebSocket(`ws://104.199.175.143/ws/chat/${user.id}_${user.announcement}/`))
+    setWs(
+      new WebSocket(
+        `wss://enactusanimals.com/ws/chat/${user.customer}_${user.announcement}/`,
+      ),
+    )
+    setCurrentChat(user)
+    
   }
 
   if (ws) {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data)
-          console.log(data)
+      console.log(data)
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
     }
     ws.onclose = (ev) => {
-      setTimeout(() => {
-        setWs(
-          new WebSocket(
-            `ws://104.199.175.143/ws/chat/${currentChat.id}_${currentChat.announcement}/`,
-          ),
-        )
-      }, 1000)
+      // setTimeout(() => {
+      //   setWs(
+      //     new WebSocket(
+      //       `wss://enactusanimals.com/ws/chat/${currentChat.customer}_${currentChat.announcement}/`,
+      //     ),
+      //   )
+      // }, 1000)
     }
   }
+  useEffect(() => {
+    console.log(params.state)
+    if (params?.state?.anoun) {
+      setCurrentChat({ announcement: params.state.anoun, customer: params.state.id })
+      setWs(
+        new WebSocket(`wss://enactusanimals.com/ws/chat/${id}_${params.state.anoun}/`),
+      )
+      console.log(ws)
+      return
+    }
+    return () => {
+      if (ws) {
+        ws.close()
+      }
+    }
+  }, [])
   useEffect(() => {
     const getDataChats = async () => {
       const data = await ChatApi.getChats()
@@ -100,9 +125,6 @@ export const Chat = () => {
 
   return (
     <Layout className="chat">
-      <button onClick={() => changeChat({ id: '1', announcement: 'chat' })}>
-        chat
-      </button>
       <Sider className="chat-sidebar">
         <ul className="chat-sidebar_user">
           {chats.map((user, index) => (
@@ -119,7 +141,7 @@ export const Chat = () => {
                 preview={false}
                 height={40}
                 width={40}
-                src="/holand.png"
+                src={user.photo}
               />
               <div className="sidebar_user_item_info">
                 <Typography.Title className="sidebar_user_item_info_name">
