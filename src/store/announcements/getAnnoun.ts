@@ -1,19 +1,3 @@
-// import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { AxiosError } from "axios";
-// import instance from "src/api";
-
-// export const getAnnoun = createAsyncThunk<Data, string, {rejectValue: string}>(
-//   'posts/getPosts',
-//   async (id, {rejectWithValue}) => {
-//     try {
-//       const res = await instance.get<Data>(`/announcements/${id}`);
-//       return res
-//     } catch (error: AxiosError | any) {
-//       return rejectWithValue(error.message)
-//     }
-//   }
-// )
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
   AnnouncementCardType,
@@ -26,7 +10,7 @@ import {
 export const announcementApi = createApi({
   reducerPath: 'announcementsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://enactusanimals.com' }),
-
+  refetchOnFocus: true,
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
       query: (id) => `/announcements/${id}/`,
@@ -35,17 +19,17 @@ export const announcementApi = createApi({
       query: (body) => ({
         url: '/announcements/',
         method: 'GET',
-        params: body,
+        params: {body},
       }),
-      keepUnusedDataFor: 30,
+      keepUnusedDataFor: 10,
     }),
     getOrganizarions: builder.query<OrganizarionApiType, OrganizarionParamsType>({
-      query: (body) => ({
+      query: (body?) => ({
         url: '/catalog/',
         method: 'GET',
         params: body && body,
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 10,
     }),
   }),
 })

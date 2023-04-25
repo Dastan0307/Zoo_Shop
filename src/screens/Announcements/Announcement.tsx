@@ -2,6 +2,7 @@ import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from '
 import { CarouselRef } from 'antd/es/carousel'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
 
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
@@ -12,8 +13,6 @@ import {
 } from '@store/announcements/getAnnoun'
 
 import './announcement.scss'
-
-import { toast } from 'react-toastify'
 
 const { Sider } = Layout
 const { Title, Text, Paragraph } = Typography
