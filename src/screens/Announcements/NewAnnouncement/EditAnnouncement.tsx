@@ -1,5 +1,6 @@
-import { Button, Typography, message, Popconfirm, PopconfirmProps } from 'antd'
+import { Button, Typography, message, Popconfirm, Image } from 'antd'
 import { AxiosError, AxiosResponse } from 'axios'
+import { useState } from 'react'
 import { Field, Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -13,7 +14,23 @@ import { motion } from 'framer-motion'
 
 const { Title } = Typography
 
+type PostAnnouncementTypes = {
+  slug?: string | undefined
+  user?: string | undefined
+  photos?: any | undefined
+  title: string | undefined
+  price?: string | undefined
+  description: string | undefined
+  phone_number: string | undefined
+  location: string | undefined
+  created_at?: string | undefined
+  updated_at?: string | undefined
+  views_count?: number | undefined
+  category: string | undefined
+}
+
 export const EditAnnouncement = () => {
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const { announcement } = useParams()
   const {data, error, isLoading} = useGetAnnouncementQuery(announcement)
   const photo = data?.photos
@@ -41,7 +58,7 @@ export const EditAnnouncement = () => {
   };
 
 
-  const initialValues: AnnouncementTypes = {
+  const initialValues: PostAnnouncementTypes = {
     title: data?.title,
     price: data?.price,
     description: data?.description,
@@ -54,13 +71,6 @@ export const EditAnnouncement = () => {
   const categories: string[] = [
     'dogs',
     'koshki',
-    'Птицы',
-    'Рыбки',
-    'Грызуны',
-    'Рептилии и амфибии',
-    'Насекомые',
-    'Паукообразные',
-    'Сельскохозяйственные животные',
   ]
   const locations: string[] = [
     'Бишкек',
@@ -72,23 +82,63 @@ export const EditAnnouncement = () => {
     'Джалал-Абад',
   ]
 
-  const submitForm = async (data: AnnouncementTypes) => {
+  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(e.target.files);
+    }
+  }
+  const submitForm = async (data: PostAnnouncementTypes) => {
     console.log(data);
+    
     const token = localStorage.getItem('access_token')
+    const photos: File[] = []
+    if(selectedFiles) {
+      for(let i = 0; i < selectedFiles?.length; i++) {
+        photos.push(selectedFiles[i])
+      }
+    }
+    const formData = new FormData()
+    if(typeof data.title === 'string') {
+      formData.append('title', data?.title)
+    }
+    if(typeof data.description === 'string') {
+      formData.append('description', data.description)
+    }
+    if(typeof data.location === 'string') {
+      formData.append('location', data.location)
+    }
+    if(typeof data.category === 'string') {
+      formData.append('category', data.category)
+    }
+    if(typeof data.price === 'string') {
+      formData.append('price', data.price!)
+    }
+    if(typeof data.phone_number === 'string') {
+      formData.append('phone_number', data.phone_number)
+    }
+    for(let i = 0; i<photos?.length; i++) {
+      formData.append(`photos`, photos[i], photos[i].name)
+    }
+    console.log(data);
+
+    data = {...data, photos: selectedFiles}
     try {
-      await api.patch(`announcements/${announcement}/`, data, {
+      await api.patch(`announcements/${announcement}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       })
+
+      message.success(`создал ${data.title}`)
+      console.log(data)
+      setTimeout(() => {
+        navigate(`/`)
+      }, 3000)
+
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
-    message.success('Классно отредактировали!!!)')
-    setTimeout(() => {
-      navigate(-1)
-    }, 3000)
   }
 
   return (
@@ -152,19 +202,32 @@ export const EditAnnouncement = () => {
               placeholder="Расскажите о питомце"
             />
           </Form.Item>
-          <Form.Item name="photo" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="photo" id="photo">
-              фотографии
-            </label>
-            <Input
-              multiple
-              type="file"
-              name="photo"
-              placeholder="Описание"
-            />
-            <label>
+          <div className='old-photos'>
+            {
+              photo && photo.map(photo => {
+                return (
+                  <Image preview={false} key={photo.id} src={photo.image_url}/>
+                )
+              })
+            }
+          </div>
+          <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
+            <div className='files'>
+              <label>
+                <Input
+                  className='input-file'
+                  multiple
+                  type="file"
+                  name="photos"
+                  placeholder="Описание"
+                  onChange={photoChange}
+                />
+                <span className='text'>Обновить Фотографии</span>
+              </label>
+            </div>
+            <label style={{width: 570}}>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
-              Максимальный размер фото — 25MB.
+              Максимальный размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся новые!
             </label>
           </Form.Item>
           <Form.Item

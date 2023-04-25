@@ -13,7 +13,7 @@ export const announcementApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
-      query: (id) => `/announcements/${id}/`,
+      query: (id) => `/announcements/${id}/`, 
     }),
     getAnnouncements: builder.query<AnnouncementCardType[], AnnouncementFilterType>({
       query: (body) => ({
