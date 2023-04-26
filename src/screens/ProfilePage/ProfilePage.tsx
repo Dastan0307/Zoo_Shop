@@ -25,18 +25,19 @@ export const ProfilePage = () => {
   
   
 
-  useEffect(() => {
+    useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchCards())
     }
-    if (status === 'loading') {
-      return <p>Loading...</p>
-    }
-
-    if (status === 'failed') {
-      return <p>{error}</p>
-    }
   }, [status, dispatch])
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
+  if (status === 'failed') {
+    return <p>{error}</p>
+  }
   
   
   
