@@ -50,10 +50,7 @@ export const ProfilePage = () => {
   
   
 
-  // Get current data
-  const now = new Date()
-  const time: string = now.toLocaleTimeString()
-  console.log('work');
+ 
   
   return (
     <div className='profile'>
