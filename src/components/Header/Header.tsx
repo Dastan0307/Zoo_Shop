@@ -48,40 +48,36 @@ export const Header = () => {
       <Col>
         <Link
           to="/about-us"
-          style={{
-            color: '#333333',
-            border: 'none',
-            background: 'transparent',
-            marginRight: 65,
-          }}
+          className='header__link'
         >
           О нас
         </Link>
         <Link
           to="papers"
-          style={{
-            color: '#333333',
-            border: 'none',
-            background: 'transparent',
-            marginRight: 55,
-          }}
+          className='header__link'
         >
           Статьи
         </Link>
         {
-              user ? (
-                <>
-                  <Link to={'/login'} style={{ padding: '10px 25px', color: '#333333', marginRight: 10 }}>Сообщения</Link>
-                  <Link to={'/login'} style={{ padding: '10px 25px', color: '#333333', marginRight: 10, fontSize: 14, fontWeight: 400,  }}> <img src={TomHoland} alt="error" width={40} height={40} /> {user.first_name}</Link>
-                </>
-              ):(
-                <Link to={'/login'} style={{ padding: '10px 25px', color: '#333333', background: 'transparent', marginRight: 20, border: '1px solid #828282', borderRadius: 6 }}>Войти</Link>
-              )
+          user ? (
+            <>
+              <Link to={'/'} className='header__link-ms_inside'>Сообщения</Link>
+              <Link to={'/profile'} className='header__link-nm_inside'> <img src={TomHoland} alt="error" width={40} height={40} /> {user.first_name}</Link>
+            </>
+            ):(
+              <Link to={'/login'} className='header__link-avatar_inside'>Войти</Link>
+            )
             }
+<<<<<<< HEAD
         <Link
           to={{
             pathname: '/new-announcement'
           }}
+=======
+        <PrimaryButton
+          onClick={() => dispatch(logout())}
+          className='header__btn'
+>>>>>>> 14912ac291f83b60cba48267ff62904be70aa15d
         >
           <PrimaryButton
             style={{ color: '#FFFFFF', width: 212, height: 40, marginRight: 80 }}

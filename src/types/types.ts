@@ -109,8 +109,18 @@ export interface AnnouncementCardType {
   ageGender?: string
 }
 
+
+export interface CardType {
+  id: number
+  img: string
+  ageGender: string
+  description: string
+  price: number
+  title: string
+}
+
 export interface CardsState {
-  data: AnnouncementCardType[];
+  data: CardType[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }

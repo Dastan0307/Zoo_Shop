@@ -46,7 +46,7 @@ const Name = ({ setNameCard, nameCard }: any) => {
             <Text>Фамилия</Text>
             <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={() => handleName()}>Сохранить</PrimaryButton>
+          <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={handleName}>Сохранить</PrimaryButton>
           <button className='btn' onClick={() => setNameCard(false)}>Отменить</button>
         </Card>
       </div>

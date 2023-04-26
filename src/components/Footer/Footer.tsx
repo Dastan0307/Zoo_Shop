@@ -15,80 +15,65 @@ const style: React.CSSProperties = {
   marginLeft: 10
   };
 
-const styleTitle: React.CSSProperties = { 
-  fontStyle: 'normal', 
-  fontWeight: 500, 
-  fontSize: 16, color: 
-  '#333333',
-  marginLeft: 135
-  };
-
-const styleLink: React.CSSProperties = { 
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontSize: 14,
-  color: '#000000',
-  marginLeft: 135
-  };
 
 
 export const Footer = () => {
   const navigate = useNavigate();
   return (
-    <FooterWrapper style={{ maxWidth: "100%", margin: '0 auto', height: 290, background: "#FAFAFA", display: 'flex', justifyContent: 'center', alignItems: 'center', paddingLeft: 100 }}>
+    <FooterWrapper className='footer'>
       <Row gutter={[20, 30]}>
         <Col className="gutter-row" span={7}>
-          <div style={style}>
+          <div className='footer__link-div'>
               <Text style={{ color: '#333333', fontSize: 24, fontWeight: 700, marginLeft: 10, cursor: 'pointer' }} onClick={() => navigate('/')}>Zoo.Net</Text>
           </div>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="#" style={styleTitle}>О нас</Link>
+          <Text className='footer__title'>О нас</Text>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="#" style={styleTitle}>Объявления</Link>
+          <Text className='footer__title'>Объявления</Text>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="#" style={styleTitle}>Обратная связь</Link>
+          <Text className='footer__title'>Обратная связь</Text>
         </Col>
         <Col className="gutter-row" span={7}>
-          <div style={style}>
+          <div className='footer__link-div'>
             <Link to="#" style={ style }>Copyright ©️ 2023 ZooNet. All Right Reserved.</Link>
           </div>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="/about-us" style={styleLink}>Наша миссия</Link>
+          <Link to="/about-us" className='footer__link'>Наша миссия</Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="/announcement" style={styleLink}>Объявления</Link>
+          <Link to="/announcement" className='footer__link'>Объявления</Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="#" style={styleLink}>Оставить отзыв</Link>
+          <Link to="#" className='footer__link'>Оставить отзыв</Link>
         </Col>
         <Col className="gutter-row" span={7}>
-          <div style={style}>
+          <div className='footer__link-div'>
             <Link to="#" style={ style }>Privacy Policy</Link>
           </div>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="#" style={styleLink}>Отзывы</Link>
+          <Link to="#" className='footer__link'>Отзывы</Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="/new-announcement" style={{ fontStyle: 'normal', fontWeight: 300, fontSize: 14, color: '#000000', marginLeft: 132 }}>Новое объявление</Link>
+          <Link to="/new-announcement" className='footer__link'>Новое объявление</Link>
         </Col>
         <Col className="gutter-row" span={4}>
-          <Link to="#" style={styleLink}>Почта</Link>
+          <Link to="#" className='footer__link'>Почта</Link>
         </Col>
         <Col className="gutter-row" span={6}>
-          <div style={style}>
-            <Link to="#" style={ style }>Terms of use</Link>
+          <div className='footer__link-div'>
+            <Link to="#" className='footer__link-div'>Terms of use</Link>
           </div>
         </Col>
         <Col className="gutter-row" span={6}>
-          <Link to="#" style={{ fontStyle: 'normal', fontWeight: 300, fontSize: 14, color: '#000000', marginLeft: 190 }}>Статьи о животных</Link>
+          <Link to="#" className='footer__link_mg'>Статьи о животных</Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="/login" style={styleLink}>Войти</Link>
+          <Link to="/login" className='footer__link'>Войти</Link>
         </Col>
       </Row>
     </FooterWrapper>

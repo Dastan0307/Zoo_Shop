@@ -1,5 +1,141 @@
-@media (max-width: 1200) {
-    .gutter-row {
-        display: flex;
+.footer {
+    max-width: 100%;
+    margin: 0 auto;
+    height: 290px;
+    background-color: #FAFAFA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 100px;
+}
+
+.footer__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333333;
+    margin-left: 125px;
+}
+
+.footer__link {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    color: #000000;
+    margin-left: 125px;
+}
+
+.footer__link-div {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    color: #828282;
+    margin-left: 15px;
+}
+
+.footer__link_mg {
+    font-weight: 300;
+    font-size: 14px;
+    color: #000000;
+    margin-left: 182px;
+}
+
+@media screen and (max-width: 1400px) {
+    .footer__title {
+        margin-left: 110px;
+    }
+
+    .footer__link {
+        margin-left: 100px;
+    }
+
+    .footer__link_mg {
+        margin-left: 150px;
+    }
+    
+}
+
+
+
+@media screen and (max-width: 1250px) {
+    .footer {
+        max-width: 1250px;
+        margin: 0 auto;
+    }
+    .footer__title {
+        margin-left: 60px;
+    }
+
+    .footer__link {
+        margin-left: 60px;
+    }
+
+    .footer__link_mg {
+        margin-left: 105px;
+    }
+    
+}
+  
+
+@media screen and (max-width: 1100px) {
+    .footer {
+        width: 114%;
+        width: 113%;
+        margin: 0 auto;
+    }
+    .footer__title {
+        margin-left: 60px;
+    }
+
+    .footer__link {
+        margin-left: 60px;
+    }
+
+    .footer__link_mg {
+        margin-left: 105px;
+    }
+    
+}
+  
+@media screen and (max-width: 1400px) {
+    .footer__title {
+        margin-left: 110px;
+    }
+
+    .footer__link {
+        margin-left: 100px;
+    }
+
+    .footer__link_mg {
+        margin-left: 150px;
+    }
+    
+}
+
+@media screen and (max-width: 1250px) {
+    .footer {
+        max-width: 1250px;
+        margin: 0 auto;
+    }
+    .footer__title {
+        margin-left: 60px;
+    }
+
+    .footer__link {
+        margin-left: 60px;
+    }
+
+    .footer__link_mg {
+        margin-left: 105px;
+    }
+    
+}
+  
+
+@media screen and (max-width: 1000px) {
+    .footer {
+        width: 119%;
+        margin: 0 auto;
     }
 }
+  

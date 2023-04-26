@@ -1,42 +1,54 @@
-import { Card, Col, Row, Typography } from 'antd'
-import { useEffect } from 'react'
+import { Button, Card, Col, Row,Typography } from 'antd'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { useTypedDispatch, useTypedSelector } from 'src/hooks'
-
 import avatar from '../../assets/A.png'
-import Cards from '../../components/Card/CardProfile'
 import { setCredentials } from '../../store/features/auth/authSlice'
-import { fetchCards } from '../../store/features/details/detailsSlice'
 import { RootState } from '../../store/store'
-
+import { useEffect } from 'react'
+import  { fetchCards }  from '../../store/features/details/detailsSlice'
+import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 import './profile.scss'
+import { motion } from 'framer-motion'
 
-const { Title, Text } = Typography
+import { ClockCircleOutlined } from '@ant-design/icons'
+
+
+const { Title, Text, Paragraph  } = Typography
 
 export const ProfilePage = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state))
   const user = payload.auth.userInfo
+  
 
   const dispatch = useTypedDispatch()
   const { data, status, error } = useTypedSelector((state: RootState) => state.card)
-  console.log();
   
+  
+
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchCards())
     }
+    if (status === 'loading') {
+      return <p>Loading...</p>
+    }
+
+    if (status === 'failed') {
+      return <p>{error}</p>
+    }
   }, [status, dispatch])
-
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
-
-  if (status === 'failed') {
-    return <div>{error}</div>
-  }
-
+  
+  
+  
   const dataCount = data.slice(3)
+  
+  
+  // Get current data 
+  const now = new Date()
+  const time: string = now.toLocaleTimeString()
+  
+  
+  
 
   // Get current data
   const now = new Date()
@@ -44,25 +56,14 @@ export const ProfilePage = () => {
   console.log('work');
   
   return (
-    <div
-      style={{
-        maxWidth: '100%',
-        margin: '0 auto',
-        background: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        paddingTop: 40,
-        paddingBottom: 80,
-      }}
-    >
+    <div className='profile'>
       <Row>
         <Col span={8}>
-          <Card hoverable style={{ width: 275, border: 'none', marginRight: 300 }}>
-            <img
-              alt="example"
-              src={avatar}
-              style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }}
-            />
+          <Card
+            hoverable
+            className='profile__card'
+          >
+            <img alt="example" src={avatar} style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }} />
             <Title level={4}>{user.first_name}</Title>
 
             <Text type="secondary">{user.location}</Text>
@@ -75,7 +76,7 @@ export const ProfilePage = () => {
                 <NavLink to="/profile">Мои объявления</NavLink>
               </Col>
               <Col span={24}>
-                <NavLink to="/editProfile">Редактирование</NavLink>
+                <NavLink to="/edit-profile" >Редактирование</NavLink>
               </Col>
               <Col span={24}>
                 <NavLink to="/">Новое объявление</NavLink>
@@ -86,10 +87,37 @@ export const ProfilePage = () => {
             </Row>
           </Card>
         </Col>
-        <Col span={16}>
-          {dataCount.map((card) => (
-            <Cards type="profile" key={card.id} value={card} />
-          ))}
+        <div className='line'></div>
+        <Col span={14}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {
+            dataCount?.map((card) => (
+              <Card
+                key={card.id}
+                hoverable
+                style={{ width: 795, border: 'none' }}
+                >
+                  <Row>
+                    <Col span={5}><img alt="example" src={card.img} style={{ width: 137, height: 140, borderRadius: 6 }} /></Col>
+                    <Col span={19}>
+                      <Text type="secondary" style={{ fontSize: 12 }}><ClockCircleOutlined /> {time}</Text>
+                      <div style={{width: 600, display: 'flex', justifyContent: 'space-between', marginBottom: -13, marginTop: -3}}>
+                        <Title level={4} style={{color: '#80DBA6'}}>{card.title}</Title>
+                        <Button style={{color: '#333333', marginTop: 4, border: 'none'}}>Изменить</Button>
+                      </div>
+                      <Text strong style={{fontSize: 18 }}>{card.price} ₸</Text>
+                      <Text style={{ fontSize: 12, color: '#BDBDBD', display: 'block',  marginBottom: 5}}>{card.ageGender}</Text>
+                      <Paragraph style={{width: 550}}>{card.description}</Paragraph>
+                    </Col>
+                  </Row>
+              </Card>
+            ))
+          }
+        </motion.div>
         </Col>
       </Row>
     </div>

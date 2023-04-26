@@ -33,12 +33,12 @@ const EditProfile = () => {
             <Col span={8}>
                 <Card
                 hoverable
-                style={{ width: 275, border: 'none', marginRight: 300 }}
+                style={{ width: 275, border: 'none', marginRight: 180 }}
                 >
                 <img alt="example" src={avatar} style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }} />
                 <Title level={4}>{user.first_name}</Title>
 
-                <Text type="secondary">Г. Бишкек</Text>
+                <Text type="secondary">{user.location}</Text>
                 <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user.about_user}</Text>
                 
                 <Row gutter={[20, 20]} style={{marginTop: 30}} className='links'>
@@ -46,7 +46,7 @@ const EditProfile = () => {
                     <NavLink to="/profile" >Мои объявления</NavLink>
                     </Col>
                     <Col span={24}>
-                    <NavLink to="/editProfile">Редактирование</NavLink>
+                    <NavLink to="/edit-profile">Редактирование</NavLink>
                     </Col>
                     <Col span={24}>
                     <NavLink to='/' >Новое объявление</NavLink>
@@ -57,6 +57,7 @@ const EditProfile = () => {
                 </Row>
                 </Card>
             </Col>
+            <div className='line'></div>
             <div className="edit">
                 <div className='personal_data'>
                     <Row gutter={[16, 18]}>

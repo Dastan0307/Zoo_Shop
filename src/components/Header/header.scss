@@ -1,3 +1,72 @@
-@media (max-width: 1000) {
+.header {
+    max-width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__logo {
+    color: #333333;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: auto 0 auto 70px;
+}
+
+.header__link {
+    color: #333333;
+    border: none;
+    background: transparent;
+    margin-right: 65px;
+}
+
+.header__link-ms_inside {
+    padding: 10px, 25px;
+    color: #333333;
+    margin-right: 35px;
+}
+
+.header__link-nm_inside {
+    padding: 10px, 25px;
+    color: #333333;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.header__link-avatar_inside {
+    padding: 10px, 25px;
+    color: #333333;
+    background: transparent;
+    margin-right: 20px;
+    border: 1px solid #828282;
+    border-radius: 6px;
+}
+
+.header__btn {
+    color: #FFFFFF;
+    width: 212px;
+    height: 40px;
+    margin-right: 80px;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .header__link {
+        margin-right: 45px;
+    }
+    .header__btn {
+        margin-right: -45px;
+    }
     
 }
+@media screen and (max-width: 1100px) {
+    .header__link {
+        margin-right: 35px;
+    }
+    .header__btn {
+        margin-right: -105px;
+    }
+    
+}
+  

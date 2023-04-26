@@ -12,3 +12,27 @@
         color: #80DBA6
     }
 }
+
+.line {
+    height: 738px;
+    width: 0px;
+    border: 1px solid #F2F2F2;
+    
+}
+
+.profile {
+    max-width: 100%;
+    margin: 0 auto;
+    background: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.profile__card {
+    width: 275px;
+    border: none;
+    margin-bottom: 5px;
+}
+
