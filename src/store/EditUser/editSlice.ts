@@ -2,9 +2,9 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const api = 'https://enactusanimals.com/';
-const headers = {
-    headers: { 'Content-Type': 'multipart/form-data' }
-};
+// const headers = {
+//     headers: { 'Content-Type': 'multipart/form-data' }
+// };
 
 
 export const changeDesc = createAsyncThunk(
@@ -43,11 +43,10 @@ export const changeName = createAsyncThunk(
         data.append(new_password, 'new_password');
         data.append(new_password_confirm, 'new_password_confirm');
 
-        const response = await axios.post(`${api}change_password/`, data, headers);
+        const response = await axios.post(`${api}change_password/`, data);
         return response.data;
       } catch (error) {
-        console.log(error);
-        
+        console.log(error);      
       }
     }
   );

@@ -79,11 +79,19 @@ export const ProfilePage = () => {
             dataCount.map((card) => (
               <Cards
                 key={card.id} 
-                title={card.title} 
-                created_at={time} 
-                description={card.description} 
-                price={card.price} 
-                img={card.img}  />
+                // img={card.img}  
+                // category={card.category}
+                // created_at={card.created_at}
+                // description={card.description}
+                // location={card.location}
+                // price={card.price}
+                // slug={card.slug}
+                // title={card.title}
+                // update_at={card.updated_at}
+                // user={card.user}
+                // count={card.views_count}
+                />
+
             ))
           }
         </Col>
