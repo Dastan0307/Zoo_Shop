@@ -10,32 +10,25 @@ import {
 export const announcementApi = createApi({
   reducerPath: 'announcementsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://enactusanimals.com' }),
-  refetchOnFocus: true,
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
-      query: (id) => `/announcements/${id}/`, 
+      query: (id) => `/announcements/${id}/`,
     }),
-    getAnnouncements: builder.query<AnnouncementCardType[], AnnouncementFilterType>({
-      query: (body) => ({
-        url: '/announcements/',
-        method: 'GET',
-        params: {body},
-      }),
-      keepUnusedDataFor: 10,
-    }),
-    getOrganizarions: builder.query<OrganizarionApiType, OrganizarionParamsType>({
-      query: (body?) => ({
-        url: '/catalog/',
-        method: 'GET',
-        params: body && body,
-      }),
-      keepUnusedDataFor: 10,
-    }),
+    // getAnnouncements: builder.query<AnnouncementCardType[], AnnouncementFilterType>({
+    //   query: (body) => ({
+    //     url: '/announcements/',
+    //     method: 'GET',
+    //     params: {body},
+    //   }),
+    // }),
+    // getOrganizarions: builder.query<OrganizarionApiType, OrganizarionParamsType>({
+    //   query: (body?) => ({
+    //     url: '/catalog/',
+    //     method: 'GET',
+    //     params: body && body,
+    //   }),
+    // }),
   }),
 })
 
-export const {
-  useGetAnnouncementQuery,
-  useGetAnnouncementsQuery,
-  useGetOrganizarionsQuery,
-} = announcementApi
+export const { useGetAnnouncementQuery } = announcementApi

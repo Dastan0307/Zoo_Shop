@@ -1,60 +1,86 @@
 import { Button, Card, Col, Input, Layout, List, Row, Select, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
-import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
 
-import Cards from '@components/Card/Card'
-import { CardOrg } from '@components/index'
-import {
-  useGetAnnouncementsQuery,
-  useGetOrganizarionsQuery,
-} from '@store/announcements/getAnnoun'
+import { AnnouncementApi } from '@api/AnnouncementApi'
+import { CardMain, CardOrg } from '@components/index'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
-import { AnnouncementFilterType, CategoryType } from '@typess/types'
+import {
+  AnnouncementCardType,
+  AnnouncementFilterType,
+  CategoryType,
+  OrganizarionType,
+} from '@typess/types'
 import { debounce } from '@utils/debounce'
 
 import './main.scss'
 
 export const Main = () => {
   const [params, setParams] = useState<AnnouncementFilterType>({})
-  const res = useGetCategoriesQuery('2').currentData
+  const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
+  const [orgs, setOrgs] = useState<OrganizarionType[]>([])
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
-  const { data, ...props1 } = useGetAnnouncementsQuery(params)
-  const { currentData, ...props2 } = useGetOrganizarionsQuery({})
-  const orgs = currentData?.results
+  const res = useGetCategoriesQuery('2').currentData
   const categories = res?.results
-  const announ = data
+
   const handleSetParamsValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // res.refetch()
     if (e.target.dataset.key == 'lower_price' || e.target.dataset.key == 'lower_price') {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return setParams({
+      setParams({
         ...params,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         [e.target.name]: +e.target.dataset.value!,
       })
     }
-
     setParams({ ...params, [e.target.name]: e.target.value })
   }
   const handleSetParamsValue2 = (value: CategoryType) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setParams({ ...params, category: value.slug })
   }
-  const handlePriceButton = () =>
+
+  const handlePriceButton = () => {
     setParams({ ...params, lower_price: '-1', higher_price: '-1' })
+  }
+  console.log(params)
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await AnnouncementApi.getAnnouncement(params)
+      if (data?.data) {
+        setAnnoun(data?.data)
+      }
+    }
+    getData()
+  }, [params])
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await AnnouncementApi.getOrganization(params)
+      if (data?.data) {
+        setOrgs(data?.data.results)
+      }
+    }
+    getData()
+  }, [])
+
   const setSelectLocation = (location: string) => setParams({ ...params, location })
   const debouncedOnChange = debounce(handleSetParamsValue, 500)
-
   return (
-    <div className="main">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="main"
+    >
       <Input placeholder="Поиск" onChange={debouncedOnChange} name="search" />
       <Row className="main_type_wrapper">
         <Col span={12}>
           <Card
             className="main_type"
             onClick={() => {
-              props1.refetch()
-
               setMainType('announ')
             }}
           >
@@ -66,9 +92,6 @@ export const Main = () => {
           <Card
             className="main_type_2"
             onClick={() => {
-              // eslint-disable-next-line react/prop-types
-              props2.refetch()
-
               setMainType('org')
             }}
           >
@@ -101,7 +124,13 @@ export const Main = () => {
                         onClick={() => handleSetParamsValue2(value)}
                         key={index}
                       >
-                        <span>{value.title}</span>
+                        <span
+                          style={{
+                            color: params.category == value.slug ? '#96e7b7' : '#333333',
+                          }}
+                        >
+                          {value.title}
+                        </span>
                       </List.Item>
                     ))}
                 </List>
@@ -178,7 +207,6 @@ export const Main = () => {
                     ))}
                 </List>
               </Col>
-
               <Col>
                 <Typography.Title level={5}>Местоположение</Typography.Title>
                 <Select
@@ -202,10 +230,13 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {mainType == 'announ'
-            ? announ && announ.map((value) => <Cards key={value.slug} value={value} type="main" />)
+            ? announ &&
+              announ.map((value) => (
+                <CardMain key={value.slug} value={value} type="main" />
+              ))
             : orgs && orgs.map((value) => <CardOrg key={value.id} {...value} />)}
         </Content>
       </Layout>
-    </div>
+    </motion.div>
   )
 }

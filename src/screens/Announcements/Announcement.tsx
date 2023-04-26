@@ -1,30 +1,25 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
-import { AxiosError, AxiosResponse} from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
 
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
+import { errorHandler } from '@utils/errorHandler'
 
 // import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 import './announcement.scss'
 
 const { Sider } = Layout
-import { toast } from 'react-toastify'
 
-import { errorHandler } from '@utils/errorHandler'
 const { Title, Text, Paragraph } = Typography
 type PostAnnouncementTypes = {
   slug?: string
   user?: string
-  photos?: [
-    id: string,
-    announcement: string,
-    image: string,
-    image_url: string,
-  ]
+  photos?: { id: string; announcement: string; image: string; image_url: string }[]
   title: string
   price?: string
   description: string
@@ -42,33 +37,28 @@ export const Announcements: React.FC = () => {
   const [isPhone, setIsPhone] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const { id } = useParams()
-  console.log(id);
-  
-
+  console.log(id)
 
   // const { data, isLoading, error } = useGetAnnouncementQuery(id)
   const photo = data?.photos
-  console.log(photo);
-
   async function getAnnoun(id: any) {
     try {
       const res = await api.get<PostAnnouncementTypes>(`announcements/${id}/`)
       setData(res.data)
-    } catch (error: AxiosError| any) {
+    } catch (error: AxiosError | any) {
       errorHandler(error)
     }
   }
   useEffect(() => {
     getAnnoun(id)
   }, [id])
-  
+
   const carouselRef = useRef<CarouselRef>(null)
   const handlePrev = () => {
     if (carouselRef.current) {
       carouselRef.current.prev()
     }
-    console.log(carouselRef);
-    
+    console.log(carouselRef)
   }
 
   const handleNext = () => {
@@ -91,7 +81,26 @@ export const Announcements: React.FC = () => {
             <Row>
               <Col>
                 <Carousel ref={carouselRef}>
-                  {photo && photo.map((photo) => {
+                  {photo &&
+                    photo.map((photo) => {
+                      return (
+                        <Image
+                          // onClick={() => handlePhoto(photo.id)}
+                          preview={false}
+                          key={photo.id}
+                          src={photo.image_url}
+                        />
+                      )
+                    })}
+                </Carousel>
+                <LeftOutlined onClick={handlePrev} />
+                <RightOutlined onClick={handleNext} />
+              </Col>
+            </Row>
+            <Row className="slides__img">
+              <Col>
+                {photo &&
+                  photo.map((photo) => {
                     return (
                       <Image
                         // onClick={() => handlePhoto(photo.id)}
@@ -101,23 +110,6 @@ export const Announcements: React.FC = () => {
                       />
                     )
                   })}
-                </Carousel>
-                <LeftOutlined onClick={handlePrev} />
-                <RightOutlined onClick={handleNext} />
-              </Col>
-            </Row>
-            <Row className="slides__img">
-              <Col>
-                {photo && photo.map((photo) => {
-                  return (
-                    <Image
-                      // onClick={() => handlePhoto(photo.id)}
-                      preview={false}
-                      key={photo.id}
-                      src={photo.image_url}
-                    />
-                  )
-                })}
               </Col>
             </Row>
           </Row>

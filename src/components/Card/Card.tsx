@@ -12,7 +12,7 @@ type CardType = {
 }
 
 const { Title, Text, Paragraph } = Typography
-const Cards = ({ value, type }: CardType) => {
+export const CardMain = ({ value, type }: CardType) => {
   const {
     category,
     created_at,
@@ -27,6 +27,7 @@ const Cards = ({ value, type }: CardType) => {
     user_name,
     photos,
   } = value
+  
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -48,7 +49,7 @@ const Cards = ({ value, type }: CardType) => {
             <Image
               className="card-image"
               alt="example"
-              src={photos[0].image_url}
+              src={photos[0] ? photos[0].image_url : '/dog.png'}
               style={{ width: 215, height: 195, borderRadius: 6 }}
             />
           </Col>
@@ -75,7 +76,7 @@ const Cards = ({ value, type }: CardType) => {
                 </Title>
               </div>
               <Text strong style={{ fontSize: 18 }}>
-                {value.price == '-1' ? 'Договорная' : `${value.price} KGS`}
+                {value.price == '-1.00' ? 'Договорная' : `${value.price} KGS`}
               </Text>
               <Paragraph style={{ width: '100%', fontSize: '16px', height: '60px' }}>
                 {value.description}
@@ -123,4 +124,4 @@ const Cards = ({ value, type }: CardType) => {
   )
 }
 
-export default Cards
+
