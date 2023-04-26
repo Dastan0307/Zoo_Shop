@@ -20,7 +20,7 @@ export const Login = () => {
 
   const submitForm = async (data: RegisterTypes) => {
     dispatch(userLogin(data))
-    if (userInfo?.access) {
+    if (userInfo) {
       navigate('/')
       toast.success('вы вошли как:' + userInfo?.first_name)
     }

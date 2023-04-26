@@ -77,8 +77,8 @@ export interface AnnouncementFilterType {
   titie?: string
   location?: string
   category?: string
-  lower_price?: number
-  higher_price?: number
+  lower_price?: string
+  higher_price?: string
   search?: string
   ordering?: string
   page?: number
@@ -98,6 +98,8 @@ export interface AnnouncementCardType {
   location?: string
   price?: string
   slug?: string
+  user_name:string
+  photos: { announcement: string; id: number; image: string; image_url: string }[]
   title?: string
   updated_at?: string
   user?: number
@@ -156,8 +158,8 @@ export interface OrganizarionType {
 
 export interface OrganizarionApiType {
   count: number
-  next: string,
-  previous:string,
+  next: string
+  previous: string
   results: OrganizarionType[]
 }
 

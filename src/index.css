@@ -41,3 +41,7 @@ input:-webkit-autofill:active {
   aspect-ratio: 3/2;
   object-fit: cover;
 }
+
+.title-s {
+  text-decoration: 1px solid #828282 !important;
+}

@@ -1,56 +1,65 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
+import { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
 
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
-import {
-  useGetAnnouncementQuery,
-  useGetAnnouncementsQuery,
-} from '@store/announcements/getAnnoun'
+import { errorHandler } from '@utils/errorHandler'
 
+// import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 import './announcement.scss'
 
-import { toast } from 'react-toastify'
-
 const { Sider } = Layout
-const { Title, Text, Paragraph } = Typography
 
-const pohotos: string[] = [
-  'https://thumbs.dreamstime.com/b/golden-retriever-dog-21668976.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAAA1fB91VgHp3UJ3BLapwEbOedYJO2prDPrrcVf14tFAM6mjGPjIIjcUNbRuR2kkG7kE&usqp=CAU',
-  'https://www.purina.co.uk/sites/default/files/2020-12/Dog_1098119012_Teaser.jpg',
-  'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
-]
+const { Title, Text, Paragraph } = Typography
+type PostAnnouncementTypes = {
+  slug?: string
+  user?: string
+  photos?: { id: string; announcement: string; image: string; image_url: string }[]
+  title: string
+  price?: string
+  description: string
+  phone_number: string
+  location: string
+  created_at?: string
+  updated_at?: string
+  views_count?: number
+  category: string
+}
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
+  const [data, setData] = useState<PostAnnouncementTypes>()
   const [isPhone, setIsPhone] = useState<boolean>(false)
-  const [clikcPhoto, setClickPhoto] = useState(0)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const { id } = useParams()
+  console.log(id)
 
-  const { data, isLoading, error } = useGetAnnouncementQuery(id)
+  // const { data, isLoading, error } = useGetAnnouncementQuery(id)
   const photo = data?.photos
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
+  async function getAnnoun(id: any) {
+    try {
+      const res = await api.get<PostAnnouncementTypes>(`announcements/${id}/`)
+      setData(res.data)
+    } catch (error: AxiosError | any) {
+      errorHandler(error)
+    }
   }
+  useEffect(() => {
+    getAnnoun(id)
+  }, [id])
 
   const carouselRef = useRef<CarouselRef>(null)
   const handlePrev = () => {
     if (carouselRef.current) {
       carouselRef.current.prev()
     }
+    console.log(carouselRef)
   }
-
-  console.log(data)
 
   const handleNext = () => {
     if (carouselRef.current) {
@@ -58,13 +67,8 @@ export const Announcements: React.FC = () => {
     }
   }
 
-  const handlePhoto = (i: number) => {
-    setClickPhoto(i)
-  }
-
   return (
     <div className="announcements">
-      <button></button>
       <Row className="title">
         <Title level={2}>{data?.title}</Title>
         {userInfo?.id == data?.user ? (
@@ -77,15 +81,17 @@ export const Announcements: React.FC = () => {
             <Row>
               <Col>
                 <Carousel ref={carouselRef}>
-                  {pohotos &&
-                    pohotos.map((photo) => (
-                      <Image
-                        preview={false}
-                        key={photo}
-                        src={photo}
-                        alt="carousel_photo"
-                      />
-                    ))}
+                  {photo &&
+                    photo.map((photo) => {
+                      return (
+                        <Image
+                          // onClick={() => handlePhoto(photo.id)}
+                          preview={false}
+                          key={photo.id}
+                          src={photo.image_url}
+                        />
+                      )
+                    })}
                 </Carousel>
                 <LeftOutlined onClick={handlePrev} />
                 <RightOutlined onClick={handleNext} />
@@ -93,16 +99,17 @@ export const Announcements: React.FC = () => {
             </Row>
             <Row className="slides__img">
               <Col>
-                {pohotos.map((poho, index) => {
-                  return (
-                    <Image
-                      onClick={() => handlePhoto(index)}
-                      preview={false}
-                      key={poho}
-                      src={poho}
-                    />
-                  )
-                })}
+                {photo &&
+                  photo.map((photo) => {
+                    return (
+                      <Image
+                        // onClick={() => handlePhoto(photo.id)}
+                        preview={false}
+                        key={photo.id}
+                        src={photo.image_url}
+                      />
+                    )
+                  })}
               </Col>
             </Row>
           </Row>
@@ -113,9 +120,6 @@ export const Announcements: React.FC = () => {
               </Col>
               <Col span={12} className="middle-text">
                 <Paragraph>{data?.location}</Paragraph>
-              </Col>
-              <Col span={6}>
-                <Text className="addressMap">Показать на карте</Text>
               </Col>
             </Row>
             <Divider />

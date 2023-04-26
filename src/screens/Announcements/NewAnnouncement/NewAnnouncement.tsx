@@ -105,8 +105,6 @@ export const NewAnnouncement = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          console.log('click')
-
           submitForm(values)
           setSubmitting(false)
         }}
@@ -160,15 +158,21 @@ export const NewAnnouncement = () => {
           </Form.Item>
           <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="photos" id="photos">
-              фотографии
+              Фотографии
             </label>
-            <Input
-              multiple
-              type="file"
-              name="photos"
-              placeholder="Описание"
-              onChange={photoChange}
-            />
+            <div className='files'>
+              <label>
+                <Input
+                  className='input-file'
+                  multiple
+                  type="file"
+                  name="photos"
+                  placeholder="Описание"
+                  onChange={photoChange}
+                />
+                <span className='text'>Добавить Фотографии</span>
+              </label>
+            </div>
             <label>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
               Максимальный размер фото — 25MB.

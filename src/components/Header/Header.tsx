@@ -17,8 +17,7 @@ const { Text } = Typography
 export const Header = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
-
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const dispatch = useTypedDispatch()
 
   return (
@@ -52,12 +51,17 @@ export const Header = () => {
               <Link to={'/login'} className='header__link-avatar_inside'>Войти</Link>
             )
             }
-        <PrimaryButton
-          onClick={() => dispatch(logout())}
-          className='header__btn'
+        <Link
+          to={{
+            pathname: '/new-announcement'
+          }}
         >
-          Новое объявление
-        </PrimaryButton>
+          <PrimaryButton
+            style={{ color: '#FFFFFF', width: 212, height: 40, marginRight: 80 }}
+          >
+            Новое объявление
+          </PrimaryButton>
+        </Link>
       </Col>
     </HeaderWrapper>
   )

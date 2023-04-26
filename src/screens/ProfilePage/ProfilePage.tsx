@@ -51,6 +51,8 @@ export const ProfilePage = () => {
   
   
 
+ 
+  
   return (
     <div className='profile'>
       <Row>
@@ -63,20 +65,22 @@ export const ProfilePage = () => {
             <Title level={4}>{user.first_name}</Title>
 
             <Text type="secondary">{user.location}</Text>
-            <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user.about_user}</Text>
-            
-            <Row gutter={[20, 20]} style={{marginTop: 30}} className='links'>
+            <Text style={{ width: 275, display: 'block', marginTop: 20 }}>
+              {user.about_user}
+            </Text>
+
+            <Row gutter={[20, 20]} style={{ marginTop: 30 }} className="links">
               <Col span={24}>
-                <NavLink to="/profile" >Мои объявления</NavLink>
+                <NavLink to="/profile">Мои объявления</NavLink>
               </Col>
               <Col span={24}>
                 <NavLink to="/edit-profile" >Редактирование</NavLink>
               </Col>
               <Col span={24}>
-                <NavLink to='/' >Новое объявление</NavLink>
+                <NavLink to="/">Новое объявление</NavLink>
               </Col>
               <Col span={24}>
-                <NavLink to='/' >Выход</NavLink>
+                <NavLink to="/">Выход</NavLink>
               </Col>
             </Row>
           </Card>

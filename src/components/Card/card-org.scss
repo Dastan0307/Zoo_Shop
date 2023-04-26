@@ -1,0 +1,53 @@
+.card-org {
+  width: 100%;
+  max-width: 805px;
+  border-radius: 10px;
+  height: 143px;
+  padding: 20px 18px;
+  display: flex;
+  color: #FAFAFA;
+  gap: 30px;
+  &_title {
+    color: #80dba6 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  &_image {
+    height: 100px !important;
+    width: 100px !important;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+  }
+  &-hr{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    color: #F2F2F2;
+    background: #F2F2F2;
+  }
+  &_content {
+    flex: 1;
+    &_location {
+      display: flex;
+      justify-content: start;
+      gap: 5px;
+      &_image {
+        border-radius: 100%;
+        aspect-ratio: 3/2;
+        object-fit: cover;
+        width: 36px !important;
+        height: 36px !important ;
+      }
+      &_title {
+        font-size: 14px !important;
+        color: #333333 !important;
+        margin: 0 !important;
+      }
+      &_address {
+        color: #828282 !important;
+        margin: 0 !important;
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+  }
+}

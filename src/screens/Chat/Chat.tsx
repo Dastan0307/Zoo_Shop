@@ -26,11 +26,11 @@ export const Chat = () => {
   const [chats, setChats] = useState<getChatsProps[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [ws, setWs] = useState<WebSocket | null>(null)
-  console.log(ws)
 
   // new WebSocket(`ws://104.199.175.143/ws/chat`)
   const changeChat = (user: getChatsProps) => {
     if (ws) {
+      console.log('work')
       ws.close()
       setMessages([])
     }
@@ -40,15 +40,18 @@ export const Chat = () => {
       ),
     )
     setCurrentChat(user)
-    
   }
 
   if (ws) {
-    ws.onmessage = (event) => {
+    ws.onmessage = async (event) => {
       const data = JSON.parse(event.data)
-      console.log(data)
+      const chats = await ChatApi.getChats()
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
+      console.log(data)
+      if (chats) {
+        setChats(chats?.data)
+      }
     }
     ws.onclose = (ev) => {
       // setTimeout(() => {
@@ -62,20 +65,16 @@ export const Chat = () => {
   }
   useEffect(() => {
     console.log(params.state)
+
     if (params?.state?.anoun) {
       setCurrentChat({ announcement: params.state.anoun, customer: params.state.id })
       setWs(
         new WebSocket(`wss://enactusanimals.com/ws/chat/${id}_${params.state.anoun}/`),
       )
-      console.log(ws)
       return
     }
-    return () => {
-      if (ws) {
-        ws.close()
-      }
-    }
   }, [])
+  
   useEffect(() => {
     const getDataChats = async () => {
       const data = await ChatApi.getChats()
@@ -85,17 +84,19 @@ export const Chat = () => {
       }
       return
     }
-    getDataChats()
+    setTimeout(() => {
+      getDataChats()
+    }, 700)
+
+    return () => {
+      ws?.close()
+    }
   }, [ws])
 
   const userChat = 'true'
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)
-
     if (e.key == 'Enter') {
       if (ws) {
-        console.log(ws)
-
         ws.send(
           JSON.stringify({
             message: e.currentTarget.value,
