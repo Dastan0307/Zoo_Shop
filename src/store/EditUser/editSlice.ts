@@ -10,11 +10,10 @@ export const changeName = createAsyncThunk(
     'name/changeName',
     async ({ first_name, last_name, id }: { first_name: string, last_name: string, id: number }) => {
       try {
-        // const data = new FormData();
-        // data.append(first_name, 'first_name');
-        // data.append(last_name, 'last_name');
         const response = await axios.patch(`${api}account/${id}/`, { first_name, last_name }, {headers: {'Content-Type': 'application/json'}});
-        return response.data;
+        // return response.data;
+        console.log(response);
+        
       } catch (error) {
         console.log(error);
         

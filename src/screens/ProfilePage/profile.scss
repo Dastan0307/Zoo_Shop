@@ -13,11 +13,11 @@
     }
 }
 
-.line {
-    height: 738px;
+.profile__line {
     width: 0px;
+    height: 760;
     border: 1px solid #F2F2F2;
-    
+    margin-top: 22px;
 }
 
 .profile {
@@ -35,5 +35,22 @@
     border: none;
     margin-bottom: 5px;
     margin-right: 168px;
+}
+
+
+@media screen and (max-width: 1280px) {
+    .profile__card {
+        margin-left: 60px;
+    }
+
+    .header__list {
+        margin-right: -70px;
+    }
+    .profile__card_main {
+        margin-left: -40px;
+    }
+    .line {
+        margin-left: -20px;
+    }
 }
 

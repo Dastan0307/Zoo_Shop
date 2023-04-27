@@ -15,6 +15,8 @@ import { ClockCircleOutlined } from '@ant-design/icons'
 
 const { Title, Text, Paragraph  } = Typography
 
+
+
 export const ProfilePage = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state))
   const user = payload.auth.userInfo
@@ -29,15 +31,15 @@ export const ProfilePage = () => {
     if (status === 'idle') {
       dispatch(fetchCards())
     }
-  }, [status, dispatch])
+    }, [status, dispatch])
 
-  if (status === 'loading') {
-    return <p>Loading...</p>
-  }
+    if (status === 'loading') {
+      return <p>Loading...</p>
+    }
 
-  if (status === 'failed') {
-    return <p>{error}</p>
-  }
+    if (status === 'failed') {
+      return <p>{error}</p>
+    }
   
   
   
@@ -47,7 +49,6 @@ export const ProfilePage = () => {
   // Get current data 
   const now = new Date()
   const time: string = now.toLocaleTimeString()
-  
   
   
   return (
@@ -82,8 +83,8 @@ export const ProfilePage = () => {
             </Row>
           </Card>
         </Col>
-        <div className='line'></div>
-        <Col span={14}>
+        <div className='profile__line'></div>
+        <Col span={14} className='profile__card_main'>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

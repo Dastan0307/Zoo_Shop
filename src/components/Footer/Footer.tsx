@@ -59,7 +59,7 @@ export const Footer = () => {
           <Link to="#" className='footer__link'>Отзывы</Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to="/new-announcement" className='footer__link'>Новое объявление</Link>
+          <Link to="/new-announcement" className='footer__link footer__link_long-word'>Новое объявление</Link>
         </Col>
         <Col className="gutter-row" span={4}>
           <Link to="#" className='footer__link'>Почта</Link>

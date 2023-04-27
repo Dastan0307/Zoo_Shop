@@ -22,9 +22,6 @@ const Name = ({ setNameCard, nameCard }: any) => {
 
   const [first_name, setName] = useState(user.first_name);
   const [last_name, setLastName] = useState('');
-  console.log(first_name, last_name);
-  
-
   const id = user.id;
   
 
