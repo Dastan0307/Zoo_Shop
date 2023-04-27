@@ -50,9 +50,6 @@ export const ProfilePage = () => {
   
   
   
-
- 
-  
   return (
     <div className='profile'>
       <Row>
