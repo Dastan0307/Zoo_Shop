@@ -35,10 +35,12 @@
 }
 
 .header__link-avatar_inside {
-    padding: 10px, 25px;
-    color: #333333;
-    background: transparent;
     margin-right: 20px;
+    padding: 10px 25px;
+    color: #333333;
+    gap: 10px;
+    width: 96px;
+    height: 37px;
     border: 1px solid #828282;
     border-radius: 6px;
 }

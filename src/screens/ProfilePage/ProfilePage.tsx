@@ -9,6 +9,7 @@ import  { fetchCards }  from '../../store/features/details/detailsSlice'
 import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 import './profile.scss'
 import { motion } from 'framer-motion'
+import { logout } from '../../store/features/auth/authSlice'
 
 import { ClockCircleOutlined } from '@ant-design/icons'
 
@@ -51,6 +52,7 @@ export const ProfilePage = () => {
   const time: string = now.toLocaleTimeString()
   
   
+  
   return (
     <div className='profile'>
       <Row>
@@ -60,11 +62,11 @@ export const ProfilePage = () => {
             className='profile__card'
           >
             <img alt="example" src={avatar} style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }} />
-            <Title level={4}>{user.first_name}</Title>
+            <Title level={4}>{user?.first_name}. {user?.last_name}</Title>
 
-            <Text type="secondary">{user.location}</Text>
+            <Text type="secondary">{user?.location}</Text>
             <Text style={{ width: 275, display: 'block', marginTop: 20 }}>
-              {user.about_user}
+              {user?.about_user}
             </Text>
 
             <Row gutter={[20, 20]} style={{ marginTop: 30 }} className="links">
@@ -78,7 +80,7 @@ export const ProfilePage = () => {
                 <NavLink to="/">Новое объявление</NavLink>
               </Col>
               <Col span={24}>
-                <NavLink to="/">Выход</NavLink>
+                <NavLink to="/" onClick={() => dispatch(logout())}>Выход</NavLink>
               </Col>
             </Row>
           </Card>

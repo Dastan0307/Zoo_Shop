@@ -5,7 +5,7 @@ import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import TomHoland from '../../assets/A.png'
 import { Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PrimaryButton } from '..';
 import { changeName } from '@store/EditUser/editSlice';
 import { useTypedDispatch } from 'src/hooks';
@@ -21,13 +21,17 @@ const Name = ({ setNameCard, nameCard }: any) => {
   const user = payload.auth.userInfo;
 
   const [first_name, setName] = useState(user.first_name);
-  const [last_name, setLastName] = useState('');
+  const [last_name, setLastName] = useState(user.last_name);
+  
+
   const id = user.id;
   
 
   function handleName() {
-    dispatch(changeName({first_name, last_name, id}));
+    changeName({first_name, last_name, id});
+    setNameCard(false)
   }
+
 
 
   return (
@@ -43,8 +47,12 @@ const Name = ({ setNameCard, nameCard }: any) => {
             <Text>Фамилия</Text>
             <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={handleName}>Сохранить</PrimaryButton>
-          <button className='btn' onClick={() => setNameCard(false)}>Отменить</button>
+            <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={handleName}>Сохранить</PrimaryButton>
+            <button 
+              className='btn' 
+              onClick={() => setNameCard(false)}
+              >Отменить
+            </button>
         </Card>
       </div>
     </>
