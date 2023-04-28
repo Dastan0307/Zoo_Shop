@@ -8,7 +8,8 @@ import { Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { PrimaryButton } from '..';
 import { changeName } from '@store/EditUser/editSlice';
-import { useTypedDispatch } from 'src/hooks';
+import { useTypedDispatch, useTypedSelector } from 'src/hooks';
+import { toast } from 'react-toastify';
 
 
 const { Text } = Typography;
@@ -17,7 +18,7 @@ const { Text } = Typography;
 const Name = ({ setNameCard, nameCard }: any) => {
   const dispatch = useTypedDispatch();
 
-  const { payload } = useSelector((state: RootState) => setCredentials(state));
+  const { payload } = useTypedSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
 
   const [first_name, setName] = useState(user.first_name);
@@ -27,10 +28,13 @@ const Name = ({ setNameCard, nameCard }: any) => {
   const id = user.id;
   
 
-  function handleName() {
-    changeName({first_name, last_name, id});
+  async function handleName() {
+    const data = await changeName({first_name, last_name, id});
     setNameCard(false)
+    dispatch(setCredentials(data))
   }
+
+ 
 
 
 

@@ -43,6 +43,24 @@
     }
 }
 
+.inp {
+    width: 438px;
+    height: 40px;
+    left: 0px;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.inpNum {
+    width: 438px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
 .choice_place {
     display: flex;
     flex-direction: column;
@@ -61,18 +79,9 @@
         letter-spacing: 0.005em;
         color: #828282;
     }
-    .inp {
-        width: 438px;
-        height: 40px;
-        left: 0px;
-        border: 1px solid #BDBDBD;
-        border-radius: 4px;
-        margin-right: 10px;
-        }
     .btn {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+        margin-left: 140px;
+        margin-top: 5px;
         padding: 10px 25px;
         gap: 10px;
         width: 163px;
