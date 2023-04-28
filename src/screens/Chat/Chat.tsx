@@ -74,7 +74,7 @@ export const Chat = () => {
       return
     }
   }, [])
-  
+
   useEffect(() => {
     const getDataChats = async () => {
       const data = await ChatApi.getChats()
@@ -142,7 +142,7 @@ export const Chat = () => {
                 preview={false}
                 height={40}
                 width={40}
-                src={user.photo}
+                src={"/user.png"} 
               />
               <div className="sidebar_user_item_info">
                 <Typography.Title className="sidebar_user_item_info_name">

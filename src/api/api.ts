@@ -1,13 +1,11 @@
 import axios from "axios";
 import { AnnouncementCardType } from "@typess/types";
 
-const BASE_URL = 'http://enactusanimals.com';
+const BASE_URL = 'https://enactusanimals.com';
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
-
-
 
   export const cardApi = {
     async fetchTodos(): Promise<AnnouncementCardType[]> {
@@ -16,9 +14,5 @@ const api = axios.create({
       
     },
   };
-
-
-
-
 
 export default api;

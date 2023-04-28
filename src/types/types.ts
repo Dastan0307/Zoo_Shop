@@ -73,6 +73,12 @@ export interface CategoryType {
   updated_at: string
 }
 
+export interface OrgParams {
+  location?: string
+  search?: string
+  category?: string
+}
+
 export interface AnnouncementFilterType {
   titie?: string
   location?: string
@@ -98,7 +104,7 @@ export interface AnnouncementCardType {
   location?: string
   price?: string
   slug?: string
-  user_name:string
+  user_name: string
   photos: { announcement: string; id: number; image: string; image_url: string }[]
   title?: string
   updated_at?: string
