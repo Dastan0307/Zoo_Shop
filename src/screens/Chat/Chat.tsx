@@ -140,11 +140,11 @@ export const Chat = () => {
                 preview={false}
                 height={40}
                 width={40}
-                src={user.last_message?.author_photo ? user.last_message?.author_photo : "/user.png"}
+                src={user.last_message?.author_photo ? user.last_message?.author_photo : "/dogg.jpg"}
               />
               <div className="sidebar_user_item_info">
                 <Typography.Title className="sidebar_user_item_info_name">
-                  Владимир. Б {user.id}
+                  {user.other_name}
                 </Typography.Title>
                 <Typography.Text className="sidebar_user_item_info_status">
                   {user.last_message ? user.last_message.content : ''}

@@ -42,7 +42,7 @@ export interface UserData {
   is_superuser?: boolean
   last_login?: string
   password?: string
-  user_permissions?: [] 
+  user_permissions?: []
   users_announsments?: []
 }
 
@@ -66,6 +66,8 @@ export interface AnnouncementTypes {
   updated_at?: string | undefined
   views_count?: number | undefined
   category: string | undefined
+  user_name: string | undefined
+  user_photo: string | null
 }
 
 export type CategoriesType = {

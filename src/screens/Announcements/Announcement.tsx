@@ -3,23 +3,27 @@ import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
-
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
-import { errorHandler } from '@utils/errorHandler'
-
-// import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
+import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 import './announcement.scss'
-
-const { Sider } = Layout
-
+import { toast } from 'react-toastify'
+import { errorHandler } from '@utils/errorHandler'
+import { current } from '@reduxjs/toolkit'
+import { number } from 'yup'
 const { Title, Text, Paragraph } = Typography
 type PostAnnouncementTypes = {
   slug?: string
   user?: string
-  photos?: { id: string; announcement: string; image: string; image_url: string }[]
+  photos?: [
+    {
+      id: number,
+      announcement: string,
+      image: string,
+      image_url: string,
+    }
+  ]
   title: string
   price?: string
   description: string
@@ -33,18 +37,28 @@ type PostAnnouncementTypes = {
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
-  const [data, setData] = useState<PostAnnouncementTypes>()
+  // const [data, setData] = useState<PostAnnouncementTypes>()
+  const [index, setIndex] = useState<number>(0)
   const [isPhone, setIsPhone] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const { id } = useParams()
-  console.log(id)
+  const carouselRef = useRef<CarouselRef>(null)
 
-  // const { data, isLoading, error } = useGetAnnouncementQuery(id)
-  const photo = data?.photos
+  const { data } = useGetAnnouncementQuery(id)
+  const photos = data && data?.photos
+
+  const pohotos: string[] = [
+    'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
+    'https://alpha.aeon.co/images/acd6897d-9849-4188-92c6-79dabcbcd518/header_essay-final-gettyimages-685469924.jpg',
+    'https://paradepets.com/.image/t_share/MTkxMzY1Nzg4NjczMzIwNTQ2/cutest-dog-breeds-jpg.jpg'
+  ]
+
+  console.log(data);
+
   async function getAnnoun(id: any) {
     try {
       const res = await api.get<PostAnnouncementTypes>(`announcements/${id}/`)
-      setData(res.data)
+      // setData(res.data)
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
@@ -53,12 +67,13 @@ export const Announcements: React.FC = () => {
     getAnnoun(id)
   }, [id])
 
-  const carouselRef = useRef<CarouselRef>(null)
+
   const handlePrev = () => {
     if (carouselRef.current) {
       carouselRef.current.prev()
     }
-    console.log(carouselRef)
+    console.log(carouselRef);
+
   }
 
   const handleNext = () => {
@@ -67,49 +82,47 @@ export const Announcements: React.FC = () => {
     }
   }
 
+  const clickGoTo = (current: number) => {
+    if (carouselRef.current) {
+      carouselRef.current.goTo(current)
+    }
+  }
+
   return (
     <div className="announcements">
       <Row className="title">
         <Title level={2}>{data?.title}</Title>
-        {userInfo?.id == data?.user ? (
+        {userInfo?.id === data?.user ? (
           <Link to={`/edit-announcement/${data?.slug}`}>Редактировать</Link>
         ) : null}
       </Row>
       <div className="main">
         <div className="main__img">
-          <Row className="big-image">
-            <Row>
+          <Row>
+            <Row className="big-image">
               <Col>
-                <Carousel ref={carouselRef}>
-                  {photo &&
-                    photo.map((photo) => {
-                      return (
-                        <Image
-                          // onClick={() => handlePhoto(photo.id)}
-                          preview={false}
-                          key={photo.id}
-                          src={photo.image_url}
-                        />
-                      )
-                    })}
-                </Carousel>
+                {
+                  photos && <Carousel ref={carouselRef}>
+                    {photos && photos.map(photo => <Image className='image-corusel' width={713} preview={false} src={photo.image_url} key={photo.id} />)}
+                  </Carousel>
+                }
                 <LeftOutlined onClick={handlePrev} />
                 <RightOutlined onClick={handleNext} />
               </Col>
             </Row>
             <Row className="slides__img">
               <Col>
-                {photo &&
-                  photo.map((photo) => {
-                    return (
-                      <Image
-                        // onClick={() => handlePhoto(photo.id)}
-                        preview={false}
-                        key={photo.id}
-                        src={photo.image_url}
-                      />
-                    )
-                  })}
+                {photos && photos.map((photo, index) => {
+                  return (
+                    <Image
+                      className='image-corusel'
+                      onClick={() => clickGoTo(index)}
+                      preview={false}
+                      key={index}
+                      src={photo.image_url}
+                    />
+                  )
+                })}
               </Col>
             </Row>
           </Row>
@@ -145,15 +158,13 @@ export const Announcements: React.FC = () => {
         <div className="sider">
           <Text>{data === null ? 'бесплатно ДЭЭ' : `${data?.price} KGS`}</Text>
           <Row>
-            <Image src="https://www.latfan.com/u/fotografias/m/2022/8/14/f850x638-25786_103275_4119.png" />
-            <Text>Владимир. Б</Text>
+            <Image src="/gost.jpg" />
+            <Text>{data?.user_name}</Text>
           </Row>
-          {isPhone && (
-            <Row className="phone">
-              <Text>Номер телефона</Text>
-              <Text>{data?.phone_number}</Text>
-            </Row>
-          )}
+          <Row className="phone">
+            <Text>Номер телефона</Text>
+            <Text>{data?.phone_number}</Text>
+          </Row>
           <Button
             onClick={() => {
               if (userInfo?.access) {
@@ -161,7 +172,7 @@ export const Announcements: React.FC = () => {
 
                 navigate('/chats', { state: { anoun: data?.slug, id: userInfo.id } })
               } else {
-                toast.warning('Aвторизуйтесь')
+                toast.warning('авторизуйтесь')
               }
             }}
           >

@@ -1,10 +1,11 @@
 .sidebar_user {
   &_item {
+    margin-top: 10px;
     cursor: pointer;
     border: 0 !important;
     display: flex;
     justify-content: start !important;
-    gap: 7px;
+    gap: 10px;
     &_image {
       border-radius: 100%;
     }

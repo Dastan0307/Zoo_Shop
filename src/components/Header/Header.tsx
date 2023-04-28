@@ -44,7 +44,7 @@ export const Header = () => {
         {
           user ? (
             <>
-              <Link to={'/'} className='header__link-ms_inside'>Сообщения</Link>
+              <Link to={'/chats'} className='header__link-ms_inside'>Сообщения</Link>
               <Link to={'/profile'} className='header__link-nm_inside'> <img src={TomHoland} alt="error" width={40} height={40} /> {user.first_name}</Link>
             </>
             ):(
