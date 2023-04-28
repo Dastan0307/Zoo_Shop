@@ -161,7 +161,7 @@ export const Announcements: React.FC = () => {
 
                 navigate('/chats', { state: { anoun: data?.slug, id: userInfo.id } })
               } else {
-                toast.warning('авторизуйтесь')
+                toast.warning('Aвторизуйтесь')
               }
             }}
           >
