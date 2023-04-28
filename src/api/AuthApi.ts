@@ -16,8 +16,8 @@ export class AuthApi {
   static async login(body: RegisterTypes) {
     try {
       const { data } = await api.post<UserData>('login/', body)
-      localStorage.setItem('access_token', data.access)
-      localStorage.setItem('refresh_token', data.refresh)
+      localStorage.setItem('access_token', data.access!)
+      localStorage.setItem('refresh_token', data.refresh!)
       return data
     } catch (error: AxiosError | any) {
       errorHandler(error)

@@ -9,9 +9,8 @@ import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
 import './newAnnouncement.scss'
-import { useGetAnnouncementQuery, useGetAnnouncementsQuery } from '@store/announcements/getAnnoun'
 import { motion } from 'framer-motion'
-
+import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 const { Title } = Typography
 
 type PostAnnouncementTypes = {
