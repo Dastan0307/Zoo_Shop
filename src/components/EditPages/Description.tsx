@@ -26,7 +26,7 @@ const Description = ({ setDescCard, descCard }: any) => {
   
 
   function handleDesc() {
-    dispatch(changeDesc({ about_user, id}));
+    changeDesc({ about_user, id});
   }
 
   return (

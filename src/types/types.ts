@@ -25,17 +25,27 @@ export interface loginProps {
 
 export interface UserData {
   about_user: string
-  access: string
+  access?: string
   date_joined: string
   email: string
   first_name: string
   id: number
   last_name: string
   phone_number: string
-  refresh: string
+  refresh?: string
   telegram_url: string
   username: string
+  group?: []
+  activation_code?: string
+  is_active?: boolean
+  is_staff?: boolean
+  is_superuser?: boolean
+  last_login?: string
+  password?: string
+  user_permissions?: [] 
+  users_announsments?: []
 }
+
 export interface AnnouncementTypes {
   slug?: string | undefined
   user?: string | undefined

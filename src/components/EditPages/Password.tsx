@@ -26,7 +26,7 @@ const Password = ({ passwordCard, setPasswordCard }: any) => {
     
 
     const handleSubmit = () => {
-      dispatch(changePassword({ old_password, new_password, new_password_confirm }));
+      changePassword({ old_password, new_password, new_password_confirm });
     };
 
   return (

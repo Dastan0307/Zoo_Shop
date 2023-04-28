@@ -25,6 +25,7 @@ const EditProfile = () => {
     const [nameCard, setNameCard] = useState(false);
     const [passwordCard, setPasswordCard] = useState(false);
     const [descCard, setDescCard] = useState(false);
+    
 
 
   return (
@@ -36,10 +37,10 @@ const EditProfile = () => {
                 style={{ width: 275, border: 'none', marginRight: 180 }}
                 >
                 <img alt="example" src={avatar} style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }} />
-                <Title level={4}>{user.first_name}</Title>
+                <Title level={4}>{user?.first_name}. {user?.last_name}</Title>
 
-                <Text type="secondary">{user.location}</Text>
-                <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user.about_user}</Text>
+                <Text type="secondary">{user?.location}</Text>
+                <Text style={{ width: 275, display: 'block' ,marginTop: 20 }}>{user?.about_user}</Text>
                 
                 <Row gutter={[20, 20]} style={{marginTop: 30}} className='links'>
                     <Col span={24}>
@@ -68,7 +69,7 @@ const EditProfile = () => {
                             <div>Профиль</div>
                         </Col>
                         <Col className="gutter-row" span={13}>
-                            <div>{user.first_name}</div>
+                            <div>{user?.first_name}</div>
                         </Col>
                         <Col className="gutter-row" span={5}>
                             <Button onClick={() => setNameCard(true)}>Изменить</Button>

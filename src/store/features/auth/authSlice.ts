@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthProps, UserData } from '@typess/types'
 
 import { userLogin } from './authActions'
+import { changeName } from '@store/EditUser/editSlice'
 
 // initialize userToken from local storage
 // const userToken = localStorage.getItem('userToken')
