@@ -1,35 +1,57 @@
 import { useState } from 'react';
-import { Button, Card, Col, Row, Typography, Input, Tooltip } from 'antd';
-import { useSelector } from 'react-redux';
+import { Button, Card, Col, Row, Typography, Input, Select } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { CloseOutlined } from '@ant-design/icons';
 import avatar from '../../assets/A.png';
 import { setCredentials } from '../../store/features/auth/authSlice';
 import { RootState } from '../../store/store';
-import place from '../../assets/Place.png';
 import './editProfile.scss'
 import Name from '@components/EditPages/Name';
 import Description from '@components/EditPages/Description';
 import Password from '@components/EditPages/Password';
-
+import { AnnouncementFilterType } from '@typess/types';
+import { postAdress } from '@store/features/postAdres/postSlice';
+import { useSelector } from 'react-redux';
 const { Title, Text } = Typography;
 
 const EditProfile = () => {
     const { payload } = useSelector((state: RootState) => setCredentials(state));
     const user = payload.auth.userInfo;
 
-    const [choice, setChoice] = useState('');
-
-    const claerInp = () => setChoice('');
-
     const [nameCard, setNameCard] = useState(false);
     const [passwordCard, setPasswordCard] = useState(false);
     const [descCard, setDescCard] = useState(false);
+
+    const [place, setPlace] = useState(false);
+
+    const [params, setParams] = useState<AnnouncementFilterType>({})
+    const [phone_number, setPhone] = useState('');
+    const [adress, setAdress] = useState('');
+    const [title, setTitle] = useState('');
+    const [image, setImage] = useState({});
+    
+
+    const setSelectLocation = (location: string) => setParams({ ...params, location })
+
+
+    const location = params.location
+    
+    
+    const id = user.id
+
+    // fake 
+    const adress_type = 'hostel'
+    const verified_adress = true
+    
+    
+
+    function postBtn() {
+        postAdress({ adress, adress_type, verified_adress, title, image,  phone_number, location, id })
+    }
     
 
 
   return (
-      <div style={{ maxWidth: '100%', margin: '0 auto' , background: 'white', display: 'flex', justifyContent: 'center', paddingTop: 40, paddingBottom: 80, position: 'relative' }}>
+      <div style={{ maxWidth: '100%', margin: '0 auto' , background: 'white', display: 'flex', justifyContent: 'center', paddingTop: 40, paddingBottom: 250, position: 'relative' }}>
         <Row>
             <Col span={8}>
                 <Card
@@ -100,19 +122,19 @@ const EditProfile = () => {
                             <Text className='main__title'>Добавить адрес</Text>
                         </Col>
                         <Col span={24}>
-                            <input type="checkbox" />
+                            <input type="checkbox" value="Хостелы/приюты" onChange={() => setPlace(!place)} />
                             <Text className='list'> Хостелы/приюты</Text>
                         </Col>
                         <Col span={24}>
-                            <input type="checkbox" />
+                            <input type="checkbox" value="Зоомагазины" />
                             <Text className='list'> Зоомагазины</Text>
                         </Col>
                         <Col span={24}>
-                            <input type="checkbox" />
+                            <input type="checkbox" value="Ветклиники" />
                             <Text className='list'> Ветклиники</Text>
                         </Col>
                         <Col span={24}>
-                            <input type="checkbox" />
+                            <input type="checkbox" value="Зооняни" />
                             <Text className='list'> Зооняни</Text>
                         </Col>
                     </Row>
@@ -120,20 +142,42 @@ const EditProfile = () => {
                 <div className="choice_place">
                     <Text>Местоположение</Text>
                     <div className="place">
-                        <Input
-                            placeholder=" Кыргызстан"
-                            prefix={<img src={place} alt='error'/>}
-                            value={choice}
-                            onChange={(e) => setChoice(e.target.value)}
-                            className='inp'
-                            suffix={
-                                <Tooltip title="Clear" >
-                                <CloseOutlined style={{ color: 'rgba(0,0,0,.45)' }} onClick={() => claerInp()} />
-                                </Tooltip>
-                            }
-                        />
-                        <button className='btn'>Подтвердить</button>
+                        <Col className="inp">
+                            <Select
+                            style={{ width: '100%' }}
+                            size={'large'}
+                            placeholder="Весь Кыргызстан"
+                            onChange={setSelectLocation}
+                            optionLabelProp="label"
+                            >
+                            <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
+                            <Select.Option value={'Ош'}>Ош</Select.Option>
+                            <Select.Option value={'Нарын'}>Нарын</Select.Option>
+                            <Select.Option value={'Иссык-Куль'}>Иссык-Куль</Select.Option>
+                            <Select.Option value={'Баткен'}>Баткен</Select.Option>
+                            <Select.Option value={'Джалал-Абад'}>Джалал-Абад</Select.Option>
+                            </Select>
+                        </Col>
                     </div>
+                        <Input
+                            placeholder=" Номер"
+                            className='inpNum'
+                            value={phone_number}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                        <Input
+                            placeholder=" Название"
+                            className='inpNum'
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <Input
+                            placeholder=" Адресс"
+                            className='inpNum'
+                            value={adress}
+                            onChange={(e) => setAdress(e.target.value)}
+                        />
+                        <button className='btn' onClick={() => postBtn()}>Подтвердить</button>
                 </div>
             </div>
         </Row>

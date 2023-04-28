@@ -25,9 +25,12 @@ const Description = ({ setDescCard, descCard }: any) => {
   
   
 
-  function handleDesc() {
-    changeDesc({ about_user, id});
+  async function handleDesc() {
+    const data = await changeDesc({ about_user, id });
+    setDescCard(false)
+    dispatch(setCredentials(data))
   }
+  
 
   return (
     <>
@@ -39,7 +42,7 @@ const Description = ({ setDescCard, descCard }: any) => {
                 <Text>Описание</Text>
                 <input type="text" value={about_user} onChange={(e) => setDesc(e.target.value)} className="descInp" />
             </div>
-            <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={() => handleDesc}>Сохранить</PrimaryButton>
+            <PrimaryButton style={{ width: 306, height: 40, marginTop: 30 }} onClick={() => handleDesc()}>Сохранить</PrimaryButton>
             <button className='btn' onClick={() => setDescCard(false)}>Отменить</button>
             </Card>
         </div>

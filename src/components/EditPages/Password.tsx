@@ -18,15 +18,15 @@ const Password = ({ passwordCard, setPasswordCard }: any) => {
 
     const dispatch = useTypedDispatch();
 
-    // const [old_password, setOldPassword] = useState('********');
+    const [old_password, setOldPassword] = useState('');
     const [new_password, setNewPassword] = useState('');
     const [new_password_confirm, setConfirmNewPassword] = useState('');
 
-    const old_password = user.password
     
 
     const handleSubmit = () => {
       changePassword({ old_password, new_password, new_password_confirm });
+      setPasswordCard(false)
     };
 
   return (
@@ -37,7 +37,7 @@ const Password = ({ passwordCard, setPasswordCard }: any) => {
             <Text className="card_title__password">Сменить пароль</Text>
             <div className="nameIps" style={{ marginTop: 30 }}>
                 <Text>Старый пароль</Text>
-                <input type="password" placeholder='********' />
+                <input type="password" value={old_password} onChange={(e) => setOldPassword(e.target.value)} />
                 <Text>Новый пароль</Text>
                 <input type="password" value={new_password} onChange={(e) => setNewPassword(e.target.value)} />
                 <Text>Подтверждение пароля</Text>
