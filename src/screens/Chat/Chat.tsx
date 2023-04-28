@@ -3,13 +3,9 @@ import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import { motion } from 'framer-motion'
 import moment from 'moment'
-import React, { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import useWebSocket, { ReadyState } from 'react-use-websocket'
 import { useTypedSelector } from 'src/hooks'
-import { WebsocketBuilder } from 'websocket-ts'
-
-import { API_URL } from '@api/index'
 
 import SendIcon from '../../../public/chat/send.svg'
 import { ChatApi, getChatsProps } from '../../api/Chat'
@@ -26,6 +22,8 @@ export const Chat = () => {
   const [chats, setChats] = useState<getChatsProps[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [ws, setWs] = useState<WebSocket | null>(null)
+  console.log(chats);
+
 
   // new WebSocket(`ws://104.199.175.143/ws/chat`)
   const changeChat = (user: getChatsProps) => {
@@ -142,7 +140,7 @@ export const Chat = () => {
                 preview={false}
                 height={40}
                 width={40}
-                src={"/user.png"} 
+                src={user.last_message?.author_photo ? user.last_message?.author_photo : "/user.png"}
               />
               <div className="sidebar_user_item_info">
                 <Typography.Title className="sidebar_user_item_info_name">
