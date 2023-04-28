@@ -43,7 +43,7 @@ export const Chat = () => {
   if (ws) {
     ws.onmessage = async (event) => {
       const data = JSON.parse(event.data)
-      const chats = await ChatApi.getChats()
+      const chats = await ChatApi.getChats()  
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
       console.log(data)
