@@ -6,11 +6,9 @@ import TomHoland from '../../assets/A.png';
 import './header.scss'
 import { Col, Typography } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
-import { useTypedDispatch } from 'src/hooks'
-
-import { logout } from '@store/features/auth/authSlice'
-
 import { PrimaryButton } from '..'
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 const { Text } = Typography
 
@@ -18,7 +16,8 @@ export const Header = () => {
   const { payload } = useSelector((state: RootState) => setCredentials(state));
   const user = payload.auth.userInfo;
   const navigate = useNavigate()
-  const dispatch = useTypedDispatch()
+
+  const [menu, setMenu] = useState(true)
 
   return (
     <HeaderWrapper className='header'>
@@ -63,6 +62,53 @@ export const Header = () => {
           </PrimaryButton>
         </Link>
       </Col>
+      {/* адаптация для мобильных  */}
+        {
+          menu ? (
+            <MenuOutlined onClick={() => setMenu(!menu)} className='nav__menu_icon' />
+          ) : (
+            <>
+            <div className='nav_line'></div>
+              <CloseOutlined onClick={() => setMenu(!menu)} className='nav__menu_icon-close' />
+              <Col className='nav__menu'>
+                <Link
+                  to="/about-us"
+                  className='header__link'
+                >
+                  О нас
+                </Link>
+                <Link
+                  to="papers"
+                  className='header__link'
+                >
+                  Статьи
+                </Link>
+                {
+                  user ? (
+                    <>
+                      <Link to={'/chats'} className='header__link-ms_inside'>Сообщения</Link>
+                      <Link to={'/profile'} className='header__link-nm_inside'> <img src={TomHoland} alt="error" width={40} height={40} /> {user.first_name}</Link>
+                    </>
+                    ):(
+                      <Link to={'/login'} className='nav-avatar_inside-menu'>Войти</Link>
+                    )
+                    }
+                <Link
+                  to={{
+                    pathname: '/new-announcement'
+                  }}
+                >
+                  <PrimaryButton
+                    className='nav__btn'
+                  >
+                    Новое объявление
+                  </PrimaryButton>
+                </Link>
+              </Col>
+            </>
+          )
+        }
+      
     </HeaderWrapper>
   )
 }
