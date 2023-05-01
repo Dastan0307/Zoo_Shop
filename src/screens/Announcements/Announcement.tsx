@@ -1,51 +1,30 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
-import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 import './announcement.scss'
 import { toast } from 'react-toastify'
 import { errorHandler } from '@utils/errorHandler'
-import { current } from '@reduxjs/toolkit'
-import { number } from 'yup'
+import { PostAnnouncementTypes } from '../../types/types'
+import no_foto from '../../assets/no_photo.jpg'
+
+
 const { Title, Text, Paragraph } = Typography
-type PostAnnouncementTypes = {
-  slug?: string
-  user?: string
-  photos?: [
-    {
-      id: number,
-      announcement: string,
-      image: string,
-      image_url: string,
-    }
-  ]
-  title: string
-  price?: string
-  description: string
-  phone_number: string
-  location: string
-  created_at?: string
-  updated_at?: string
-  views_count?: number
-  category: string
-}
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
-  // const [data, setData] = useState<PostAnnouncementTypes>()
-  const [index, setIndex] = useState<number>(0)
-  const [isPhone, setIsPhone] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
+  const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
 
-  const { data } = useGetAnnouncementQuery(id)
-  const photos = data && data?.photos
+  console.log(announ);
+  
+  
 
   const pohotos: string[] = [
     'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
@@ -53,18 +32,21 @@ export const Announcements: React.FC = () => {
     'https://paradepets.com/.image/t_share/MTkxMzY1Nzg4NjczMzIwNTQ2/cutest-dog-breeds-jpg.jpg'
   ]
 
-  console.log(data);
-
-  async function getAnnoun(id: any) {
-    try {
-      const res = await api.get<PostAnnouncementTypes>(`announcements/${id}/`)
-      // setData(res.data)
-    } catch (error: AxiosError | any) {
-      errorHandler(error)
-    }
-  }
-  useEffect(() => {
-    getAnnoun(id)
+  
+  useLayoutEffect(() => {
+    (async () =>  {
+      const token = localStorage.getItem('access_token')
+      try {
+        const res = await api.get<PostAnnouncementTypes>(`/announcements/${id}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setAnnoun(res.data)
+      } catch (error: AxiosError | any) {
+        errorHandler(error)
+      }
+    })()
   }, [id])
 
 
@@ -91,9 +73,9 @@ export const Announcements: React.FC = () => {
   return (
     <div className="announcements">
       <Row className="title">
-        <Title level={2}>{data?.title}</Title>
-        {userInfo?.id === data?.user ? (
-          <Link to={`/edit-announcement/${data?.slug}`}>Редактировать</Link>
+        <Title level={2}>{announ?.title}</Title>
+        {userInfo?.id === announ?.user ? (
+          <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
         ) : null}
       </Row>
       <div className="main">
@@ -102,8 +84,11 @@ export const Announcements: React.FC = () => {
             <Row className="big-image">
               <Col>
                 {
-                  photos && <Carousel ref={carouselRef}>
-                    {photos && photos.map(photo => <Image className='image-corusel' width={713} preview={false} src={photo.image_url} key={photo.id} />)}
+                  announ?.photos &&  announ.photos.length > 0 ? <Carousel ref={carouselRef}>
+                  {announ?.photos && announ?.photos.map(photo => <Image className='image-corusel' width={713} preview={false} src={photo.image_url} key={photo.id} />)}
+                </Carousel> :
+                  <Carousel ref={carouselRef}>
+                    {[1,2,3].map((photo, index) => <Image className='image-corusel' width={713} preview={false} src={no_foto} key={index} />)}
                   </Carousel>
                 }
                 <LeftOutlined onClick={handlePrev} />
@@ -112,7 +97,7 @@ export const Announcements: React.FC = () => {
             </Row>
             <Row className="slides__img">
               <Col>
-                {photos && photos.map((photo, index) => {
+                {announ?.photos && announ?.photos.map((photo, index) => {
                   return (
                     <Image
                       className='image-corusel'
@@ -132,7 +117,7 @@ export const Announcements: React.FC = () => {
                 <Text className="gray-text">Местоположение</Text>
               </Col>
               <Col span={12} className="middle-text">
-                <Paragraph>{data?.location}</Paragraph>
+                <Paragraph>{announ?.location}</Paragraph>
               </Col>
             </Row>
             <Divider />
@@ -141,7 +126,7 @@ export const Announcements: React.FC = () => {
                 <Text className="gray-text">Описание</Text>
               </Col>
               <Col span={12}>
-                <Paragraph className="middle-text">{data?.description}</Paragraph>
+                <Paragraph className="middle-text">{announ?.description}</Paragraph>
               </Col>
             </Row>
             <Divider />
@@ -150,27 +135,27 @@ export const Announcements: React.FC = () => {
                 <Text className="gray-text">Категория</Text>
               </Col>
               <Col span={12}>
-                <Paragraph className="middle-text">{data?.category}</Paragraph>
+                <Paragraph className="middle-text">{announ?.category}</Paragraph>
               </Col>
             </Row>
           </div>
         </div>
         <div className="sider">
-          <Text>{data === null ? 'бесплатно ДЭЭ' : `${data?.price} KGS`}</Text>
+          <Text>{announ === null ? 'бесплатно ДЭЭ' : `${announ?.price} KGS`}</Text>
           <Row>
             <Image src="/gost.jpg" />
-            <Text>{data?.user_name}</Text>
+            <Text>{announ?.user_name}</Text>
           </Row>
           <Row className="phone">
             <Text>Номер телефона</Text>
-            <Text>{data?.phone_number}</Text>
+            <Text>{announ?.phone_number}</Text>
           </Row>
           <Button
             onClick={() => {
               if (userInfo?.access) {
                 console.log(userInfo)
 
-                navigate('/chats', { state: { anoun: data?.slug, id: userInfo.id } })
+                navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
               } else {
                 toast.warning('авторизуйтесь')
               }

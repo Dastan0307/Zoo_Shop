@@ -1,19 +1,18 @@
 import { Button, Typography, message, Popconfirm, Image } from 'antd'
 import { AxiosError, AxiosResponse } from 'axios'
-import { useState } from 'react'
-import { Field, Formik } from 'formik'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AnnouncementTypes } from '@typess/types'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
+import { CategoriesType, CategoryType, PostAnnouncementTypes } from '../../../types/types'
 import api from '../../../api'
 import './newAnnouncement.scss'
 import { motion } from 'framer-motion'
-import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 const { Title } = Typography
 
-type PostAnnouncementTypes = {
+type PostAnnouncementTypess = {
   slug?: string | undefined
   user?: string | undefined
   photos?: any | undefined
@@ -30,15 +29,47 @@ type PostAnnouncementTypes = {
 
 export const EditAnnouncement = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [count, setCount] = useState<number>(0)
   const { announcement } = useParams()
-  const {data, error, isLoading} = useGetAnnouncementQuery(announcement)
-  const photo = data?.photos
+  const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
+  const [categories, setCategories] = useState<CategoryType[]> ([])
   const navigate = useNavigate()
+
+  console.log(announ);
+  
+
+  useLayoutEffect(() => {
+    (async () =>  {
+      try {
+        const res = await api.get<CategoriesType>(`/categories/`)
+        setCategories(res.data.results)
+      } catch (error: AxiosError | any) {
+        errorHandler(error)
+      }
+    })()
+  }, [announcement])
+  
+  useLayoutEffect(() => {
+    (async () =>  {
+      const token = localStorage.getItem('access_token')
+      try {
+        const res = await api.get<PostAnnouncementTypes>(`/announcements/${announcement}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setAnnoun(res.data)
+      } catch (error: AxiosError | any) {
+        errorHandler(error)
+      }
+    })()
+  }, [announcement])
+
 
   const confirm = async () => {
       const token = localStorage.getItem('access_token')
       try {
-        await api.delete(`announcements/${data?.slug}/`, {
+        await api.delete(`announcements/${announ?.slug}/`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -46,7 +77,7 @@ export const EditAnnouncement = () => {
       } catch (error: AxiosError | any) {
         errorHandler(error)
       }
-    message.success(`Вы удалили объявление ${data?.title}`);
+    message.success(`Вы удалили объявление ${announ?.title}`);
     setTimeout(() => {
       navigate('/')
     }, 3000)
@@ -57,20 +88,15 @@ export const EditAnnouncement = () => {
   };
 
 
-  const initialValues: PostAnnouncementTypes = {
-    title: data?.title,
-    price: data?.price,
-    description: data?.description,
-    location: data?.location,
-    category: data?.category,
-    phone_number: data?.phone_number,
+  const initialValues: PostAnnouncementTypess = {
+    title: announ && announ.title,
+    price: announ?.price,
+    description: announ?.description,
+    location: announ?.location,
+    category: announ?.category,
+    phone_number: announ?.phone_number,
   }
 
-
-  const categories: string[] = [
-    'dogs',
-    'koshki',
-  ]
   const locations: string[] = [
     'Бишкек',
     'Ош',
@@ -83,10 +109,11 @@ export const EditAnnouncement = () => {
 
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      setCount(e.target.files.length)
       setSelectedFiles(e.target.files);
     }
   }
-  const submitForm = async (data: PostAnnouncementTypes) => {
+  const submitForm = async (data: PostAnnouncementTypess) => {
     console.log(data);
     
     const token = localStorage.getItem('access_token')
@@ -129,7 +156,7 @@ export const EditAnnouncement = () => {
         },
       })
 
-      message.success(`создал ${data.title}`)
+      message.success(`Вы изменили объявление ${data.title}`)
       console.log(data)
       setTimeout(() => {
         navigate(`/`)
@@ -158,11 +185,11 @@ export const EditAnnouncement = () => {
         <Form>
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
-            <Select name="category" defaultValue={data?.category}>
-              {categories.map((category) => {
+            <Select name="category" defaultValue={announ?.category}>
+              {categories && categories.map((category) => {
                 return (
-                  <Select.Option key={category} value={category}>
-                    {category}
+                  <Select.Option key={category.slug} value={category.slug}>
+                    {category.title}
                   </Select.Option>
                 )
               })}
@@ -203,7 +230,7 @@ export const EditAnnouncement = () => {
           </Form.Item>
           <div className='old-photos'>
             {
-              photo && photo.map(photo => {
+              announ?.photos && announ?.photos.map(photo => {
                 return (
                   <Image preview={false} key={photo.id} src={photo.image_url}/>
                 )
@@ -211,18 +238,23 @@ export const EditAnnouncement = () => {
             }
           </div>
           <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
-            <div className='files'>
-              <label>
-                <Input
-                  className='input-file'
-                  multiple
-                  type="file"
-                  name="photos"
-                  placeholder="Описание"
-                  onChange={photoChange}
-                />
-                <span className='text'>Обновить Фотографии</span>
-              </label>
+          <div className='display-files'>
+              <div className='files'>
+                <label>
+                  <Input
+                    className='input-file'
+                    multiple
+                    type="file"
+                    name="photos"
+                    placeholder="Описание"
+                    onChange={photoChange}
+                  />
+                  <span className='text'>Добавить Фотографии</span>
+                </label>
+              </div>
+              {
+                count > 0 && <p>{`Количество фотографий ${count}`}</p>
+              }
             </div>
             <label style={{width: 570}}>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
@@ -234,7 +266,7 @@ export const EditAnnouncement = () => {
             showValidateSuccess={true}
             hasFeedback={true}
           >
-            <Select defaultValue={data?.location} name="location" placement="bottomRight">
+            <Select defaultValue={announ?.location} name="location" placement="bottomRight">
               {locations.map((loc) => {
                 return (
                   <Select.Option key={loc} value={loc}>
