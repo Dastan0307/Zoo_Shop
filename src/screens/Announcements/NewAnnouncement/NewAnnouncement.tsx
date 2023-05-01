@@ -8,6 +8,7 @@ import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
 import './newAnnouncement.scss'
 import { useNavigate } from 'react-router-dom'
+import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
 
 const { Title } = Typography
 type PostAnnouncementTypes = {
@@ -26,6 +27,9 @@ type PostAnnouncementTypes = {
 }
 
 export const NewAnnouncement = () => {
+  const [count, setCount] = useState<number>(0)
+  const { data } = useGetCategoriesQuery('s')
+  const categories = data?.results
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const navigate = useNavigate()
   const initialValues: PostAnnouncementTypes = {
@@ -38,10 +42,6 @@ export const NewAnnouncement = () => {
     phone_number: '+996 ',
   }
 
-  const categories: string[] = [
-    'dogs',
-    'cats',
-  ]
   const locations: string[] = [
     'Бишкек',
     'Ош',
@@ -53,6 +53,7 @@ export const NewAnnouncement = () => {
   ]
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      setCount(e.target.files.length)
       setSelectedFiles(e.target.files);
     }
   }
@@ -114,10 +115,10 @@ export const NewAnnouncement = () => {
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
             <Select name="category">
-              {categories.map((category) => {
+              {categories && categories.map((category) => {
                 return (
-                  <Select.Option key={category} value={category}>
-                    {category}
+                  <Select.Option key={category.slug} value={category.slug}>
+                    {category.title}
                   </Select.Option>
                 )
               })}
@@ -160,18 +161,23 @@ export const NewAnnouncement = () => {
             <label htmlFor="photos" id="photos">
               Фотографии
             </label>
-            <div className='files'>
-              <label>
-                <Input
-                  className='input-file'
-                  multiple
-                  type="file"
-                  name="photos"
-                  placeholder="Описание"
-                  onChange={photoChange}
-                />
-                <span className='text'>Добавить Фотографии</span>
-              </label>
+            <div className='display-files'>
+              <div className='files'>
+                <label>
+                  <Input
+                    className='input-file'
+                    multiple
+                    type="file"
+                    name="photos"
+                    placeholder="Описание"
+                    onChange={photoChange}
+                  />
+                  <span className='text'>Добавить Фотографии</span>
+                </label>
+              </div>
+              {
+                count > 0 && <p>{`Количество фотографии ${count}`}</p>
+              }
             </div>
             <label>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.

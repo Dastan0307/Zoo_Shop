@@ -186,3 +186,26 @@ export interface OrganizarionParamsType {
   location?: string
   test?: string
 }
+
+export interface PostAnnouncementTypes {
+  slug?: string
+  user?: string
+  photos?: [
+    {
+      id: number,
+      announcement: string,
+      image: string,
+      image_url: string,
+    }
+  ]
+  title: string
+  price?: string
+  description: string
+  phone_number: string
+  location: string
+  created_at?: string
+  updated_at?: string
+  views_count?: number
+  category: string
+  user_name: string
+}

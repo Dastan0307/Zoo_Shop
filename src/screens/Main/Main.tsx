@@ -24,7 +24,7 @@ export const Main = () => {
   const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
-  const res = useGetCategoriesQuery('1').currentData
+  const res = useGetCategoriesQuery('s').currentData
   const categories = res?.results 
 
   const searchInput = useRef<InputRef>(null)
