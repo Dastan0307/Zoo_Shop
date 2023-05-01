@@ -43,7 +43,7 @@ export interface UserData {
   last_login?: string
   password?: string
   user_permissions?: []
-  users_announsments?: []
+  users_announsments?: AnnouncementTypes[]
 }
 
 export interface AnnouncementTypes {

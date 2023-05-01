@@ -1,4 +1,16 @@
-import { Button, Card, Col, Image, Input, InputRef, Layout, List, Row, Select, Typography } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Image,
+  Input,
+  InputRef,
+  Layout,
+  List,
+  Row,
+  Select,
+  Typography,
+} from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import { motion } from 'framer-motion'
@@ -25,7 +37,7 @@ export const Main = () => {
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
   const res = useGetCategoriesQuery('1').currentData
-  const categories = res?.results 
+  const categories = res?.results
 
   const searchInput = useRef<InputRef>(null)
   const lowerPriceInput = useRef<InputRef>(null)
@@ -46,9 +58,12 @@ export const Main = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setParams({ ...params, category: value.slug })
   }
-  const cleanParams = (searchInput: RefObject<InputRef>, lowerPriceInput: RefObject<InputRef>, higherPriceInput: RefObject<InputRef>) => {
+  const cleanParams = (
+    searchInput: RefObject<InputRef>,
+    lowerPriceInput: RefObject<InputRef>,
+    higherPriceInput: RefObject<InputRef>,
+  ) => {
     setParams({})
-
   }
   const handlePriceButton = () => {
     setParams({ ...params, lower_price: '-1', higher_price: '-1' })
@@ -84,7 +99,16 @@ export const Main = () => {
       transition={{ duration: 0.5 }}
       className="main"
     >
-      <Input placeholder="Поиск" ref={searchInput} onChange={(e) => mainType == 'org' ? setOrgParams({ ...orgParams, search: e.target.value }) : debouncedOnChange(e)} name="search" />
+      <Input
+        placeholder="Поиск"
+        ref={searchInput}
+        onChange={(e) =>
+          mainType == 'org'
+            ? setOrgParams({ ...orgParams, search: e.target.value })
+            : debouncedOnChange(e)
+        }
+        name="search"
+      />
       <Row className="main_type_wrapper">
         <Col span={12}>
           <Card
@@ -120,7 +144,11 @@ export const Main = () => {
                   <div>
                     <Typography.Title level={4}>Категории</Typography.Title>
                   </div>
-                  <Typography.Text onClick={() => cleanParams(searchInput, lowerPriceInput, higherPriceInput)}>
+                  <Typography.Text
+                    onClick={() =>
+                      cleanParams(searchInput, lowerPriceInput, higherPriceInput)
+                    }
+                  >
                     Очистить
                   </Typography.Text>
                 </Row>
@@ -154,7 +182,6 @@ export const Main = () => {
                     name="lower_price"
                     ref={lowerPriceInput}
                     onChange={debouncedOnChange}
-
                   />
                   <Input
                     type="number"
@@ -163,7 +190,6 @@ export const Main = () => {
                     name="higher_price"
                     ref={higherPriceInput}
                     onChange={debouncedOnChange}
-
                   />
                 </div>
                 <Button
@@ -212,8 +238,7 @@ export const Main = () => {
                       <List.Item
                         className="category_list_item active"
                         style={{ border: 'none' }}
-                        onClick={(e) => setOrgParams({ ...orgParams, category: value })
-                        }
+                        onClick={(e) => setOrgParams({ ...orgParams, category: value })}
                         key={index}
                       >
                         <span>{value}</span>
@@ -243,16 +268,26 @@ export const Main = () => {
           )}
         </Sider>
         <Content className="main-content">
-          {mainType == 'announ'
-            ? announ &&
-              announ[0] ? announ.map((value) => (
+          {mainType == 'announ' ? (
+            announ && announ[0] ? (
+              announ.map((value) => (
                 <CardMain key={value.slug} value={value} type="main" />
-              )) : <motion.div initial={{ opacity: 0 }}
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5 }} style={{ display: 'flex', justifyContent: 'center' }} >
-              <Typography.Title level={4}><Image src='/noData.png.png' width={100} /> нет результатов(</Typography.Title>
-            </motion.div>
-            : orgs && orgs.map((value) => <CardOrg key={value.id} {...value} />)}
+                transition={{ duration: 0.5 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <Typography.Title level={4}>
+                  <Image src="/noData.png.png" width={100} /> нет результатов(
+                </Typography.Title>
+              </motion.div>
+            )
+          ) : (
+            orgs && orgs.map((value) => <CardOrg key={value.id} {...value} />)
+          )}
         </Content>
       </Layout>
     </motion.div>

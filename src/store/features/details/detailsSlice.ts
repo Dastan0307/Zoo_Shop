@@ -1,21 +1,28 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { CardsState }  from '../../../types/types';
-import axios from 'axios';
+import axios from 'axios'
 
+import { API_URL } from '@api/index'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-const api = 'http://localhost:3000';
+import { CardsState } from '../../../types/types'
 
 export const fetchCards = createAsyncThunk('card/fetchCards', async () => {
-  const data = await axios.get(`${api}/products`);
-  return data.data
-});
-
+  try {
+    const data = await axios.get(`${API_URL}/products`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+    })
+    console.log(data);
+    
+    return data.data
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 const initialState: CardsState = {
   data: [],
   status: 'idle',
   error: null,
-};
+}
 
 const cardSlice = createSlice({
   name: 'card',
@@ -23,18 +30,18 @@ const cardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCards.pending, (state) => {
-      state.status = "loading";
-      state.error = null;
-    });
+      state.status = 'loading'
+      state.error = null
+    })
     builder.addCase(fetchCards.fulfilled, (state, action) => {
       state.data = action.payload
-      state.status = "succeeded";
-    });
+      state.status = 'succeeded'
+    })
     builder.addCase(fetchCards.rejected, (state, action) => {
-      state.status = "failed";
-      state.error = action.error.message || 'Something went wrong';
-    });
+      state.status = 'failed'
+      state.error = action.error as string
+    })
   },
-});
+})
 
-export default cardSlice.reducer;
+export default cardSlice.reducer

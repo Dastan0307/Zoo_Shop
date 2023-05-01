@@ -15,10 +15,10 @@ export class AuthApi {
   }
   static async login(body: RegisterTypes) {
     try {
-      const { data } = await api.post<UserData>('login/', body)
-      localStorage.setItem('access_token', data.access!)
-      localStorage.setItem('refresh_token', data.refresh!)
-      return data
+      const res = await api.post<UserData>('login/', body)
+      localStorage.setItem('access_token', res.data.access!)
+      localStorage.setItem('refresh_token', res.data.refresh!)
+      return res
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
@@ -35,6 +35,14 @@ export class AuthApi {
     try {
       const data = await api.post('account/forgot_password_complete/', body)
       return data
+    } catch (error: AxiosError | any) {
+      errorHandler(error)
+    }
+  }
+  static async getCurrentUser(id: number) {
+    try {
+      const res = await api.get<UserData>(`account/${id}/`)
+      return res
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }

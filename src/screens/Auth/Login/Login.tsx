@@ -6,7 +6,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 
+import { AuthApi } from '@api/AuthApi'
 import { userLogin } from '@store/features/auth/authActions'
+import { setCredentials } from '@store/features/auth/authSlice'
 import { RegisterTypes } from '@typess/types'
 import { LoginValidate } from '@utils/validate'
 
@@ -19,10 +21,11 @@ export const Login = () => {
   const navigate = useNavigate()
 
   const submitForm = async (data: RegisterTypes) => {
-    dispatch(userLogin(data))
-    if (userInfo) {
+    const res = await AuthApi.login(data)
+    if (res?.status == 200) {
+      toast.success('вы вошли как: ' + res.data?.first_name)
+      dispatch(setCredentials(res.data))
       navigate('/')
-      toast.success('вы вошли как:' + userInfo?.first_name)
     }
   }
 

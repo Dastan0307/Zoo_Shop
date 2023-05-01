@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { changeName } from '@store/EditUser/editSlice'
 import { AuthProps, UserData } from '@typess/types'
 
 import { userLogin } from './authActions'
-import { changeName } from '@store/EditUser/editSlice'
 
 // initialize userToken from local storage
 // const userToken = localStorage.getItem('userToken')
@@ -29,24 +29,9 @@ const authSlice = createSlice({
       state.userToken = null
       state.success = false
     },
-    setCredentials: (state, { payload }) => {
-      state.userInfo = payload
-    },
-  },
-  extraReducers(builder) {
-    builder.addCase(userLogin.pending, (state) => {
-      state.loading = true
-    })
-    builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.loading = false
+    setCredentials: (state, action: PayloadAction<UserData>) => {
       state.userInfo = action.payload
-      // state.userToken = action.payload.userToken
-      state.success = true
-    })
-    builder.addCase(userLogin.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    })
+    },
   },
 })
 
