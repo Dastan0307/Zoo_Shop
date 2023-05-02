@@ -1,0 +1,45 @@
+.CardProfile {
+    margin-top: 15px !important;
+    height: 177px !important;
+    display: flex !important;
+    // background: red !important;
+    @media screen and (max-width: 480px) {
+      height: 430px !important;
+      justify-content: center !important;
+    }
+    &-wrapper {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      @media screen and (max-width: 480px) {
+        flex-wrap: wrap !important;
+      }
+      &_image {
+        display: flex !important;
+        justify-content: center !important;
+        @media screen and (max-width: 480px) {
+          width: 100% !important;
+        }
+      }
+      &_content{
+          width: 100% !important;
+          @media screen and (max-width: 480px) {
+              // display: flex !important;
+              // justify-content: center !important;
+              // background: gray !important;
+              margin-top: 20px;
+              // width: 300px !important;
+          }
+      }
+    }
+    &_img {
+      width: 137px !important;
+      height: 137px !important;
+      @media screen and (max-width: 480px) {
+        width: 330px !important;
+        max-width: 100% !important;
+      //   width: 100% !important;
+        height: 200px !important;
+      }
+    }
+  }
+  
