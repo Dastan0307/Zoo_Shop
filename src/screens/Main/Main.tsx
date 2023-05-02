@@ -36,13 +36,9 @@ export const Main = () => {
   const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
-<<<<<<< HEAD
-  const res = useGetCategoriesQuery('1').currentData
-  const categories = res?.results
-=======
+
   const res = useGetCategoriesQuery('s').currentData
   const categories = res?.results 
->>>>>>> 67aa3897c47c61999f771186a747a54670ff5ff6
 
   const searchInput = useRef<InputRef>(null)
   const lowerPriceInput = useRef<InputRef>(null)

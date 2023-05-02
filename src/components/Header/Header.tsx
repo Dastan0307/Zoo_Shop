@@ -1,14 +1,12 @@
 import { Col, Typography } from 'antd'
 import { Header as HeaderWrapper } from 'antd/es/layout/layout'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons'
 
 import TomHoland from '../../assets/A.png'
-import { setCredentials } from '../../store/features/auth/authSlice'
 import { RootState } from '../../store/store'
 import { PrimaryButton } from '..'
 
