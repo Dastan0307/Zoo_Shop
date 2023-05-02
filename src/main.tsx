@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import ScrollToTop from '@components/ScrollToTop/ScrollToTop'
 import { persistor, store } from '@store/store'
 import { theme } from '@utils/theme'
 
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <PersistGate loading={false} persistor={persistor}>
       <ConfigProvider theme={theme}>
         <BrowserRouter>
+          <ScrollToTop />
           <App />
           <ToastContainer />
         </BrowserRouter>

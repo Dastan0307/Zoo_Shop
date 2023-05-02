@@ -1,6 +1,6 @@
 export interface AuthProps {
   loading?: boolean
-  userInfo?: UserData | null
+  userInfo?: UserData
   userToken?: string | null | unknown
   error?: string | null | unknown
   success?: boolean
@@ -25,25 +25,26 @@ export interface loginProps {
 
 export interface UserData {
   about_user: string
-  access?: string
+  access: string
   date_joined: string
   email: string
   first_name: string
   id: number
   last_name: string
   phone_number: string
-  refresh?: string
+  refresh: string
   telegram_url: string
   username: string
-  group?: []
-  activation_code?: string
-  is_active?: boolean
-  is_staff?: boolean
-  is_superuser?: boolean
-  last_login?: string
-  password?: string
-  user_permissions?: []
-  users_announsments?: AnnouncementTypes[]
+  group: []
+  activation_code: string
+  is_active: boolean
+  is_staff: boolean
+  is_superuser: boolean
+  last_login: string
+  password: string
+  image: string
+  user_permissions: []
+  users_announsments: AnnouncementTypes[]
 }
 
 export interface AnnouncementTypes {
@@ -88,7 +89,7 @@ export interface CategoryType {
 export interface OrgParams {
   location?: string
   search?: string
-  category?: string
+  adress_type?: string
 }
 
 export interface AnnouncementFilterType {

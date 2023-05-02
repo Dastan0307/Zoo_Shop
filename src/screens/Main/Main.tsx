@@ -13,9 +13,11 @@ import {
 } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
-import { motion } from 'framer-motion'
+import { color, motion } from 'framer-motion'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
+import { CloseOutlined, MenuOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { AnnouncementApi } from '@api/AnnouncementApi'
 import { CardMain, CardOrg } from '@components/index'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
@@ -35,10 +37,13 @@ export const Main = () => {
   const [orgParams, setOrgParams] = useState<OrgParams>({})
   const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
-  const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
+  const [mobile, setMobile] = useState<boolean>(true)
 
-  const res = useGetCategoriesQuery('k').currentData
-  const categories = res?.results 
+  const MobileQuery = useMediaQuery({ query: '(max-width:800px)' })
+
+  const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
+  const res = useGetCategoriesQuery('1').currentData
+  const categories = res?.results
 
   const searchInput = useRef<InputRef>(null)
   const lowerPriceInput = useRef<InputRef>(null)
@@ -59,17 +64,12 @@ export const Main = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setParams({ ...params, category: value.slug })
   }
-  const cleanParams = (
-    searchInput: RefObject<InputRef>,
-    lowerPriceInput: RefObject<InputRef>,
-    higherPriceInput: RefObject<InputRef>,
-  ) => {
+  const cleanParams = () => {
     setParams({})
   }
   const handlePriceButton = () => {
     setParams({ ...params, lower_price: '-1', higher_price: '-1' })
   }
-  console.log(params)
 
   useEffect(() => {
     const getData = async () => {
@@ -83,13 +83,19 @@ export const Main = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await AnnouncementApi.getOrganization(params)
+      const data = await AnnouncementApi.getOrganization(orgParams)
       if (data?.data) {
         setOrgs(data?.data.results)
       }
     }
     getData()
-  }, [])
+  }, [orgParams])
+
+  useEffect(() => {
+    if (!MobileQuery) {
+      setMobile(true)
+    }
+  }, [MobileQuery])
 
   const setSelectLocation = (location: string) => setParams({ ...params, location })
   const debouncedOnChange = debounce(handleSetParamsValue, 500)
@@ -100,44 +106,89 @@ export const Main = () => {
       transition={{ duration: 0.5 }}
       className="main"
     >
-      <Input
-        placeholder="Поиск"
-        ref={searchInput}
-        onChange={(e) =>
-          mainType == 'org'
-            ? setOrgParams({ ...orgParams, search: e.target.value })
-            : debouncedOnChange(e)
-        }
-        name="search"
-      />
-      <Row className="main_type_wrapper">
-        <Col span={12}>
-          <Card
-            className="main_type"
-            onClick={() => {
-              setMainType('announ')
-            }}
-          >
-            <Typography.Title level={3}>Питомцы</Typography.Title>
-            <Typography.Text>Выберите питомца по душе</Typography.Text>
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card
-            className="main_type_2"
-            onClick={() => {
-              setMainType('org')
-            }}
-          >
-            <Typography.Title level={3}>Организации</Typography.Title>
-            <Typography.Text>
-              Ветеринарные клиники, <br /> зоомагазины и приюты
-            </Typography.Text>
-          </Card>
-        </Col>
+      <Row className="main_wrapper-search">
+        <Input
+          placeholder="Поиск"
+          className="main_search"
+          ref={searchInput}
+          onChange={(e) =>
+            mainType == 'org'
+              ? setOrgParams({ ...orgParams, search: e.target.value })
+              : debouncedOnChange(e)
+          }
+          name="search"
+        />
       </Row>
-      <Layout style={{ display: 'flex', gap: '30px' }}>
-        <Sider className="sideBar">
+      {MobileQuery ? (
+        <Row justify={'center'}>
+          <div className="main_type_mobile">
+            <Typography.Text
+              style={{
+                fontSize: '22px',
+                color: mainType == 'announ' ? '#FFD02B' : '#333333',
+              }}
+              onClick={() => {
+                setMainType('announ')
+              }}
+            >
+              Питомцы
+            </Typography.Text>
+            <Typography.Text style={{ fontSize: '18px', padding: ' 0 15px' }}>
+              |
+            </Typography.Text>
+            <Typography.Text
+              style={{
+                fontSize: '22px',
+                color: mainType == 'org' ? '#FFD02B' : '#333333',
+              }}
+              onClick={() => {
+                setMainType('org')
+              }}
+            >
+              Организации
+            </Typography.Text>
+          </div>
+        </Row>
+      ) : (
+        <Row className="main_type_wrapper">
+          <Col md={12} xs={24}>
+            <Card
+              className="main_type"
+              onClick={() => {
+                setMainType('announ')
+              }}
+            >
+              <Typography.Title level={3}>Питомцы</Typography.Title>
+              <Typography.Text className="main_type_text">
+                Выберите питомца по душе
+              </Typography.Text>
+            </Card>
+          </Col>
+          <Col md={12} xs={24}>
+            <Card
+              className="main_type_2"
+              onClick={() => {
+                setMainType('org')
+              }}
+            >
+              <Typography.Title level={3}>Организации</Typography.Title>
+              <Typography.Text className="main_type_text">
+                Ветеринарные клиники, <br /> зоомагазины и приюты
+              </Typography.Text>
+            </Card>
+          </Col>
+        </Row>
+      )}
+      <Row className="close_btn" onClick={() => setMobile(!mobile)}>
+        {' '}
+        {mobile ? (
+          <CloseOutlined style={{ fontSize: 20 }} />
+        ) : (
+          <MenuOutlined style={{ fontSize: 20 }} />
+        )}{' '}
+      </Row>
+      <Layout style={{ display: 'flex', gap: '30px', overflow: 'hidden' }}>
+        <Sider className="sideBar" style={{ left: mobile ? '0%' : '-100%' }}>
           {mainType == 'announ' ? (
             <Row>
               <Col style={{ width: '100%' }}>
@@ -145,11 +196,7 @@ export const Main = () => {
                   <div>
                     <Typography.Title level={4}>Категории</Typography.Title>
                   </div>
-                  <Typography.Text
-                    onClick={() =>
-                      cleanParams(searchInput, lowerPriceInput, higherPriceInput)
-                    }
-                  >
+                  <Typography.Text onClick={() => cleanParams()}>
                     Очистить
                   </Typography.Text>
                 </Row>
@@ -225,24 +272,32 @@ export const Main = () => {
               </Col>
             </Row>
           ) : (
-            <Row>
+            <Row className="sideBar_org">
               <Col>
                 <Typography.Title level={5}>Категории</Typography.Title>
                 <List>
                   {categories &&
                     [
-                      'Ветеринарные клиники',
-                      'Зоомагазины',
-                      'Хостелы/приюты',
-                      'Зооняни',
+                      { title: 'Ветеринарные клиники', slug: 'clinic' },
+                      { title: 'Зоомагазины', slug: 'zooshop' },
+                      { title: 'Хостелы/приюты', slug: 'hostel' },
+                      { title: 'Зооняни', slug: 'babysitter' },
                     ].map((value, index) => (
                       <List.Item
                         className="category_list_item active"
                         style={{ border: 'none' }}
-                        onClick={(e) => setOrgParams({ ...orgParams, category: value })}
+                        onClick={(e) =>
+                          setOrgParams({ ...orgParams, category: value.slug })
+                        }
                         key={index}
                       >
-                        <span>{value}</span>
+                        <span
+                          style={{
+                            color: orgParams.category == value.slug ? '#96e7b7' : '#333333',
+                          }}
+                        >
+                          {value.title}
+                        </span>
                       </List.Item>
                     ))}
                 </List>
@@ -260,7 +315,7 @@ export const Main = () => {
                   <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
                   <Select.Option value={'Ош'}>Ош</Select.Option>
                   <Select.Option value={'Нарын'}>Нарын</Select.Option>
-                  <Select.Option value={'Иссык-Куль'}>Иссык-Куль</Select.Option>
+                  <Select.Option value={'Иссык-куль'}>Иссык-Куль</Select.Option>
                   <Select.Option value={'Баткен'}>Баткен</Select.Option>
                   <Select.Option value={'Джалал-Абад'}>Джалал-Абад</Select.Option>
                 </Select>

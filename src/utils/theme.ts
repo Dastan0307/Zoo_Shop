@@ -3,7 +3,7 @@ import { ThemeConfig } from 'antd'
 export const theme: ThemeConfig = {
   token: {
     fontFamily: 'Montserrat, sans-serif',
-    colorPrimary: '#96e7b7',
+    colorPrimary: '#FFD02B',
     colorSuccess: '#52c41a',
     colorPrimaryBg: '#ffffff',
     colorBgContainer: '#ffffff',
@@ -11,6 +11,7 @@ export const theme: ThemeConfig = {
     colorBgLayout: '#fff',
     fontSizeHeading1: 96,
     fontSizeHeading2: 48,
+    fontSizeHeading3: 24,
     fontSizeHeading4: 24,
     fontSizeHeading5: 18,
     fontSize: 14,

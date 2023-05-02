@@ -7,16 +7,9 @@ import './card-org.scss'
 
 export const CardOrg = ({
   adress,
-  adress_type,  
-  id,
   image,
-  location,
-  phone_number,
   title,
-  user,
-  verified_adress,
 }: OrganizarionType) => {
-  console.log(adress_type, adress)
 
   return (
     <Card style={{border: 'none'}} >

@@ -4,6 +4,9 @@
   max-width: 1080px;
   margin: 0 auto;
   padding: 20px 0;
+  &_wrapper-search{
+    padding: 0 15px !important;
+  }
   &_type {
     max-width: 530px;
     height: 120px;
@@ -12,6 +15,15 @@
     background-position: right 0;
     box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    @media screen and (max-width: 720px) {
+      height: 70px;
+      max-width: 100%;
+    }
+    &_mobile{
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: flex;
+    }
   }
   &_type_2 {
     float: right;
@@ -23,6 +35,10 @@
     background-position: right 0;
     box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    @media screen and (max-width: 720px) {
+      max-width: 100%;
+      height: 70px;
+    }
   }
   &-content {
     display: flex;
@@ -31,17 +47,29 @@
   }
 }
 
+.main_type_text {
+  @media screen and (max-width: 720px) {
+    display: none;
+  }
+}
+
 .main_type_wrapper {
+  padding: 0 15px;
   margin-top: 30px;
   margin-bottom: 50px;
   display: flex;
   justify-content: center;
-  // gap: 20px;
+  flex-wrap: nowrap !important;
+  gap: 20px;
+  @media screen and (max-width: 720px) {
+    flex-wrap: wrap !important;
+  }
 }
 
 .sideBar {
   background: transparent !important;
   min-width: 250px !important;
+  padding: 20px !important;
   &_title {
     width: 100% !important;
     display: flex;
@@ -57,8 +85,22 @@
       text-underline-offset: 2px;
     }
   }
+  @media screen and (max-width: 720px) {
+    left: -100%;
+    position: absolute !important;
+    z-index: 100 !important;
+    background: white !important;
+    height: 100vh !important;
+  }
 }
 
+.close_btn {
+  margin-left: 15px;
+  display: none;
+  @media screen and (max-width: 720px) {
+    display: block;
+  }
+}
 .category_list_item {
   cursor: pointer;
   &:hover {
@@ -69,7 +111,4 @@
       text-underline-offset: 2px;
     }
   }
-}
-
-.active {
 }

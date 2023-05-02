@@ -1,5 +1,6 @@
-import { Button, Card, Col, Row, Typography } from 'antd'
+import { Button, Card, Col, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
+import moment from 'moment'
 import { useLayoutEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useTypedDispatch, useTypedSelector } from 'src/hooks'
@@ -12,12 +13,15 @@ import { logout, setCredentials } from '../../store/features/auth/authSlice'
 import { RootState } from '../../store/store'
 
 import './profile.scss'
+import './cardProfile.scss'
+import { useMediaQuery } from 'react-responsive'
 
 const { Title, Text, Paragraph } = Typography
 
 export const ProfilePage = () => {
   const dispatch = useTypedDispatch()
   const { userInfo } = useTypedSelector((state: RootState) => state.auth)
+  console.log(userInfo?.users_announsments)
 
   useLayoutEffect(() => {
     const getCurrentUser = async () => {
@@ -31,14 +35,17 @@ export const ProfilePage = () => {
     getCurrentUser()
   }, [])
 
+  const MobileQuery = useMediaQuery({ query: '(max-width:800px)' })
+
+
   return (
     <div className="profile">
       <Row>
-        <Col span={8}>
+        <Col xs={24} md={8} className='profile_card_wrapper' >
           <Card hoverable className="profile__card">
-            <img
+            <Image
               alt="example"
-              src={avatar}
+              src={userInfo ? userInfo?.image : ''}
               style={{ width: 100, height: 100, borderRadius: 90, marginBottom: 5 }}
             />
             <Title level={4}>
@@ -68,7 +75,7 @@ export const ProfilePage = () => {
             </Row>
           </Card>
         </Col>
-        <div className="profile__line"></div>
+      {MobileQuery ? '' :  <div className="profile__line"></div> } 
         <Col span={14} className="profile__card_main">
           <motion.div
             initial={{ opacity: 0 }}
@@ -76,56 +83,68 @@ export const ProfilePage = () => {
             transition={{ duration: 0.5 }}
           >
             {userInfo?.users_announsments?.map((card) => (
-              <Card key={card.slug} hoverable style={{ width: 795, border: 'none' }}>
-                <Row>
-                  <Col span={5}>
-                    <img
-                      alt="example"
-                      src={card.photos ? card.photos[0].image_url : '/public/dogs.png'}
-                      style={{ width: 137, height: 140, borderRadius: 6 }}
-                    />
-                  </Col>
-                  <Col span={19}>
-                    <Text type="secondary" style={{ fontSize: 12 }}>
-                      <ClockCircleOutlined /> null
-                    </Text>
-                    <div
-                      style={{
-                        width: 600,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        marginBottom: -13,
-                        marginTop: -3,
-                      }}
-                    >
-                      <Title level={4} style={{ color: '#80DBA6' }}>
-                        {card.title}
-                      </Title>
-                      <Link to={'/edit-announcement/' + card.slug}>
-                        <Button
-                          style={{ color: '#333333', marginTop: 4, border: 'none' }}
+              <motion.div
+                key={card.slug}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card
+                  className="CardProfile"
+                  hoverable
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    // height: 235,
+                    padding: 0,
+                    background: '#ffffff',
+                  }}
+                >
+                  <Row gutter={30} className="CardProfile-wrapper">
+                    <Col className="CardProfile-wrapper_image">
+                      <Image
+                        className="CardProfile_img"
+                        alt="example"
+                        src={card?.photos ? card.photos[0].image_url : '/dog.png'}
+                        // style={{ width: 215, height: 195, borderRadius: 6 }}
+                      />
+                    </Col>
+                    <Col className="CardProfile-wrapper_content">
+                      <Link to={`/announcement/${card.slug}`} key={card.slug}>
+                        <Text type="secondary" style={{ fontSize: 12 }}>
+                          <ClockCircleOutlined /> {moment(card.created_at).format('dddd')}
+                        </Text>
+                        <div
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginBottom: -13,
+                            marginTop: -3,
+                          }}
                         >
-                          Изменить
-                        </Button>
+                          <Title
+                            className="title-s"
+                            level={4}
+                            style={{ fontSize: 18, color: '#FFD02B', fontWeight: '700' }}
+                          >
+                            {card.title}
+                          </Title>
+                        </div>
+                        <Text strong style={{ fontSize: 18 }}>
+                          {card.price == '-1.00' ? 'Договорная' : `${card.price} KGS`}
+                        </Text>
+                        <Paragraph
+                          className="paragraph"
+                          style={{ width: '100%', fontSize: '16px', height: '60px' }}
+                        >
+                          {card.description}
+                        </Paragraph>
                       </Link>
-                    </div>
-                    <Text strong style={{ fontSize: 18 }}>
-                      {card.price} ₸
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: '#BDBDBD',
-                        display: 'block',
-                        marginBottom: 5,
-                      }}
-                    >
-                      {card.created_at}
-                    </Text>
-                    <Paragraph style={{ width: 550 }}>{card.description}</Paragraph>
-                  </Col>
-                </Row>
-              </Card>
+                    </Col>
+                  </Row>
+                </Card>
+              </motion.div>
             ))}
           </motion.div>
         </Col>

@@ -15,20 +15,15 @@ type CardType = {
   type: 'profile' | 'main'
 }
 
+import './card.scss'
+
+
 const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
   const {
-    category,
     created_at,
-    description,
     location,
-    price,
-    slug,
-    title,
-    updated_at,
-    user,
-    views_count,
     user_name,
     photos,
   } = value
@@ -44,35 +39,29 @@ export const CardMain = ({ value, type }: CardType) => {
       transition={{ duration: 0.5 }}
     >
       <Card
+        className="CardAnnoun"
         hoverable
         style={{
           width: '100%',
           border: 'none',
-          height: 235,
+          // height: 235,
           padding: 0,
           background: '#ffffff',
         }}
       >
-        <Row gutter={30} style={{ display: 'flex', flexWrap: 'nowrap' }}>
-          <Col>
+        <Row gutter={30} className="CardAnnoun-wrapper">
+          <Col className='CardAnnoun-wrapper_image'>
             <Image
-              className="card-image"
+              className="CardAnnoun_img"
               alt="example"
               src={photos[0] ? photos[0].image_url : '/dog.png'}
-              style={{ width: 215, height: 195, borderRadius: 6 }}
+              // style={{ width: 215, height: 195, borderRadius: 6 }}
             />
           </Col>
-          <Link to={`/announcement/${value.slug}`} key={value.slug}>
-            <Col>
-              <Text className='card-header' type="secondary" style={{ fontSize: 12 }}>
-                <div>
-                  <ClockCircleOutlined /> {moment(created_at).format('dddd')}
-                </div>
-                <Text onClick={handleLike}>
-                  {
-                    like ?  <img src={blike} /> : <img src={dlike} />
-                  }
-                </Text>
+          <Col className='CardAnnoun-wrapper_content' >
+            <Link to={`/announcement/${value.slug}`} key={value.slug}>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                <ClockCircleOutlined /> {moment(created_at).format('dddd')}
               </Text>
               
               <div
@@ -87,7 +76,7 @@ export const CardMain = ({ value, type }: CardType) => {
                 <Title
                   className="title-s"
                   level={4}
-                  style={{ fontSize: 18, color: '#96E7B7', fontWeight: '700' }}
+                  style={{ fontSize: 18, color: '#FFD02B', fontWeight: '700' }}
                 >
                   {value.title}
                 </Title>
@@ -95,12 +84,15 @@ export const CardMain = ({ value, type }: CardType) => {
               <Text strong style={{ fontSize: 18 }}>
                 {value.price == '-1.00' ? 'Договорная' : `${value.price} KGS`}
               </Text>
-              <Paragraph className='description-announ'>
+              <Paragraph
+                className="paragraph"
+                style={{ width: '100%', fontSize: '16px', height: '60px' }}
+              >
                 {value.description}
               </Paragraph>
               {type == 'main' ? (
                 <div style={{ display: 'flex', gap: '7px' }}>
-                  <Image src="/holand.png" />
+                  <Image src={value.img} />
                   <div
                     style={{
                       display: 'flex',
@@ -133,12 +125,10 @@ export const CardMain = ({ value, type }: CardType) => {
                   Изменить
                 </Button>
               )}
-            </Col>
-          </Link>
+            </Link>
+          </Col>
         </Row>
       </Card>
     </motion.div>
   )
 }
-
-
