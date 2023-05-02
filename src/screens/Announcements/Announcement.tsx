@@ -1,47 +1,43 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
-import './announcement.scss'
 import { toast } from 'react-toastify'
 import { errorHandler } from '@utils/errorHandler'
 import { PostAnnouncementTypes } from '../../types/types'
 import no_foto from '../../assets/no_photo.jpg'
+import { motion } from 'framer-motion'
+import dlike from '../../assets/blike.png'
+import blike from '../../assets/like.png'
+import './announcement.scss'
+import { likeAnnoun } from '@store/favorites/favoriteId'
+
 
 
 const { Title, Text, Paragraph } = Typography
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
+  const [like,setLike] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
-
-  console.log(announ);
-  
   
 
-  const pohotos: string[] = [
-    'https://cdn.mos.cms.futurecdn.net/ASHH5bDmsp6wnK6mEfZdcU.jpg',
-    'https://alpha.aeon.co/images/acd6897d-9849-4188-92c6-79dabcbcd518/header_essay-final-gettyimages-685469924.jpg',
-    'https://paradepets.com/.image/t_share/MTkxMzY1Nzg4NjczMzIwNTQ2/cutest-dog-breeds-jpg.jpg'
-  ]
-
+  const handleLike = () => {
+    setLike(item => !item)
+    likeAnnoun(announ?.slug)
+  }
   
   useLayoutEffect(() => {
     (async () =>  {
-      const token = localStorage.getItem('access_token')
       try {
-        const res = await api.get<PostAnnouncementTypes>(`/announcements/${id}/`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+        const res = await api.get<PostAnnouncementTypes>(`/announcements/${id}/`)
         setAnnoun(res.data)
       } catch (error: AxiosError | any) {
         errorHandler(error)
@@ -71,12 +67,20 @@ export const Announcements: React.FC = () => {
   }
 
   return (
-    <div className="announcements">
+    <motion.div
+      className="announcements"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
-        {userInfo?.id === announ?.user ? (
-          <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
-        ) : null}
+        <Col>
+          {userInfo?.id === announ?.user ? (like ? <img onClick={handleLike} src={blike}/> : <img onClick={handleLike} src={dlike}/>) : null}
+          {userInfo?.id === announ?.user ? (
+            <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
+          ) : null}
+        </Col>
       </Row>
       <div className="main">
         <div className="main__img">
@@ -165,6 +169,6 @@ export const Announcements: React.FC = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

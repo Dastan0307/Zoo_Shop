@@ -6,9 +6,10 @@ import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
-import './newAnnouncement.scss'
 import { useNavigate } from 'react-router-dom'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
+import { motion } from 'framer-motion'
+import './newAnnouncement.scss'
 
 const { Title } = Typography
 type PostAnnouncementTypes = {
@@ -93,7 +94,7 @@ export const NewAnnouncement = () => {
       console.log(data)
       setTimeout(() => {
         navigate(`/`)
-      }, 3000)
+      }, 1500)
 
     } catch (error: AxiosError | any) {
       errorHandler(error)
@@ -101,7 +102,12 @@ export const NewAnnouncement = () => {
   }
 
   return (
-    <div className="newannoun">
+    <motion.div
+      className="newannoun"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Title level={2}>Новое объявление</Title>
       <Formik
         initialValues={initialValues}
@@ -202,7 +208,7 @@ export const NewAnnouncement = () => {
           <SubmitButton type="primary">Опубликовать объявление</SubmitButton>
         </Form>
       </Formik>
-    </div>
+    </motion.div>
   )
 }
 

@@ -160,7 +160,7 @@ export const EditAnnouncement = () => {
       console.log(data)
       setTimeout(() => {
         navigate(`/`)
-      }, 3000)
+      }, 1500)
 
     } catch (error: AxiosError | any) {
       errorHandler(error)
@@ -232,7 +232,7 @@ export const EditAnnouncement = () => {
             {
               announ?.photos && announ?.photos.map(photo => {
                 return (
-                  <Image preview={false} key={photo.id} src={photo.image_url}/>
+                  <Image className='image-corusel' preview={false} key={photo.id} src={photo.image_url}/>
                 )
               })
             }
@@ -249,7 +249,7 @@ export const EditAnnouncement = () => {
                     placeholder="Описание"
                     onChange={photoChange}
                   />
-                  <span className='text'>Добавить Фотографии</span>
+                  <span className='text'>Изменить Фотографии</span>
                 </label>
               </div>
               {
@@ -266,6 +266,7 @@ export const EditAnnouncement = () => {
             showValidateSuccess={true}
             hasFeedback={true}
           >
+            <label>Местоположение</label>
             <Select defaultValue={announ?.location} name="location" placement="bottomRight">
               {locations.map((loc) => {
                 return (
