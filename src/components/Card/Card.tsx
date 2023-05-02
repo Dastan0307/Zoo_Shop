@@ -2,9 +2,13 @@ import { Button, Card, Col, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-
+import {HeartTwoTone} from '@ant-design/icons'
 import { ClockCircleOutlined } from '@ant-design/icons'
 import { AnnouncementCardType } from '@typess/types'
+import dlike from '../././../assets/blike.png'
+import blike from '../../assets/like.png'
+import './card-org.scss'
+import { useState } from 'react'
 
 type CardType = {
   value: AnnouncementCardType
@@ -13,6 +17,7 @@ type CardType = {
 
 const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type }: CardType) => {
+  const [like, setLike] = useState<boolean>(false)
   const {
     category,
     created_at,
@@ -27,6 +32,10 @@ export const CardMain = ({ value, type }: CardType) => {
     user_name,
     photos,
   } = value
+
+  const handleLike = () => {
+    setLike(item => !item)
+  }
   
   return (
     <motion.div
@@ -55,9 +64,17 @@ export const CardMain = ({ value, type }: CardType) => {
           </Col>
           <Link to={`/announcement/${value.slug}`} key={value.slug}>
             <Col>
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                <ClockCircleOutlined /> {moment(created_at).format('dddd')}
+              <Text className='card-header' type="secondary" style={{ fontSize: 12 }}>
+                <div>
+                  <ClockCircleOutlined /> {moment(created_at).format('dddd')}
+                </div>
+                <Text onClick={handleLike}>
+                  {
+                    like ?  <img src={blike} /> : <img src={dlike} />
+                  }
+                </Text>
               </Text>
+              
               <div
                 style={{
                   width: '100%',
@@ -78,7 +95,7 @@ export const CardMain = ({ value, type }: CardType) => {
               <Text strong style={{ fontSize: 18 }}>
                 {value.price == '-1.00' ? 'Договорная' : `${value.price} KGS`}
               </Text>
-              <Paragraph style={{ width: '100%', fontSize: '16px', height: '60px' }}>
+              <Paragraph className='description-announ'>
                 {value.description}
               </Paragraph>
               {type == 'main' ? (

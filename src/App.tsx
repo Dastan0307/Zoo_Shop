@@ -19,6 +19,7 @@ import {
   Paper,
 } from './screens'
 import EditProfile from '@screens/Edit/EditProfile'
+import Favorites from '@screens/Favorites/Favorites'
 
 export const App = () => {
   const location = useLocation()
@@ -36,6 +37,8 @@ export const App = () => {
           <Route path='/papers/:id' element={<Paper />} />
           <Route path='/papers/:id' element={<AboutUs />} />
           <Route path='/edit-profile' element={<EditProfile />} />
+          <Route path='/edit-profile' element={<EditProfile />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Route>
         <Route element={<Layout footer={false}  />}>
           <Route path="/chats" element={<Chat />} />
@@ -43,7 +46,6 @@ export const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />
-        <Route path="/recovery_finish" element={<RecoveryFinish />} />
       </Routes>
     </AnimatePresence>
   )

@@ -209,3 +209,19 @@ export interface PostAnnouncementTypes {
   category: string
   user_name: string
 }
+
+export interface ShortDescription {
+  id: number
+  slug: string
+  title: string
+  body: string
+  image: string
+  short_description: string
+}
+
+export interface News {
+  count: number
+  next: string
+  previous: string
+  results: ShortDescription[]
+}

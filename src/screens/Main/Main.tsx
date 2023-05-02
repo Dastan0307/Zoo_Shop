@@ -37,7 +37,7 @@ export const Main = () => {
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
 
-  const res = useGetCategoriesQuery('s').currentData
+  const res = useGetCategoriesQuery('k').currentData
   const categories = res?.results 
 
   const searchInput = useRef<InputRef>(null)
