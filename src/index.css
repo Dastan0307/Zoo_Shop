@@ -20,10 +20,8 @@ input {
 }
 
 .paragraph {
-  display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  height: 50px !important;
 }
 
 .paragraph2 {

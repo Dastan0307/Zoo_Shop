@@ -211,7 +211,7 @@ export const Main = () => {
                       >
                         <span
                           style={{
-                            color: params.category == value.slug ? '#96e7b7' : '#333333',
+                            color: params.category == value.slug ? '#FFD02b' : '#333333',
                           }}
                         >
                           {value.title}

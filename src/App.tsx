@@ -26,9 +26,9 @@ export const App = () => {
   return (
     <AnimatePresence>
       <Routes key={location.pathname} location={location}>
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route index element={<Main />} />
         <Route element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/announcement/:id" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />

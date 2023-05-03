@@ -13,8 +13,8 @@ import { setCredentials } from '../../store/features/auth/authSlice';
 const { Text } = Typography;
 
 const Password = ({ passwordCard, setPasswordCard }: any) => {
-    const { payload } = useSelector((state: RootState) => setCredentials(state));
-    const user = payload.auth.userInfo;
+    const { userInfo } = useSelector((state: RootState) => state.auth);
+    const user = userInfo!
 
     const dispatch = useTypedDispatch();
 

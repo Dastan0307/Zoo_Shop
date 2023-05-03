@@ -31,6 +31,8 @@
     }
   }
   &_img {
+    aspect-ratio: 3/2;
+    object-fit: cover !important;
     width: 235px !important;
     height: 190px !important;
     @media screen and (max-width: 480px) {

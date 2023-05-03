@@ -1,7 +1,7 @@
 import { Header as HeaderWrapper } from 'antd/es/layout/layout';
 import { RootState } from '../../store/store';
 import TomHoland from '../../assets/A.png';
-import { Col, Typography } from 'antd'
+import { Col, Image, Typography } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { PrimaryButton } from '..'
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
@@ -50,7 +50,7 @@ export const Header = () => {
           user ? (
             <>
               <Link to={'/chats'} className='header__link-ms_inside'>Сообщения</Link>
-              <Link to={'/profile'} className='header__link-nm_inside'> <img src={TomHoland} alt="error" width={40} height={40} /> {user.first_name}</Link>
+              <Link to={'/profile'} className='header__link-nm_inside'> <Image style={{borderRadius: '100%'}}  preview={false}  src={user.image ? user.image : TomHoland } alt="error" width={40} height={40} /> {user.first_name}</Link>
             </>
             ):(
               <Link to={'/login'} className='header__link-avatar_inside'>Войти</Link>

@@ -4,7 +4,7 @@ export const theme: ThemeConfig = {
   token: {
     fontFamily: 'Montserrat, sans-serif',
     colorPrimary: '#FFD02b',
-    colorSuccess: '#52c41a',
+    colorSuccess: '#FFD02b',
     colorPrimaryBg: '#ffffff',
     colorBgContainer: '#ffffff',
     colorBgBase: '#fff',
@@ -29,5 +29,8 @@ export const theme: ThemeConfig = {
     Input: {
       borderRadius: 6,
     },
+    Image:{
+      borderRadius: 6
+    }
   },
 }
