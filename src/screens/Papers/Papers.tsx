@@ -18,6 +18,9 @@ export const Papers = () =>  {
     })
   }, [])
 
+  console.log(news);
+  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -36,7 +39,7 @@ export const Papers = () =>  {
                     preview={false}
                     src={item.image}
                   />
-                  {isHovering === index && <Link className='papers__link' to={`/papers/${index}`}>Читать полностью</Link>}
+                  {isHovering === index && <Link className='papers__link' to={`/papers/${item.id}`}>Читать полностью</Link>}
                 </div>
                 <Text>{item.title}</Text>
                 <Paragraph>{item.body}</Paragraph>

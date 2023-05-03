@@ -8,13 +8,13 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
 import { toast } from 'react-toastify'
 import { errorHandler } from '@utils/errorHandler'
-import { PostAnnouncementTypes } from '../../types/types'
+import { FavoritesAnnounsmentType, FavoritesType, PostAnnouncementTypes } from '../../types/types'
 import no_foto from '../../assets/no_photo.jpg'
 import { motion } from 'framer-motion'
 import dlike from '../../assets/blike.png'
 import blike from '../../assets/like.png'
 import './announcement.scss'
-import { likeAnnoun } from '@store/favorites/favoriteId'
+import { favorites, likeAnnoun } from '@store/favorites/favoriteId'
 
 
 
@@ -27,12 +27,27 @@ export const Announcements: React.FC = () => {
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
+  const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
+ 
+
+  useEffect(() => {
+    favorites().then(res => setAnnouncement(res))
+  }, [])
+  
+
+  const findLike = announcement && announcement.find(item => item.announcement === announ?.slug)
+  
+  console.log(announ);
+  console.log("a", announcement);
+  
+  console.log(findLike);
   
 
   const handleLike = () => {
     setLike(item => !item)
     likeAnnoun(announ?.slug)
   }
+
   
   useLayoutEffect(() => {
     (async () =>  {
@@ -50,8 +65,6 @@ export const Announcements: React.FC = () => {
     if (carouselRef.current) {
       carouselRef.current.prev()
     }
-    console.log(carouselRef);
-
   }
 
   const handleNext = () => {
@@ -76,7 +89,7 @@ export const Announcements: React.FC = () => {
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
         <Col>
-          {userInfo?.id === announ?.user ? (like ? <img onClick={handleLike} src={blike}/> : <img onClick={handleLike} src={dlike}/>) : null}
+          {userInfo?.id === announ?.user ? (like ?  <img onClick={handleLike} src={blike}/> : <img onClick={handleLike} src={dlike}/>) : null}
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
           ) : null}

@@ -17,15 +17,16 @@ export const likeAnnoun = async (id: any) => {
   }
 }
 
-// export const disAnnoun = async (id: any) => {
-//   const token = localStorage.getItem('access_token')
-//   try {
-//     await api.delete(`/favorites/${id}`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       }
-//     })
-//   } catch (error: AxiosError | any) {
-//     errorHandler(error)
-//   }
-// }
+export async function favorites() {
+  const token = localStorage.getItem('access_token')
+  try {
+    const res = await api.get('favorites', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return res.data
+  } catch (error: AxiosError | any ) {
+    errorHandler(error)
+  }
+}

@@ -11,3 +11,12 @@ export async function getNews() {
   }
 }
 
+export async function getNewsById(id: string | undefined) {
+  try {
+    const res = await api.get(`/news/${id}`)
+    return res.data
+  } catch (error: AxiosError | any) {
+    errorHandler(error)
+  }
+}
+

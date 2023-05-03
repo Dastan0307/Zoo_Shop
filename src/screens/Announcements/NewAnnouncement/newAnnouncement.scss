@@ -133,3 +133,47 @@
     height: 163px;
   }
 }
+
+@media (max-width: 800px) {
+  .newannoun {
+    h2 {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .newannoun {
+    h2 {
+      font-size: 30px;
+    }
+    .description {
+      min-width: 522px;
+      min-height: 250px;
+    }
+  }
+}
+
+@media (max-width: 450) {
+  .newannoun {
+    h2 {
+      font-size: 20px;
+    }
+    .description {
+      min-width: 522px;
+      min-height: 250px;
+    }
+  }
+}
+
+@media (max-width: 450) {
+  .newannoun {
+    h2 {
+      font-size: 16px;
+    }
+    .description {
+      min-width: 522px;
+      min-height: 250px;
+    }
+  }
+}

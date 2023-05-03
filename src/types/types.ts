@@ -226,3 +226,28 @@ export interface News {
   previous: string
   results: ShortDescription[]
 }
+
+export interface FavoritesType {
+  announcement: string
+  announsment: FavoritesAnnounsmentType[]
+  id: string
+  is_favorite: boolean
+  user: number
+}
+
+export interface FavoritesAnnounsmentType {
+  category: string
+  created_at: string
+  description: string
+  location: string
+  phone_number: string
+  price: string
+  rating: number
+  slug: string
+  title: string
+  updated_at: string
+  user: number
+  user_name: string
+  user_photo: string
+  views_count: number
+}

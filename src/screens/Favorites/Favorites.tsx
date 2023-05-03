@@ -1,27 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../api/index'
 import { AxiosError } from 'axios'
 import { errorHandler } from '@utils/errorHandler'
 import { CardMain } from '@components/index'
+import { favorites } from '@store/favorites/favoriteId'
+import { FavoritesAnnounsmentType, FavoritesType } from '@typess/types'
 function Favorites() {
-  // const [announcement, setAnnouncement] = useState<>()
-  async function name() {
-    const token = localStorage.getItem('access_token')
-    try {
-      const res = await api.get('favorites', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      return res.data
-    } catch (error: AxiosError | any ) {
-      errorHandler(error)
-    }
-  }
+  const [announcement, setAnnouncement] = useState<FavoritesAnnounsmentType[]>([])
+ 
 
   useEffect(() => {
-    name().then(res => console.log(res))
+    favorites().then(res => setAnnouncement(res))
   }, [])
+
+  console.log(announcement);
+  
 
   return (
     <div className='announcements'>

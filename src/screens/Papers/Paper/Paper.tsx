@@ -1,39 +1,56 @@
 import { Col, Row, Typography, Image } from 'antd'
 import './paper.scss'
 import { motion } from 'framer-motion'
+import { useParams } from 'react-router-dom'
+import { ShortDescription } from '@typess/types'
+import { useEffect, useState } from 'react'
+import { getNewsById } from '@store/papers/papers'
 
 const { Title, Text, Paragraph } = Typography
 const arr: number[] = [1,2,3]
 
+
+
 export const Paper = () => {
+  const [paper, setPaper] = useState<ShortDescription | null>(null)
+  const { id } = useParams()
+  
+  useEffect(() => {
+    getNewsById(id).then(res => setPaper(res))
+  }, [id])
+
+  console.log(paper);
+  
+  
   return (
     <motion.div initial={{ opacity: 0 }}
     whileInView={{ opacity: 1 }}
     transition={{ duration: 0.5 }} className='paper'>
-      <Title className='paper__title'>Статьи о животных</Title>
+      <Title className='paper__title'>{paper?.title}</Title>
       <Row className='paper__start'>
         <Col>
           <div>
-            <Text>Зачем делать прививки собакам</Text>
-            <Paragraph>Вакцинация для собак – это самый эффективный способ предупреждения опасных заболеваний, часто имеющих серьезные осложнения, в том числе летальный исход. Прививка способствует выработке в организме животного антител, формирующих иммунный ответ. Приобретенная защита дает активную устойчивость к болезням на один год или несколько лет, в зависимости от используемой вакцины.
+            <Text></Text>
+            <Paragraph>
+              {paper?.body}
             </Paragraph>
           </div>
           <div>
             <Text>Правила вакцинации собак</Text>
             <Paragraph>
-            До 1.5 месяцев в организме щенков сохраняются защитные антитела, полученные из молока матери. Постепенно естественная иммунная защита начинает слабеть, поэтому возникает необходимость в вакцинации, формирующей искусственную защиту организма от разного рода инфекций.
-Собак вакцинируют по прививочному календарю, начиная с двухмесячного возраста. Прививки делаются по определенным правилам. Перед процедурой собаку нужно правильно подготовить, что позволит исключить побочные эффекты и другие нежелательные последствия вакцинации.
+              {paper?.short_description}
             </Paragraph>
           </div>
         </Col>
         <Col>
           <Image
             preview={false}
-            src='https://www.proplan.ru/sites/owners.proplan.ru/files/styles/article720x340/public/2020-03/shutterstock_155382377_2.jpg?itok=EBJQe5gN'
+            src={paper?.image}
+            alt='animal'
             />
         </Col>
       </Row>
-      <Row className='paper__main'>
+      {/* <Row className='paper__main'>
         <Text>Как подготовить собаку к процедуре</Text>
         <Paragraph>Владелец должен наблюдать за состоянием собаки, обеспечить полноценное питание и контролировать стул. В случае выявления определенных признаков заболеваемости следует обратиться к ветеринару и детально разъяснить, какие признаки вызывают подозрения. Врач проведет контрольный осмотр, при необходимости возьмет анализы. Если подтвердится нездоровое состояние животного, вакцинация будет перенесена до полного выздоровления собаки.</Paragraph>
         <Text className='block'>Подготовка собаки:</Text>
@@ -66,7 +83,7 @@ export const Paper = () => {
         </ol>
         <Paragraph>Детальные рекомендации по уходу за собакой после процедуры иммунизации выдает лечащий ветеринар.
         </Paragraph>
-      </Row>
+      </Row> */}
     </motion.div>
     
   )
