@@ -242,7 +242,7 @@ export interface FavoritesAnnounsmentType {
   location: string
   phone_number: string
   price: string
-  rating: number
+  rating?: number
   slug: string
   title: string
   updated_at: string
@@ -250,4 +250,12 @@ export interface FavoritesAnnounsmentType {
   user_name: string
   user_photo: string
   views_count: number
+  photos?: [
+    {
+      id: number,
+      announcement: string,
+      image: string,
+      image_url: string,
+    }
+  ]
 }

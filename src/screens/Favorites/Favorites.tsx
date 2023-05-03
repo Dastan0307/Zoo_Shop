@@ -4,9 +4,9 @@ import { AxiosError } from 'axios'
 import { errorHandler } from '@utils/errorHandler'
 import { CardMain } from '@components/index'
 import { favorites } from '@store/favorites/favoriteId'
-import { FavoritesAnnounsmentType, FavoritesType } from '@typess/types'
+import { AnnouncementCardType, CardType, FavoritesAnnounsmentType, FavoritesType } from '@typess/types'
 function Favorites() {
-  const [announcement, setAnnouncement] = useState<FavoritesAnnounsmentType[]>([])
+  const [announcement, setAnnouncement] = useState<AnnouncementCardType[]>([])
  
 
   useEffect(() => {
@@ -18,7 +18,11 @@ function Favorites() {
 
   return (
     <div className='announcements'>
-      dawdaw
+      {
+        announcement && announcement[0] ? announcement.map(card => 
+          <CardMain type='main' key={card.description} value={card}/>
+        ) : null
+      }
     </div>
   )
 }
