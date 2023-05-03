@@ -5,8 +5,8 @@
 }
 
 input::placeholder {
-  color: #BDBDBD !important;
-  font-weight: 300
+  color: #bdbdbd !important;
+  font-weight: 300;
 }
 
 body {
@@ -14,21 +14,27 @@ body {
 }
 
 input {
-  color: #4F4F4F !important;
+  color: #4f4f4f !important;
   font-weight: 300;
   cursor: pointer;
 }
 
-.paragraph{
-   display: -webkit-box;
+.paragraph {
+  display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-* {
-  font-family: 'Montserrat, sans-serif',
+.paragraph2 {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 100px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
+
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -42,7 +48,6 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
   background-color: transparent;
 }
-
 
 .card-image {
   aspect-ratio: 3/2;

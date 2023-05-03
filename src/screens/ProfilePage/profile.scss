@@ -1,54 +1,86 @@
 .links {
-    a {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        letter-spacing: 0.005em;
-        color: #333333;
-        padding-top: 15px;
-    }
-    .active {
-        text-decoration-line: underline;
-        color: #80DBA6
-    }
+  border-radius: 6px;
+  a {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    color: #333333;
+    padding-top: 15px;
+  }
+  span{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    color: #333333;
+    padding-top: 15px;
+    cursor: pointer;
+  }
+  .active {
+    text-decoration-line: underline;
+    color: #FFD02b;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 15px;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    width: 250px !important;
+    background: white;
+  }
+  transition: 0.2s;
 }
 
 .profile__line {
-    width: 0px;
-    height: 763;
-    border: 1px solid #F2F2F2;
-    margin-top: 22px;
-    margin-right: 30px;
-    margin-left: 45px;
+  width: 0px;
+  height: 763;
+  border: 1px solid #f2f2f2;
+  margin-top: 22px;
+  margin-right: 30px;
+  margin-left: 45px;
 }
 
 .profile {
-    max-width: 1080px !important;
-    width: 100% !important;
-    margin: 0 auto;
-    background: white;
+  position: relative !important;
+  max-width: 1080px !important;
+  width: 100% !important;
+  margin: 0 auto;
+  background: white;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  &_close {
     display: flex;
-    justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 80px;
+    margin-left: 0 !important;
+    margin-top: 20px;
+    // text-align: start !important;
+    justify-content: center !important;
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .profile__card {
-    width: 275px;
-    border: none;
-    @media screen and (max-width: 730px) {
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        text-align: center !important;
-    }
+  width: 100% !important;
+  border: none;
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  &_main {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-.profile_card_wrapper{
-    @media screen and (max-width: 730px) {
-        display: flex !important ;
-        justify-content: center !important;
-    }
+.profile_card_wrapper {
+  @media screen and (max-width: 768px) {
+    display: flex !important ;
+    justify-content: center !important;
+  }
 }
-
-

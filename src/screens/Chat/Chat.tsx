@@ -46,7 +46,6 @@ export const Chat = () => {
       const chats = await ChatApi.getChats()  
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
-      console.log(data)
       if (chats) {
         setChats(chats?.data)
       }

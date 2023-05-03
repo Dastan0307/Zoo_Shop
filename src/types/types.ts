@@ -1,6 +1,6 @@
 export interface AuthProps {
   loading?: boolean
-  userInfo?: UserData
+  userInfo: UserData | null
   userToken?: string | null | unknown
   error?: string | null | unknown
   success?: boolean

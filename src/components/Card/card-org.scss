@@ -8,13 +8,13 @@
   color: #FAFAFA;
   gap: 30px;
   &_title {
-    color: #80dba6 !important;
+    color: #FFD02b !important;
     margin: 0 !important;
     padding: 0 !important;
   }
   &_image {
-    height: 100px !important;
-    width: 100px !important;
+    height: 105px !important;
+    width: 105px !important;
     aspect-ratio: 3/2;
     object-fit: cover;
   }
@@ -34,6 +34,7 @@
         border-radius: 100%;
         aspect-ratio: 3/2;
         object-fit: cover;
+        border: 1px solid #FFD02b;
         width: 36px !important;
         height: 36px !important ;
       }

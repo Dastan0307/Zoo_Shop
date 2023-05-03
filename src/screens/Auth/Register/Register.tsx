@@ -41,10 +41,7 @@ export const Register = () => {
           <Typography.Title level={2}>Регистрация</Typography.Title>
           <Formik
             initialValues={initValuies}
-            onSubmit={(values, { setSubmitting }) => {
-              submitForm(values)
-              setSubmitting(false)
-            }}
+            onSubmit={submitForm}
             validationSchema={RegisterValidate}
           >
             <Form className="auth-content_wrapper_form">
@@ -115,11 +112,8 @@ export const Register = () => {
               >
                 Зарегистрироваться
               </SubmitButton>
-              <Link
-                to="/login"
-                style={{ color: '#828282', textAlign: 'center' }}
-              >
-                Есть аккаунт? <span style={{ color: '#80DBA6' }}>Войдите</span>
+              <Link to="/login" style={{ color: '#828282', textAlign: 'center' }}>
+                Есть аккаунт? <span style={{ color: '#FFD02b' }}>Войдите</span>
               </Link>
             </Form>
           </Formik>

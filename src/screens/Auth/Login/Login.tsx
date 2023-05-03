@@ -95,7 +95,7 @@ export const Login = () => {
                 Войти
               </SubmitButton>
               <Link to="/register" style={{ color: '#828282', textAlign: 'center' }}>
-                Нет аккаунта? <span style={{ color: '#80DBA6' }}>Зарегистрируйтесь</span>
+                Нет аккаунта? <span style={{ color: '#FFD02b' }}>Зарегистрируйтесь</span>
               </Link>
             </Form>
           </Formik>

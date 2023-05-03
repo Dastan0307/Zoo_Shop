@@ -76,7 +76,7 @@ export const CardMain = ({ value, type }: CardType) => {
                 <Title
                   className="title-s"
                   level={4}
-                  style={{ fontSize: 18, color: '#FFD02B', fontWeight: '700' }}
+                  style={{ fontSize: 18, color: '#FFD02b', fontWeight: '700' }}
                 >
                   {value.title}
                 </Title>

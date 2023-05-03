@@ -6,10 +6,10 @@ import { useTypedDispatch, useTypedSelector } from 'src/hooks'
 
 import { changeName } from '@store/EditUser/editSlice'
 
-import { PrimaryButton } from '..'
 import TomHoland from '../../assets/A.png'
 import { setCredentials } from '../../store/features/auth/authSlice'
 import { RootState } from '../../store/store'
+import { PrimaryButton } from '..'
 
 import './editPages.scss'
 
@@ -22,8 +22,8 @@ const Name = ({ setNameCard, nameCard }: any) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = userInfo!
 
-  const [first_name, setName] = useState<string>(user.first_name)
-  const [last_name, setLastName] = useState<string>(user.last_name)
+  const [first_name, setName] = useState<string>(user.first_name ? user.first_name : '')
+  const [last_name, setLastName] = useState<string>(user.last_name ? user.last_name : '')
   const [photo, setPhoto] = useState<FileList | null>(null)
   const id = user.id
 
@@ -34,7 +34,7 @@ const Name = ({ setNameCard, nameCard }: any) => {
     if (photo?.length) {
       formData.append('image', photo[0])
     }
-    const data = await changeName(formData,id)
+    const data = await changeName(formData, id)
     setNameCard(false)
     dispatch(setCredentials(data))
   }

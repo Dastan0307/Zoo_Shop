@@ -125,7 +125,7 @@ export const Main = () => {
             <Typography.Text
               style={{
                 fontSize: '22px',
-                color: mainType == 'announ' ? '#FFD02B' : '#333333',
+                color: mainType == 'announ' ? '#FFD02b' : '#333333',
               }}
               onClick={() => {
                 setMainType('announ')
@@ -139,7 +139,7 @@ export const Main = () => {
             <Typography.Text
               style={{
                 fontSize: '22px',
-                color: mainType == 'org' ? '#FFD02B' : '#333333',
+                color: mainType == 'org' ? '#FFD02b' : '#333333',
               }}
               onClick={() => {
                 setMainType('org')
@@ -274,7 +274,7 @@ export const Main = () => {
           ) : (
             <Row className="sideBar_org">
               <Col>
-                <Typography.Title level={5}>Категории</Typography.Title>
+                <Typography.Title level={4}>Категории</Typography.Title>
                 <List>
                   {categories &&
                     [
@@ -287,13 +287,14 @@ export const Main = () => {
                         className="category_list_item active"
                         style={{ border: 'none' }}
                         onClick={(e) =>
-                          setOrgParams({ ...orgParams, category: value.slug })
+                          setOrgParams({ ...orgParams, adress_type: value.slug })
                         }
                         key={index}
                       >
                         <span
                           style={{
-                            color: orgParams.category == value.slug ? '#96e7b7' : '#333333',
+                            color:
+                              orgParams.adress_type == value.slug ? '#96e7b7' : '#333333',
                           }}
                         >
                           {value.title}

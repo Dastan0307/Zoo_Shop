@@ -3,7 +3,7 @@ import { ThemeConfig } from 'antd'
 export const theme: ThemeConfig = {
   token: {
     fontFamily: 'Montserrat, sans-serif',
-    colorPrimary: '#FFD02B',
+    colorPrimary: '#FFD02b',
     colorSuccess: '#52c41a',
     colorPrimaryBg: '#ffffff',
     colorBgContainer: '#ffffff',
@@ -25,6 +25,9 @@ export const theme: ThemeConfig = {
       boxShadow: '0px 2px 17px rgba(0, 0, 0, 0.1)',
       boxShadowSecondary: '0px 2px 17px rgba(0, 0, 0, 0.1)',
       boxShadowTertiary: '0px 2px 17px rgba(0, 0, 0, 0.1)',
+    },
+    Input: {
+      borderRadius: 6,
     },
   },
 }

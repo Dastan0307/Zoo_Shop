@@ -1,5 +1,6 @@
 .main__title {
-    width: 214px;
+    width: 100%;
+    max-width: 214px !important;
     height: 29px;
     font-style: normal;
     font-weight: 700;
@@ -12,9 +13,10 @@
 }
 
 .personal_data {
-    width: 714px;
-    height: 189px;
-
+    width: 100% !important;
+    max-width: 714px !important;
+    display: flex !important    ;
+    flex-wrap: wrap !important;
     button {
         font-style: normal;
         font-weight: 300;
@@ -23,7 +25,7 @@
         display: flex;
         align-items: center;
         letter-spacing: 0.005em;
-        color: #80DBA6;
+        color: #FFD02b;
         background-clip: text;
         border: none;
     }
@@ -44,16 +46,18 @@
 }
 
 .inp {
-    width: 438px;
-    height: 40px;
+    width: 100% !important;
+    max-width: 438px;
     left: 0px;
+    border: none;
     border: 1px solid #BDBDBD;
     border-radius: 4px;
     margin-right: 10px;
     margin-bottom: 15px;
 }
 .inpNum {
-    width: 438px;
+    width: 100%;
+    max-width: 438px;
     height: 40px;
     padding: 10px;
     border: 1px solid #BDBDBD;
@@ -65,8 +69,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 611px;
-    height: 76px;
+    width: 100%;
+    max-width: 611px;
     margin-top: 45px;
 
     span {
@@ -80,13 +84,13 @@
         color: #828282;
     }
     .btn {
-        margin-left: 140px;
+        // margin-left: 140px;
         margin-top: 5px;
         padding: 10px 25px;
         gap: 10px;
         width: 163px;
         height: 40px;
-        background: linear-gradient(262.43deg, #80DBA6 -2.86%, #96E7B7 81.84%);
+        background: linear-gradient(262.43deg, #FFD02b -2.86%, #96E7B7 81.84%);
         border-radius: 6px;
         border: none;
         font-weight: 500;
@@ -108,4 +112,46 @@
     width: 0px;
     border: 1px solid #F2F2F2;
     margin-right: 80px; 
+}
+
+.edit{
+    display: flex;
+    flex-wrap: wrap;
+    @media screen and (max-width: 768px) {
+        padding: 0 15px !important;
+    }
+}
+
+.gutter-row{
+    display: flex;
+    justify-content: space-between;
+    &_right{
+        display: flex;
+        gap: 60px;
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
+.gutter_title{
+    min-width: 100px;
+}
+
+.adress_gutter_type{
+    margin-top: 10px;
+}
+
+.address_gutter_wrapper{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.editProfile_wrapper_btn{
+    width: 100%;
+    @media screen and (max-width: 768px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
