@@ -89,7 +89,10 @@ export const CardMain = ({ value, type }: CardType) => {
               </Paragraph>
               {type == 'main' ? (
                 <div style={{ display: 'flex', gap: '7px' }}>
-                  <Image className="card_user-photo" src={`${value.user_photo}`} />
+                  <Image
+                    className="card_user-photo"
+                    src={`${value.user_photo ? value.user_photo : '/dogg.jpg'}`}
+                  />
                   <div
                     style={{
                       display: 'flex',

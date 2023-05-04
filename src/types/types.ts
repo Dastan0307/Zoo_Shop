@@ -50,7 +50,7 @@ export interface UserData {
 export interface AnnouncementTypes {
   slug?: string | undefined
   user?: string | undefined
-  photos?: [
+  photos: [
     {
       id: number | undefined
       image: string | undefined
