@@ -108,7 +108,7 @@ export const Announcements: React.FC = () => {
               <Col>
                 {
                   announ?.photos &&  announ.photos.length > 0 ? <Carousel ref={carouselRef}>
-                  {announ?.photos && announ?.photos.map(photo => <Image className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
+                  {announ?.photos && announ?.photos.map(photo => <Image width={713} className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
                 </Carousel> :
                   <Carousel ref={carouselRef}>
                     {[1,2,3].map((photo, index) => <Image className='image-corusel' width={713} preview={false} src={no_foto} key={index} />)}
@@ -173,7 +173,8 @@ export const Announcements: React.FC = () => {
             <Text>Номер телефона</Text>
             <Text>{announ?.phone_number}</Text>
           </Row>
-          <Button
+          {
+            userInfo?.id !== announ?.user ? <Button
             onClick={() => {
               if (userInfo?.access) {
                 navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
@@ -184,6 +185,9 @@ export const Announcements: React.FC = () => {
           >
             Связаться
           </Button>
+          :
+          null
+          }
         </div>
       </div>
     </motion.div>

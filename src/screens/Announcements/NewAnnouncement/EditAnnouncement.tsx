@@ -257,7 +257,7 @@ export const EditAnnouncement = () => {
                 count > 0 && <p>{`Количество фотографий ${count}`}</p>
               }
             </div>
-            <label style={{width: 570}}>
+            <label className='ten-photo'>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
               Максимальный размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся новые!
             </label>
