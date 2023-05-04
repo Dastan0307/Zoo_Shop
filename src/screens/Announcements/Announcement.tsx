@@ -22,36 +22,33 @@ const { Title, Text, Paragraph } = Typography
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
-  const [like,setLike] = useState<boolean>(false || true)
+  const [like,setLike] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
 
-  console.log(announ);
-  
-
   useEffect(() => {
     favorites().then(res => setAnnouncement(res))
   }, [])
-  
-  useEffect(() => {
-    if(findLike?.is_favorite) {
-      setLike(true)
-    }
-  }, [])
 
   const findLike = announcement && announcement.find(item => item.announcement === announ?.slug)
-  console.log(findLike);
   
   const handleLike = () => {
-    setLike(item => !item)
+    setLike(like => !like)
     likeAnnoun(announ?.slug)
   }
 
+  useEffect(() => {
+    if(findLike?.is_favorite) {
+      setLike(true)
+      console.log('dwadaw', like);
+      
+    }
+  }, [])
 
-  
+
   
   useLayoutEffect(() => {
     (async () =>  {
@@ -93,8 +90,7 @@ export const Announcements: React.FC = () => {
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
         <Col>
-          {userInfo && findLike && like ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />
-          
+          {userInfo && (findLike?.is_favorite === like) ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />
           }
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
