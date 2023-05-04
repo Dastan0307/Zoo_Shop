@@ -19,27 +19,34 @@
         width: 100% !important;
       }
     }
-    &_content{
-        width: 100% !important;
-        @media screen and (max-width: 480px) {
-            // display: flex !important;
-            // justify-content: center !important;
-            // background: gray !important;
-            margin-top: 20px;
-            // width: 300px !important;
-        }
+    &_content {
+      width: 100% !important;
+      @media screen and (max-width: 480px) {
+        // display: flex !important;
+        // justify-content: center !important;
+        // background: gray !important;
+        margin-top: 20px;
+        // width: 300px !important;
+      }
     }
   }
   &_img {
     aspect-ratio: 3/2;
+    border-radius: 6px !important;
     object-fit: cover !important;
     width: 235px !important;
     height: 190px !important;
     @media screen and (max-width: 480px) {
       width: 330px !important;
       max-width: 100% !important;
-    //   width: 100% !important;
+      //   width: 100% !important;
       height: 200px !important;
     }
   }
+}
+
+.card_user-photo {
+  height: 36px !important;
+  width: 36px !important;
+  border-radius: 100%;
 }

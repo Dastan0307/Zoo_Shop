@@ -3,7 +3,7 @@ import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import { motion } from 'framer-motion'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
@@ -18,13 +18,12 @@ export const Chat = () => {
   const params = useLocation()
 
   const id = useTypedSelector((state) => state.auth.userInfo?.id)
-  const [currentChat, setCurrentChat] = useState<getChatsProps>({})
+  const [currentChat, setCurrentChat] = useState<getChatsProps | null>(null)
   const [chats, setChats] = useState<getChatsProps[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [ws, setWs] = useState<WebSocket | null>(null)
-  console.log(chats);
-
-
+  console.log(ws);
+  
   // new WebSocket(`ws://104.199.175.143/ws/chat`)
   const changeChat = (user: getChatsProps) => {
     if (ws) {
@@ -34,7 +33,7 @@ export const Chat = () => {
     }
     setWs(
       new WebSocket(
-        `wss://enactusanimals.com/ws/chat/${user.customer}_${user.announcement}/`,
+        `wss://zoonet.me/ws/chat/${user.customer}_${user.announcement}/`,
       ),
     )
     setCurrentChat(user)
@@ -43,7 +42,7 @@ export const Chat = () => {
   if (ws) {
     ws.onmessage = async (event) => {
       const data = JSON.parse(event.data)
-      const chats = await ChatApi.getChats()  
+      const chats = await ChatApi.getChats()
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
       if (chats) {
@@ -52,21 +51,21 @@ export const Chat = () => {
     }
     ws.onclose = (ev) => {
       // setTimeout(() => {
-      //   setWs(
-      //     new WebSocket(
-      //       `wss://enactusanimals.com/ws/chat/${currentChat.customer}_${currentChat.announcement}/`,
-      //     ),
-      //   )
+      //   if (currentChat) {
+      //     setWs(
+      //       new WebSocket(
+      //         `wss://enactusanimals.com/ws/chat/${currentChat.customer}_${currentChat.announcement}/`,
+      //       ),
+      //     )
+      //   }
       // }, 1000)
     }
   }
   useEffect(() => {
-    console.log(params.state)
-
     if (params?.state?.anoun) {
       setCurrentChat({ announcement: params.state.anoun, customer: params.state.id })
       setWs(
-        new WebSocket(`wss://enactusanimals.com/ws/chat/${id}_${params.state.anoun}/`),
+        new WebSocket(`wss://zoonet.me/ws/chat/${id}_${params.state.anoun}/`),
       )
       return
     }
@@ -105,21 +104,7 @@ export const Chat = () => {
     }
   }
 
-  // [
-  //   {
-  //     id: 1,
-  //     customer: 1,
-  //     announcement: 'chat',
-  //     announcement_image: null,
-  //     user_photo: null,
-  //     last_message: {
-  //       content: 'asdlfj',
-  //       author: 1,
-  //       date: '2023-04-22:12:09',
-  //       author_name: 'gandon',
-  //     },
-  //   },
-  // ]
+  console.log(currentChat)
 
   return (
     <Layout className="chat">
@@ -139,7 +124,11 @@ export const Chat = () => {
                 preview={false}
                 height={40}
                 width={40}
-                src={user.last_message?.author_photo ? user.last_message?.author_photo : "/dogg.jpg"}
+                src={
+                  user.last_message?.author_photo
+                    ? user.last_message?.author_photo
+                    : '/dogg.jpg'
+                }
               />
               <div className="sidebar_user_item_info">
                 <Typography.Title className="sidebar_user_item_info_name">
@@ -157,60 +146,66 @@ export const Chat = () => {
         className="chat_contnent"
         style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
       >
-        <Row justify="space-between" className="chat_header">
-          <div className="sidebar_user_item">
-            <Image
-              className="sidebar_user_item_image"
-              preview={false}
-              height={46}
-              width={46}
-              src="/holand.png"
-            />
-            <div className="sidebar_user_item_info">
-              <Typography.Title className="sidebar_user_item_info_name">
-                Владимир. Б
-              </Typography.Title>
-              <Typography.Text className="sidebar_user_item_info_status">
-                Последнее сообщение
-              </Typography.Text>
-            </div>
-          </div>
-          <div className="sidebar_user_item">
-            <Image
-              className="sidebar_user_item_image image-card"
-              preview={false}
-              height={45}
-              width={45}
-              src="/dog.png"
-            />
-            <div className="sidebar_user_item_info">
-              <Typography.Text className="sidebar_user_item_info_status2">
-                Хороший добрый пес
-              </Typography.Text>
-              <Typography.Title className="sidebar_user_item_info_name2">
-                5000 ₸
-              </Typography.Title>
-            </div>
-          </div>
-        </Row>
-        <ul className="chat_message">
-          {userChat ? (
-            messages &&
-            messages.map((value, index) => <ChatMessage {...value} key={index} />)
-          ) : (
-            <div className="no-chat">Выберите чат</div>
-          )}
-        </ul>
-        <Row className="chat_content_input">
-          <Input
-            // onChange={(e) => setValue(e.target.value)}
-            // onClick={(e) => handleInput()}
-            onKeyDown={handleInput}
-            suffix={
-              <Image style={{ cursor: 'pointer' }} src={SendIcon} preview={false} />
-            }
-          />
-        </Row>
+        {currentChat ? (
+          <>
+            <Row justify="space-between" className="chat_header">
+              <div className="sidebar_user_item">
+                <Image
+                  className="sidebar_user_item_image"
+                  preview={false}
+                  height={46}
+                  width={46}
+                  src="/holand.png"
+                />
+                <div className="sidebar_user_item_info">
+                  <Typography.Title className="sidebar_user_item_info_name">
+                    Владимир. Б
+                  </Typography.Title>
+                  <Typography.Text className="sidebar_user_item_info_status">
+                    Последнее сообщение
+                  </Typography.Text>
+                </div>
+              </div>
+              <div className="sidebar_user_item">
+                <Image
+                  className="sidebar_user_item_image image-card"
+                  preview={false}
+                  height={45}
+                  width={45}
+                  src="/dog.png"
+                />
+                <div className="sidebar_user_item_info">
+                  <Typography.Text className="sidebar_user_item_info_status2">
+                    Хороший добрый пес
+                  </Typography.Text>
+                  <Typography.Title className="sidebar_user_item_info_name2">
+                    5000 ₸
+                  </Typography.Title>
+                </div>
+              </div>
+            </Row>
+            <ul className="chat_message">
+              {userChat ? (
+                messages &&
+                messages.map((value, index) => <ChatMessage {...value} key={index} />)
+              ) : (
+                <div className="no-chat">Выберите чат</div>
+              )}
+            </ul>
+            <Row className="chat_content_input">
+              <Input
+                // onChange={(e) => setValue(e.target.value)}
+                // onClick={(e) => handleInput()}
+                onKeyDown={handleInput}
+                suffix={
+                  <Image style={{ cursor: 'pointer' }} src={SendIcon} preview={false} />
+                }
+              />
+            </Row>
+          </>
+        ) : (
+          'Выберите чат'
+        )}
       </Content>
     </Layout>
   )

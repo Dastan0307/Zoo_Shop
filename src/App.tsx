@@ -5,7 +5,7 @@ import { Chat } from '@screens/Chat/Chat'
 import EditProfile from '@screens/Edit/EditProfile'
 import Favorites from '@screens/Favorites/Favorites'
 
-import { Header, Layout } from './components'
+import { Footer, Header, Layout } from './components'
 import {
   AboutUs,
   Announcements,
@@ -46,6 +46,7 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />
         <Route path="/recovery_finish" element={<RecoveryFinish />} />
+        <Route path="/footer" element={<Footer />} />
       </Routes>
     </AnimatePresence>
   )

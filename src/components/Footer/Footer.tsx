@@ -2,6 +2,7 @@ import { Col, Row,Typography } from 'antd';
 import { Footer as FooterWrapper } from "antd/es/layout/layout";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+
 import './footer.scss'
 
 
@@ -76,7 +77,6 @@ export const Footer = () => {
           <Link to="/login" className='footer__link'>Войти</Link>
         </Col>
       </Row>
-      {/* /////////////////////////////////////////// */}
       <div className="footer_mobil">
         <div className="footer__mb_list">
           <div className="list list_1">
