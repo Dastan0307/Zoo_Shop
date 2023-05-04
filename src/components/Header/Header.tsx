@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useTypedSelector } from 'src/hooks';
 import like from '../../assets/like.png'
 import './header.scss'
+import { API_URL } from '@api/index';
 
 const { Text } = Typography
 
@@ -17,7 +18,8 @@ export const Header = () => {
   const { userInfo } = useTypedSelector((state: RootState) => state.auth)
   const user = userInfo
   
-
+  console.log(user);
+  
   const [menu, setMenu] = useState(true);
   const header = menu ? "header header_close" : "header"
 
@@ -30,10 +32,6 @@ export const Header = () => {
         Zoo.Net
       </Link>
       <Col className={nav ? 'header__list active' : 'header__list'}>
-        {
-          user &&
-          <Link to={'/favorites'} className='header__link-ms_inside'><img className='favorites' src={like} alt='like'></img></Link>
-        }
         <Link
           to="/about-us"
           className='header__link'
@@ -50,6 +48,8 @@ export const Header = () => {
           user ? (
             <>
               <Link to={'/chats'} className='header__link-ms_inside'>Сообщения</Link>
+              <Link to={'/favorites'} className='header__link-ms_inside'>Избранные</Link>
+
               <Link to={'/profile'} className='header__link-nm_inside'> <Image style={{borderRadius: '100%'}}  preview={false}  src={user.image ? user.image : TomHoland } alt="error" width={40} height={40} /> {user.first_name}</Link>
             </>
             ):(

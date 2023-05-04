@@ -10,13 +10,14 @@ import { CategoriesType, CategoryType, PostAnnouncementTypes } from '../../../ty
 import api from '../../../api'
 import './newAnnouncement.scss'
 import { motion } from 'framer-motion'
+import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 const { Title } = Typography
 
 type PostAnnouncementTypess = {
   slug?: string | undefined
   user?: string | undefined
   photos?: any | undefined
-  title: string | undefined
+  title?: string | undefined
   price?: string | undefined
   description: string | undefined
   phone_number: string | undefined
@@ -33,9 +34,10 @@ export const EditAnnouncement = () => {
   const { announcement } = useParams()
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const [categories, setCategories] = useState<CategoryType[]> ([])
+  const {data} = useGetAnnouncementQuery(announcement)
   const navigate = useNavigate()
 
-  console.log(announ);
+  console.log(data);
   
 
   useLayoutEffect(() => {
@@ -49,7 +51,7 @@ export const EditAnnouncement = () => {
     })()
   }, [announcement])
   
-  useLayoutEffect(() => {
+  useEffect(() => {
     (async () =>  {
       const token = localStorage.getItem('access_token')
       try {
@@ -63,7 +65,7 @@ export const EditAnnouncement = () => {
         errorHandler(error)
       }
     })()
-  }, [announcement])
+  }, [])
 
 
   const confirm = async () => {
@@ -87,14 +89,14 @@ export const EditAnnouncement = () => {
     message.error('Отменено!');
   };
 
-
+  
   const initialValues: PostAnnouncementTypess = {
-    title: announ && announ.title,
-    price: announ?.price,
-    description: announ?.description,
-    location: announ?.location,
-    category: announ?.category,
-    phone_number: announ?.phone_number,
+    title: data?.title,
+    price: data?.price,
+    description: data?.description,
+    location: data?.location,
+    category: data?.category,
+    phone_number: data?.phone_number,
   }
 
   const locations: string[] = [
@@ -161,7 +163,6 @@ export const EditAnnouncement = () => {
       setTimeout(() => {
         navigate(`/`)
       }, 1500)
-
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }

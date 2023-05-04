@@ -171,7 +171,7 @@
       column-gap: 92px;
   
       .main__img {
-        width: 713px;
+        width: 513px;
   
         .ant-carousel{
           .ant-image-img {
@@ -320,11 +320,11 @@
       row-gap: 40px;
   
       .main__img {
-        width: 713px;
+        width: 413px;
   
         .ant-carousel{
           .ant-image-img {
-            width: 713px;
+            width: 513px;
             height: 400px;
           }
         }
@@ -446,7 +446,7 @@
 
 @media (max-width: 600px) {
   .announcements {
-    margin: 12px 24px;
+    margin: 25px 50px;
 
     .title {
       display: flex;
@@ -471,7 +471,7 @@
       column-gap: 112px;
   
       .main__img {
-        width: 683px;
+        width: 623px;
   
         .ant-carousel{
           .ant-image-img {
@@ -595,6 +595,153 @@
   
 }
 @media (max-width: 414px) {
+  .announcements {
+    margin: 12px 24px;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 683px;
+
+      .ant-typography {
+        font-size: 40px;
+      }
+  
+      a {
+        font-weight: 400;
+        color: #828282;
+        cursor: pointer;
+      }
+    }
+
+    .main {
+      display: grid;
+      margin: 0;
+      column-gap: 112px;
+  
+      .main__img {
+        width: 623px;
+  
+        .ant-carousel{
+          .ant-image-img {
+            width: 683px;
+            height: 400px;
+          }
+        }
+        .ant-col {
+          // position: relative;
+  
+          .anticon {
+            position: absolute;
+            top: 50%;
+            font-size: 20px;
+            color: #FFFFFF;
+          }
+  
+          .anticon-left {
+            color: #FFD02b;
+            left: 20px;
+          }
+  
+          .anticon-right {
+            color: #FFD02b;
+            right: 20px;
+          }
+        }
+      }
+    }
+  
+    .sider {
+    
+      .ant-typography {
+        font-size: 24px;
+        font-weight: 700;
+      }
+  
+      .ant-btn {
+        background: linear-gradient(262.43deg, #FFD02b -2.86%, #96E7B7 81.84%);
+        border-radius: 6px;   
+        height: 40px;
+        width: 100%;
+        color: #FFFFFF;
+      }
+  
+      .ant-row {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 20px;
+        align-items: center;
+        margin: 40px 0 30px;
+        width: 255px;
+  
+        .ant-image-img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+  
+        .ant-typography {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+  
+      .phone {
+        display: grid;
+        column-gap: 10px;
+  
+        .ant-typography:first-child {
+          font-size: 16px;
+          color: #828282;
+          font-weight: 400;
+        }
+      }
+
+      .ant-btn {
+        width: 280px;
+      }
+    }
+  
+  
+    .description {
+      margin-top: 50px;
+      width: 713px;
+      font-size: 16px;
+  
+      .addressMap {
+        display: flex;
+        justify-content: end;
+        color: #FFD02b;
+        cursor: pointer;
+      }
+  
+      .gray-text {
+        font-weight: 400;
+        color: #828282;
+      }
+  
+      .middle-text {
+        color: #333333;
+      }
+    }
+  
+    .slides__img {
+      margin-top: 20px;
+      width: 713px;
+      
+      .ant-col {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+  
+      .ant-image-img {
+        width: 163px;
+        height: 140px;
+      }
+    }
+  }
 
 }
 @media (max-width: 320px) {

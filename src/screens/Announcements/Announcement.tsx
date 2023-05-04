@@ -1,7 +1,7 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
@@ -22,32 +22,36 @@ const { Title, Text, Paragraph } = Typography
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
-  const [like,setLike] = useState<boolean>(false)
+  const [like,setLike] = useState<boolean>(false || true)
   const { userInfo } = useTypedSelector((state) => state.auth)
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
- 
+
+  console.log(announ);
+  
 
   useEffect(() => {
     favorites().then(res => setAnnouncement(res))
   }, [])
   
+  useEffect(() => {
+    if(findLike?.is_favorite) {
+      setLike(true)
+    }
+  }, [])
 
   const findLike = announcement && announcement.find(item => item.announcement === announ?.slug)
-  
-  console.log(announ);
-  console.log("a", announcement);
-  
   console.log(findLike);
   
-
   const handleLike = () => {
     setLike(item => !item)
     likeAnnoun(announ?.slug)
   }
 
+
+  
   
   useLayoutEffect(() => {
     (async () =>  {
@@ -73,7 +77,7 @@ export const Announcements: React.FC = () => {
     }
   }
 
-  const clickGoTo = (current: number) => {
+  const clickGoTo = (current: number) => { 
     if (carouselRef.current) {
       carouselRef.current.goTo(current)
     }
@@ -89,7 +93,9 @@ export const Announcements: React.FC = () => {
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
         <Col>
-          {userInfo?.id === announ?.user ? (like ?  <img onClick={handleLike} src={blike}/> : <img onClick={handleLike} src={dlike}/>) : null}
+          {userInfo && findLike && like ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />
+          
+          }
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
           ) : null}
@@ -102,7 +108,7 @@ export const Announcements: React.FC = () => {
               <Col>
                 {
                   announ?.photos &&  announ.photos.length > 0 ? <Carousel ref={carouselRef}>
-                  {announ?.photos && announ?.photos.map(photo => <Image className='image-corusel' width={713} preview={false} src={photo.image_url} key={photo.id} />)}
+                  {announ?.photos && announ?.photos.map(photo => <Image className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
                 </Carousel> :
                   <Carousel ref={carouselRef}>
                     {[1,2,3].map((photo, index) => <Image className='image-corusel' width={713} preview={false} src={no_foto} key={index} />)}
@@ -160,7 +166,7 @@ export const Announcements: React.FC = () => {
         <div className="sider">
           <Text>{announ === null ? 'бесплатно ДЭЭ' : `${announ?.price} KGS`}</Text>
           <Row>
-            <Image src="/gost.jpg" />
+            <Image src={announ?.user_photo} />
             <Text>{announ?.user_name}</Text>
           </Row>
           <Row className="phone">
@@ -170,8 +176,6 @@ export const Announcements: React.FC = () => {
           <Button
             onClick={() => {
               if (userInfo?.access) {
-                console.log(userInfo)
-
                 navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
               } else {
                 toast.warning('авторизуйтесь')
