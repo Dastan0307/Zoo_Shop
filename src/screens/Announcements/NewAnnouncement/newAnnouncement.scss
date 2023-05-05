@@ -128,23 +128,24 @@
     h2 {
       font-size: 40px;
     }
-  }
-
-  .ant-input-affix-wrapper {
-    width: 338px;
-    height: 40px;
-    display: flex;
-  }
-
-  .old-photos {
-    width: 700px;
-
-    .ant-image-img {
-      width: 123px;
-      height: 123px;
-      gap: 10px;
+    .ant-input-affix-wrapper {
+      width: 100%;
+      max-width: 338px;
+      height: 40px;
+      display: flex;
+    }
+  
+    .old-photos {
+      width: 700px;
+      .ant-image-img {
+        width: 123px;
+        height: 123px;
+        gap: 10px;
+      }
     }
   }
+
+ 
 
 }
 

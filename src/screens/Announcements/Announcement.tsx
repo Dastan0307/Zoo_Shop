@@ -1,7 +1,6 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
-
 import { motion } from 'framer-motion'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -16,7 +15,7 @@ import { errorHandler } from '@utils/errorHandler'
 import dlike from '../../assets/blike.png'
 import blike from '../../assets/like.png'
 import no_foto from '../../assets/no_photo.jpg'
-import { FavoritesAnnounsmentType, FavoritesType, PostAnnouncementTypes } from '../../types/types'
+import {FavoritesType, PostAnnouncementTypes } from '../../types/types'
 
 import './announcement.scss'
 
@@ -107,7 +106,7 @@ export const Announcements: React.FC = () => {
             <Row className="big-image">
               <Col>
                 {
-                  announ?.photos &&  announ.photos.length > 0 ? <Carousel ref={carouselRef}>
+                  announ?.photos &&  announ.photos.length > 0 ? <Carousel  ref={carouselRef}>
                   {announ?.photos && announ?.photos.map(photo => <Image width={713} className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
                 </Carousel> :
                   <Carousel ref={carouselRef}>
