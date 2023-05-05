@@ -1,6 +1,7 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
+
 import { motion } from 'framer-motion'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -31,25 +32,26 @@ export const Announcements: React.FC = () => {
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
- 
 
   useEffect(() => {
     favorites().then(res => setAnnouncement(res))
   }, [])
-  
 
   const findLike = announcement && announcement.find(item => item.announcement === announ?.slug)
   
-  console.log(announ);
-  console.log("a", announcement);
-  
-  console.log(findLike);
-  
-
   const handleLike = () => {
-    setLike(item => !item)
+    setLike(like => !like)
     likeAnnoun(announ?.slug)
   }
+
+  useEffect(() => {
+    if(findLike?.is_favorite) {
+      setLike(true)
+      console.log('dwadaw', like);
+      
+    }
+  }, [])
+
 
   
   useLayoutEffect(() => {
@@ -76,7 +78,7 @@ export const Announcements: React.FC = () => {
     }
   }
 
-  const clickGoTo = (current: number) => {
+  const clickGoTo = (current: number) => { 
     if (carouselRef.current) {
       carouselRef.current.goTo(current)
     }
@@ -92,7 +94,8 @@ export const Announcements: React.FC = () => {
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
         <Col>
-          {userInfo?.id === announ?.user ? (like ?  <img onClick={handleLike} src={blike}/> : <img onClick={handleLike} src={dlike}/>) : null}
+          {userInfo && (findLike?.is_favorite === like) ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />
+          }
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
           ) : null}
@@ -105,7 +108,7 @@ export const Announcements: React.FC = () => {
               <Col>
                 {
                   announ?.photos &&  announ.photos.length > 0 ? <Carousel ref={carouselRef}>
-                  {announ?.photos && announ?.photos.map(photo => <Image className='image-corusel' width={713} preview={false} src={photo.image_url} key={photo.id} />)}
+                  {announ?.photos && announ?.photos.map(photo => <Image width={713} className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
                 </Carousel> :
                   <Carousel ref={carouselRef}>
                     {[1,2,3].map((photo, index) => <Image className='image-corusel' width={713} preview={false} src={no_foto} key={index} />)}
@@ -163,18 +166,18 @@ export const Announcements: React.FC = () => {
         <div className="sider">
           <Text>{announ === null ? 'бесплатно ДЭЭ' : `${announ?.price} KGS`}</Text>
           <Row>
-            <Image src="/gost.jpg" />
+            <Image src={announ?.user_photo} />
             <Text>{announ?.user_name}</Text>
           </Row>
           <Row className="phone">
             <Text>Номер телефона</Text>
             <Text>{announ?.phone_number}</Text>
           </Row>
-          <Button
+          {
+            userInfo?.id !== announ?.user ? <Button
             onClick={() => {
               if (userInfo?.email) {
                 console.log(userInfo)
-
                 navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
               } else {
                 toast.warning('авторизуйтесь')
@@ -183,6 +186,9 @@ export const Announcements: React.FC = () => {
           >
             Связаться
           </Button>
+          :
+          null
+          }
         </div>
       </div>
     </motion.div>

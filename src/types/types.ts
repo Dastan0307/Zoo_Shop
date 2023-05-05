@@ -208,6 +208,7 @@ export interface PostAnnouncementTypes {
   views_count?: number
   category: string
   user_name: string
+  user_photo: string
 }
 
 export interface ShortDescription {
@@ -228,10 +229,16 @@ export interface News {
 
 export interface FavoritesType {
   announcement: string
-  announsment: FavoritesAnnounsmentType[]
+  announsment: FavoritesAnnounsmentType
   id: string
   is_favorite: boolean
   user: number
+  photos: {
+    id: number,
+    announcement: string,
+    image: string,
+    image_url: string,
+  }[]
 }
 
 export interface FavoritesAnnounsmentType {

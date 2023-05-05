@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr auto;
   background: white;
+  max-width: 1800px;
 
   .header__logo {
     color: #333333;
@@ -70,7 +71,7 @@
 
       a {
         width: 212px;
-        text-align: start;
+        text-align: center;
         
       }
     }

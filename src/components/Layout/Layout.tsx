@@ -23,7 +23,7 @@ export const Layout = ({ footer = true, header = true }: LayoutProps) => {
           <Content>
             <Outlet />
           </Content>
-          {footer && <Footer />}
+          {/* {footer && <Footer />} */}
         </LayoutWrapper>
       </Space>
     </motion.div>

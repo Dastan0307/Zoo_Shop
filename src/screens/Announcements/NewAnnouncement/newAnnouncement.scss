@@ -71,6 +71,7 @@
     font-weight: 400;
     font-size: 14px;
     margin: 16px 0;
+    width: 320px;
   }
 
   .description {
@@ -78,20 +79,6 @@
     min-height: 250px;
     text-align: start;
   }
-
-  // .uploads {
-  //   display: flex;
-  //   column-gap: 20px;
-
-  //   .upload {
-  //     width: 163px;
-  //     height: 163px;
-  //     background-color: #D9D9D9;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //   }
-  // }
 
   .delete-btn {
     margin-top: 20px;
@@ -136,44 +123,141 @@
 
 @media (max-width: 800px) {
   .newannoun {
+    margin: 10px;
+
     h2 {
       font-size: 40px;
     }
   }
+
+  .ant-input-affix-wrapper {
+    width: 338px;
+    height: 40px;
+    display: flex;
+  }
+
+  .old-photos {
+    width: 700px;
+
+    .ant-image-img {
+      width: 123px;
+      height: 123px;
+      gap: 10px;
+    }
+  }
+
 }
 
 @media (max-width: 600px) {
   .newannoun {
+    margin: 10px;
     h2 {
       font-size: 30px;
+    }
+
+    .ant-select {
+      width: 420px;
+      display: block;
+      margin: 16px 0; 
     }
     .description {
       min-width: 522px;
       min-height: 250px;
     }
+    .ant-input-affix-wrapper {
+      width: 338px;
+      height: 40px;
+      display: flex;
+    }
+  }
+  .old-photos {
+    width: 300px;
+
+    .ant-image-img {
+      width: 93px;
+      height: 93px;
+      gap: 10px;
+    }
+  }
+
+  label {
+    width: 470px;
   }
 }
 
 @media (max-width: 450) {
   .newannoun {
+    margin: 10px;
+    .ant-input-affix-wrapper {
+      width: 258px;
+      height: 40px;
+      display: flex;
+    }
+
+    .ant-select {
+      width: 420px;
+      display: block;
+      margin: 16px 0; 
+    }
     h2 {
       font-size: 20px;
     }
     .description {
-      min-width: 522px;
+      min-width: 420px;
       min-height: 250px;
     }
   }
+
+  .old-photos {
+    width: 350px;
+
+    .ant-image-img {
+      width: 93px;
+      height: 93px;
+    }
+  }
+
+  label {
+    width: 420px;
+  }
 }
 
-@media (max-width: 450) {
+@media (max-width: 320px) {
   .newannoun {
+    margin: 10px;
     h2 {
       font-size: 16px;
     }
+
+    .ant-input-affix-wrapper {
+      width: 258px;
+      height: 40px;
+      display: flex;
+    }
+
+    .ant-select {
+      width: 258px;
+      display: block;
+      margin: 16px 0; 
+    }
+
     .description {
-      min-width: 522px;
+      min-width: 290px;
       min-height: 250px;
     }
+  }
+
+  .old-photos {
+    width: 300px;
+
+    .ant-image-img {
+      width: 93px;
+      height: 93px;
+      gap: 10px;
+    }
+  }
+
+  label {
+    width: 290px;
   }
 }

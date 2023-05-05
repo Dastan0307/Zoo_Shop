@@ -6,7 +6,7 @@ import { CardMain } from '@components/index'
 import { favorites } from '@store/favorites/favoriteId'
 import { AnnouncementCardType, CardType, FavoritesAnnounsmentType, FavoritesType } from '@typess/types'
 function Favorites() {
-  const [announcement, setAnnouncement] = useState<AnnouncementCardType[]>([])
+  const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
  
 
   useEffect(() => {
@@ -19,8 +19,8 @@ function Favorites() {
   return (
     <div className='announcements'>
       {
-        announcement && announcement[0] ? announcement.map(card => 
-          <CardMain type='main' key={card.description} value={card}/>
+        announcement && announcement[0] ? announcement.map(({photos, announsment} ) => 
+          <CardMain type='main' key={announsment.slug} value={{...announsment, photos}}/>
         ) : null
       }
     </div>
