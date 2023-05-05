@@ -1,37 +1,34 @@
 import { Button, Card, Col, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
-import {HeartTwoTone} from '@ant-design/icons'
-import { ClockCircleOutlined } from '@ant-design/icons'
-import { AnnouncementCardType } from '@typess/types'
-import dlike from '../././../assets/blike.png'
-import blike from '../../assets/like.png'
-import './card-org.scss'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import { ClockCircleOutlined, HeartTwoTone } from '@ant-design/icons'
+import { API_URL } from '@api/index'
+import { AnnouncementCardType } from '@typess/types'
+
+import blike from '../../assets/like.png'
+import dlike from '../././../assets/blike.png'
+
+import './card-org.scss'
+import './card.scss'
 
 type CardType = {
   value: AnnouncementCardType
   type: 'profile' | 'main'
 }
 
-import './card.scss'
-
-
 const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
-  const {
-    created_at,
-    location,
-    user_name,
-    photos,
-  } = value
+  const { created_at, location, user_name, photos } = value
+  console.log(value)
 
   const handleLike = () => {
-    setLike(item => !item)
+    setLike((item) => !item)
   }
-  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -50,7 +47,7 @@ export const CardMain = ({ value, type }: CardType) => {
         }}
       >
         <Row gutter={30} className="CardAnnoun-wrapper">
-          <Col className='CardAnnoun-wrapper_image'>
+          <Col className="CardAnnoun-wrapper_image">
             <Image
               className="CardAnnoun_img"
               alt="example"
@@ -58,12 +55,12 @@ export const CardMain = ({ value, type }: CardType) => {
               // style={{ width: 215, height: 195, borderRadius: 6 }}
             />
           </Col>
-          <Col className='CardAnnoun-wrapper_content' >
+          <Col className="CardAnnoun-wrapper_content">
             <Link to={`/announcement/${value.slug}`} key={value.slug}>
               <Text type="secondary" style={{ fontSize: 12 }}>
                 <ClockCircleOutlined /> {moment(created_at).format('dddd')}
               </Text>
-              
+
               <div
                 style={{
                   width: '100%',
@@ -92,7 +89,10 @@ export const CardMain = ({ value, type }: CardType) => {
               </Paragraph>
               {type == 'main' ? (
                 <div style={{ display: 'flex', gap: '7px' }}>
-                  <Image src={value.img} />
+                  <Image
+                    className="card_user-photo"
+                    src={`${value.user_photo ? value.user_photo : '/dogg.jpg'}`}
+                  />
                   <div
                     style={{
                       display: 'flex',

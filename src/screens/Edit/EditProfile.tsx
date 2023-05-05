@@ -10,22 +10,20 @@ import {
   Typography,
 } from 'antd'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-
-import avatar from '../../assets/A.png'
-import { setCredentials } from '../../store/features/auth/authSlice'
-import { RootState } from '../../store/store'
-
-import './editProfile.scss'
-
 import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
 import Description from '@components/EditPages/Description'
 import Name from '@components/EditPages/Name'
 import Password from '@components/EditPages/Password'
 import { postAdress } from '@store/features/postAdres/postSlice'
-import { AnnouncementFilterType } from '@typess/types'
+
+import avatar from '../../assets/A.png'
+import { setCredentials } from '../../store/features/auth/authSlice'
+import { RootState } from '../../store/store'
+
+import './editProfile.scss'
 
 const { Title, Text } = Typography
 
@@ -187,7 +185,6 @@ const EditProfile = () => {
           />
           <Input
             bordered={false}
-            className="inpNum"
             type="file"
             onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
           />

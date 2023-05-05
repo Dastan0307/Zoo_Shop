@@ -50,7 +50,7 @@ export interface UserData {
 export interface AnnouncementTypes {
   slug?: string | undefined
   user?: string | undefined
-  photos?: [
+  photos: [
     {
       id: number | undefined
       image: string | undefined
@@ -126,8 +126,8 @@ export interface AnnouncementCardType {
   id?: number
   img?: string
   ageGender?: string
+  user_photo?: string
 }
-
 
 export interface CardType {
   id: number
@@ -139,18 +139,18 @@ export interface CardType {
 }
 
 export interface CardsState {
-  data: CardType[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
+  data: CardType[]
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: string | null
 }
 
 interface PasswordState {
-  old_password: string;
-  new_password: string;
-  new_password_confirm: string;
-  data: [];
-  isLoading: boolean;
-  error: string | null;
+  old_password: string
+  new_password: string
+  new_password_confirm: string
+  data: []
+  isLoading: boolean
+  error: string | null
 }
 
 export const initialState: PasswordState = {
@@ -160,8 +160,7 @@ export const initialState: PasswordState = {
   data: [],
   isLoading: false,
   error: null,
-};
-
+}
 
 export interface OrganizarionType {
   id: number
@@ -193,11 +192,11 @@ export interface PostAnnouncementTypes {
   user?: string
   photos?: [
     {
-      id: number,
-      announcement: string,
-      image: string,
-      image_url: string,
-    }
+      id: number
+      announcement: string
+      image: string
+      image_url: string
+    },
   ]
   title: string
   price?: string
@@ -259,10 +258,10 @@ export interface FavoritesAnnounsmentType {
   views_count: number
   photos?: [
     {
-      id: number,
-      announcement: string,
-      image: string,
-      image_url: string,
-    }
+      id: number
+      announcement: string
+      image: string
+      image_url: string
+    },
   ]
 }

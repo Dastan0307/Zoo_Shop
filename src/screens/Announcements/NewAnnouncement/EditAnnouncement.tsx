@@ -1,14 +1,18 @@
-import { Button, Typography, message, Popconfirm, Image } from 'antd'
+import { Button, Image, message, Popconfirm, Typography } from 'antd'
 import { AxiosError, AxiosResponse } from 'axios'
-import { useEffect, useLayoutEffect, useState } from 'react'
 import { Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
-import { CategoriesType, CategoryType, PostAnnouncementTypes } from '../../../types/types'
+
 import api from '../../../api'
+import { CategoriesType, CategoryType, PostAnnouncementTypes } from '../../../types/types'
+
 import './newAnnouncement.scss'
+
 import { motion } from 'framer-motion'
 import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 const { Title } = Typography
@@ -29,7 +33,7 @@ type PostAnnouncementTypess = {
 }
 
 export const EditAnnouncement = () => {
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [count, setCount] = useState<number>(0)
   const { announcement } = useParams()
   const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
@@ -37,11 +41,9 @@ export const EditAnnouncement = () => {
   const {data} = useGetAnnouncementQuery(announcement)
   const navigate = useNavigate()
 
-  console.log(data);
-  
 
   useLayoutEffect(() => {
-    (async () =>  {
+    (async () => {
       try {
         const res = await api.get<CategoriesType>(`/categories/`)
         setCategories(res.data.results)
@@ -50,17 +52,18 @@ export const EditAnnouncement = () => {
       }
     })()
   }, [announcement])
-  
   useEffect(() => {
     (async () =>  {
       const token = localStorage.getItem('access_token')
       try {
-        const res = await api.get<PostAnnouncementTypes>(`/announcements/${announcement}/`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        setAnnoun(res.data)
+        api.get<PostAnnouncementTypes>(
+          `/announcements/${announcement}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        ).then((data) => setAnnoun(data.data))
       } catch (error: AxiosError | any) {
         errorHandler(error)
       }
@@ -69,27 +72,28 @@ export const EditAnnouncement = () => {
 
 
   const confirm = async () => {
-      const token = localStorage.getItem('access_token')
-      try {
-        await api.delete(`announcements/${announ?.slug}/`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error: AxiosError | any) {
-        errorHandler(error)
-      }
-    message.success(`Вы удалили объявление ${announ?.title}`);
+    const token = localStorage.getItem('access_token')
+    try {
+      await api.delete(`announcements/${announ?.slug}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    } catch (error: AxiosError | any) {
+      errorHandler(error)
+    }
+    message.success(`Вы удалили объявление ${announ?.title}`)
     setTimeout(() => {
       navigate('/')
     }, 3000)
-  };
+  }
 
   const cancel = () => {
     message.error('Отменено!');
   };
 
   
+
   const initialValues: PostAnnouncementTypess = {
     title: data?.title,
     price: data?.price,
@@ -112,44 +116,44 @@ export const EditAnnouncement = () => {
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setCount(e.target.files.length)
-      setSelectedFiles(e.target.files);
+      setSelectedFiles(e.target.files)
     }
   }
   const submitForm = async (data: PostAnnouncementTypess) => {
-    console.log(data);
-    
+    console.log(data)
+
     const token = localStorage.getItem('access_token')
     const photos: File[] = []
-    if(selectedFiles) {
-      for(let i = 0; i < selectedFiles?.length; i++) {
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles?.length; i++) {
         photos.push(selectedFiles[i])
       }
     }
     const formData = new FormData()
-    if(typeof data.title === 'string') {
+    if (typeof data.title === 'string') {
       formData.append('title', data?.title)
     }
-    if(typeof data.description === 'string') {
+    if (typeof data.description === 'string') {
       formData.append('description', data.description)
     }
-    if(typeof data.location === 'string') {
+    if (typeof data.location === 'string') {
       formData.append('location', data.location)
     }
-    if(typeof data.category === 'string') {
+    if (typeof data.category === 'string') {
       formData.append('category', data.category)
     }
-    if(typeof data.price === 'string') {
+    if (typeof data.price === 'string') {
       formData.append('price', data.price!)
     }
-    if(typeof data.phone_number === 'string') {
+    if (typeof data.phone_number === 'string') {
       formData.append('phone_number', data.phone_number)
     }
-    for(let i = 0; i<photos?.length; i++) {
+    for (let i = 0; i < photos?.length; i++) {
       formData.append(`photos`, photos[i], photos[i].name)
     }
-    console.log(data);
+    console.log(data)
 
-    data = {...data, photos: selectedFiles}
+    data = { ...data, photos: selectedFiles }
     try {
       await api.patch(`announcements/${announcement}/`, formData, {
         headers: {
@@ -169,14 +173,15 @@ export const EditAnnouncement = () => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="newannoun">
+      className="newannoun"
+    >
       <Title level={2}>Редактировать</Title>
       <Formik
-        initialValues={initialValues}
+        initialValues={announ ? announ : initialValues}
         onSubmit={(values, { setSubmitting }) => {
           submitForm(values)
           setSubmitting(false)
@@ -187,13 +192,14 @@ export const EditAnnouncement = () => {
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
             <Select name="category" defaultValue={announ?.category}>
-              {categories && categories.map((category) => {
-                return (
-                  <Select.Option key={category.slug} value={category.slug}>
-                    {category.title}
-                  </Select.Option>
-                )
-              })}
+              {categories &&
+                categories.map((category) => {
+                  return (
+                    <Select.Option key={category.slug} value={category.slug}>
+                      {category.title}
+                    </Select.Option>
+                  )
+                })}
             </Select>
           </Form.Item>
           <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
@@ -206,20 +212,16 @@ export const EditAnnouncement = () => {
             <label htmlFor="price" id="price">
               Цена
             </label>
-            <Input type='number' name="price" placeholder="Введите цену" />
+            <Input type="number" name="price" placeholder="Введите цену" />
             <label>Не указывайте цену если отдаете питомца даром</label>
           </Form.Item>
           <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone_number" placeholder="Номер"/>
+            <Input type="tel" name="phone_number" placeholder="Номер" />
           </Form.Item>
-          <Form.Item
-            name="description"
-            showValidateSuccess={true}
-            hasFeedback={true}
-          >
+          <Form.Item name="description" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="description" id="description">
               Описание
             </label>
@@ -229,46 +231,48 @@ export const EditAnnouncement = () => {
               placeholder="Расскажите о питомце"
             />
           </Form.Item>
-          <div className='old-photos'>
-            {
-              announ?.photos && announ?.photos.map(photo => {
+          <div className="old-photos">
+            {announ?.photos &&
+              announ?.photos.map((photo) => {
                 return (
-                  <Image className='image-corusel' preview={false} key={photo.id} src={photo.image_url}/>
+                  <Image
+                    className="image-corusel"
+                    preview={false}
+                    key={photo.id}
+                    src={photo.image_url}
+                  />
                 )
-              })
-            }
+              })}
           </div>
           <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
-          <div className='display-files'>
-              <div className='files'>
+            <div className="display-files">
+              <div className="files">
                 <label>
                   <Input
-                    className='input-file'
+                    className="input-file"
                     multiple
                     type="file"
                     name="photos"
                     placeholder="Описание"
                     onChange={photoChange}
                   />
-                  <span className='text'>Изменить Фотографии</span>
+                  <span className="text">Изменить Фотографии</span>
                 </label>
               </div>
-              {
-                count > 0 && <p>{`Количество фотографий ${count}`}</p>
-              }
+              {count > 0 && <p>{`Количество фотографий ${count}`}</p>}
             </div>
             <label className='ten-photo'>
               Вы можете загрузить до 10 фотографий в формате JPG или PNG.
               Максимальный размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся новые!
             </label>
           </Form.Item>
-          <Form.Item
-            name="location"
-            showValidateSuccess={true}
-            hasFeedback={true}
-          >
+          <Form.Item name="location" showValidateSuccess={true} hasFeedback={true}>
             <label>Местоположение</label>
-            <Select defaultValue={announ?.location} name="location" placement="bottomRight">
+            <Select
+              defaultValue={announ?.location}
+              name="location"
+              placement="bottomRight"
+            >
               {locations.map((loc) => {
                 return (
                   <Select.Option key={loc} value={loc}>
@@ -289,7 +293,7 @@ export const EditAnnouncement = () => {
         okText="Удалить"
         cancelText="Отменить"
       >
-        <Button className='delete-btn'>Удалить</Button>
+        <Button className="delete-btn">Удалить</Button>
       </Popconfirm>
     </motion.div>
   )

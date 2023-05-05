@@ -1,20 +1,24 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { AxiosError, AxiosResponse } from 'axios'
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+
+import { motion } from 'framer-motion'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
+
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import api from '@api/index'
-import { toast } from 'react-toastify'
+import { favorites, likeAnnoun } from '@store/favorites/favoriteId'
 import { errorHandler } from '@utils/errorHandler'
-import { FavoritesAnnounsmentType, FavoritesType, PostAnnouncementTypes } from '../../types/types'
-import no_foto from '../../assets/no_photo.jpg'
-import { motion } from 'framer-motion'
+
 import dlike from '../../assets/blike.png'
 import blike from '../../assets/like.png'
+import no_foto from '../../assets/no_photo.jpg'
+import { FavoritesAnnounsmentType, FavoritesType, PostAnnouncementTypes } from '../../types/types'
+
 import './announcement.scss'
-import { favorites, likeAnnoun } from '@store/favorites/favoriteId'
 
 
 
@@ -172,7 +176,8 @@ export const Announcements: React.FC = () => {
           {
             userInfo?.id !== announ?.user ? <Button
             onClick={() => {
-              if (userInfo?.access) {
+              if (userInfo?.email) {
+                console.log(userInfo)
                 navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
               } else {
                 toast.warning('авторизуйтесь')

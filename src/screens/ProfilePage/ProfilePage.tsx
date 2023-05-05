@@ -70,7 +70,7 @@ export const ProfilePage = () => {
                   style={{ color: !profileType ? '#FFD02b' : '#333333' }}
                   onClick={() => {
                     setProfileType(false)
-                    setMobile(false) 
+                    setMobile(false)
                   }}
                 >
                   Мои объявления
@@ -81,7 +81,7 @@ export const ProfilePage = () => {
                   style={{ color: !profileType ? '#333333' : '#FFD02b' }}
                   onClick={() => {
                     setProfileType(true)
-                    setMobile(false) 
+                    setMobile(false)
                   }}
                 >
                   Редактирование
@@ -99,72 +99,6 @@ export const ProfilePage = () => {
           </Card>
         </Col>
         {MobileQuery ? '' : <div className="profile__line"></div>}
-        {/* <Col xs={24} md={14} className="profile__card_main">
-            {userInfo?.users_announsments?.map((card) => (
-              <motion.div
-                key={card.slug}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Card
-                  className="CardProfile"
-                  hoverable
-                  style={{
-                    width: '100%',
-                    border: 'none',
-                    // height: 235,
-                    padding: 0,
-                    background: '#ffffff',
-                  }}
-                >
-                  <Row gutter={30} className="CardProfile-wrapper">
-                    <Col className="CardProfile-wrapper_image">
-                      <Image
-                        className="CardProfile_img"
-                        alt="example"
-                        src={card?.photos ? card.photos[0].image_url : '/dog.png'}
-                        // style={{ width: 215, height: 195, borderRadius: 6 }}
-                      />
-                    </Col>
-                    <Col className="CardProfile-wrapper_content">
-                      <Link to={`/announcement/${card.slug}`} key={card.slug}>
-                        <Text type="secondary" style={{ fontSize: 12 }}>
-                          <ClockCircleOutlined /> {moment(card.created_at).format('dddd')}
-                        </Text>
-                        <div
-                          style={{
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            marginBottom: -13,
-                            marginTop: -3,
-                          }}
-                        >
-                          <Title
-                            className="title-s"
-                            level={4}
-                            style={{ fontSize: 18, color: '#FFD02b', fontWeight: '700' }}
-                          >
-                            {card.title}
-                          </Title>
-                        </div>
-                        <Text strong style={{ fontSize: 18 }}>
-                          {card.price == '-1.00' ? 'Договорная' : `${card.price} KGS`}
-                        </Text>
-                        <Paragraph
-                          className="paragraph"
-                          style={{ width: '100%', fontSize: '16px', height: '60px' }}
-                        >
-                          {card.description}
-                        </Paragraph>
-                      </Link>
-                    </Col>
-                  </Row>
-                </Card>
-              </motion.div>
-            ))}
-        </Col> */}
         {!profileType ? (
           <Col xs={24} md={14} className="profile__card_main">
             {userInfo?.users_announsments.length ? (
@@ -191,7 +125,7 @@ export const ProfilePage = () => {
                         <Image
                           className="CardProfile_img"
                           alt="example"
-                          src={card?.photos ? card.photos[0].image_url : '/dogg.jpg'}
+                          src={card?.photos[0] ? card.photos[0].image_url : '/dogg.jpg'}
                           // style={{ width: 215, height: 195, borderRadius: 6 }}
                         />
                       </Col>
