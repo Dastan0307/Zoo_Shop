@@ -58,16 +58,16 @@ export interface AnnouncementTypes {
       image_url: string | undefined
     },
   ]
-  title: string | undefined
-  price?: string | undefined
-  description: string | undefined
-  phone_number: string | undefined
-  location: string | undefined
+  title: string 
+  price: string 
+  description: string 
+  phone_number: string 
+  location: string 
   created_at?: string | undefined
   updated_at?: string | undefined
   views_count?: number | undefined
-  category: string | undefined
-  user_name: string | undefined
+  category: string 
+  user_name: string 
   user_photo: string | null
 }
 
@@ -199,7 +199,7 @@ export interface PostAnnouncementTypes {
     },
   ]
   title: string
-  price?: string
+  price: string
   description: string
   phone_number: string
   location: string

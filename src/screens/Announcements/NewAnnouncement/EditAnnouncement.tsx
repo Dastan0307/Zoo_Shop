@@ -1,9 +1,9 @@
 import { Button, Image, message, Popconfirm, Typography } from 'antd'
-import { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError } from 'axios'
 import { Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { motion } from 'framer-motion'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import {  useLayoutEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
@@ -18,27 +18,28 @@ import './newAnnouncement.scss'
 const { Title } = Typography
 
 type PostAnnouncementTypess = {
-  slug?: string | undefined
-  user?: string | undefined
-  photos?: any | undefined
-  title?: string | undefined
-  price?: string | undefined
-  description: string | undefined
-  phone_number: string | undefined
-  location: string | undefined
-  created_at?: string | undefined
-  updated_at?: string | undefined
-  views_count?: number | undefined
-  category: string | undefined
+  slug?: string
+  user?: string
+  photos?: any
+  title: string
+  price: string
+  description: string
+  phone_number: string
+  location: string
+  created_at?: string
+  updated_at?: string
+  views_count?: number
+  category: string
 }
 
 export const EditAnnouncement = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [count, setCount] = useState<number>(0)
   const { announcement } = useParams()
-  const [announ, setAnnoun] = useState<PostAnnouncementTypes>()
+  const [announ, setAnnoun] = useState<PostAnnouncementTypes | null>(null)
   const [categories, setCategories] = useState<CategoryType[]>([])
-  const { data } = useGetAnnouncementQuery(announcement)
+  // const res = useGetAnnouncementQuery(announcement)
+  // const data = res.data!
   const [loader, setLoader] = useState<boolean>(true)
   const navigate = useNavigate()
 
@@ -88,12 +89,12 @@ export const EditAnnouncement = () => {
   }
 
   const initialValues: PostAnnouncementTypess = {
-    title: data?.title,
-    price: data?.price,
-    description: data?.description,
-    location: data?.location,
-    category: data?.category,
-    phone_number: data?.phone_number,
+    title: announ ? announ.title : '',
+    price: announ ? announ.price : '',
+    description: announ ? announ.description : '',
+    location: announ ? announ.location : '',
+    category: announ ? announ.category : '',
+    phone_number: announ ? announ.phone_number : '',
   }
 
   const locations: string[] = [
@@ -106,46 +107,26 @@ export const EditAnnouncement = () => {
     'Джалал-Абад',
   ]
 
-  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setCount(e.target.files.length)
-      setSelectedFiles(e.target.files)
+  const photoChange = (e: FileList) => {
+    if (e) {
+      setCount(e.length)
+      setSelectedFiles(e)
     }
   }
   const submitForm = async (data: PostAnnouncementTypess) => {
-    console.log(data)
-
     const token = localStorage.getItem('access_token')
-    const photos: File[] = []
+    const formData = new FormData()
+    formData.append('title', data?.title)
+    formData.append('description', data.description)
+    formData.append('location', data.location)
+    formData.append('category', data.category)
+    formData.append('price', data.price)
+    formData.append('phone_number', data.phone_number)
     if (selectedFiles) {
-      for (let i = 0; i < selectedFiles?.length; i++) {
-        photos.push(selectedFiles[i])
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append(`photos`, selectedFiles[i] as File, selectedFiles[i].name)
       }
     }
-    const formData = new FormData()
-    if (typeof data.title === 'string') {
-      formData.append('title', data?.title)
-    }
-    if (typeof data.description === 'string') {
-      formData.append('description', data.description)
-    }
-    if (typeof data.location === 'string') {
-      formData.append('location', data.location)
-    }
-    if (typeof data.category === 'string') {
-      formData.append('category', data.category)
-    }
-    if (typeof data.price === 'string') {
-      formData.append('price', data.price!)
-    }
-    if (typeof data.phone_number === 'string') {
-      formData.append('phone_number', data.phone_number)
-    }
-    for (let i = 0; i < photos?.length; i++) {
-      formData.append(`photos`, photos[i], photos[i].name)
-    }
-    console.log(data)
-
     data = { ...data, photos: selectedFiles }
     try {
       await api.patch(`announcements/${announcement}/`, formData, {
@@ -156,7 +137,6 @@ export const EditAnnouncement = () => {
       })
 
       message.success(`Вы изменили объявление ${data.title}`)
-      console.log(data)
       setTimeout(() => {
         navigate(`/`)
       }, 1500)
@@ -173,109 +153,115 @@ export const EditAnnouncement = () => {
       className="newannoun"
     >
       <Title level={2}>Редактировать</Title>
-      {!loader && <Formik
-        initialValues={announ ? announ : initialValues}
-        onSubmit={submitForm}
-        validationSchema={AnnouncementValidate}
-      >
-        <Form>
-          <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
-            <label>Категория</label>
-            <Select name="category" defaultValue={announ?.category}>
-              {categories &&
-                categories.map((category) => {
+      {!loader && (
+        <Formik
+          initialValues={initialValues ? initialValues : ({} as PostAnnouncementTypess)}
+          onSubmit={submitForm}
+          validationSchema={AnnouncementValidate}
+        >
+          <Form>
+            <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
+              <label>Категория</label>
+              <Select name="category" defaultValue={announ?.category}>
+                {categories &&
+                  categories.map((category) => {
+                    return (
+                      <Select.Option key={category.slug} value={category.slug}>
+                        {category.title}
+                      </Select.Option>
+                    )
+                  })}
+              </Select>
+            </Form.Item>
+            <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
+              <label htmlFor="title" id="title">
+                Название объявления
+              </label>
+              <Input name="title" placeholder="Введите название" />
+            </Form.Item>
+            <Form.Item name="price" showValidateSuccess={true} hasFeedback={true}>
+              <label htmlFor="price" id="price">
+                Цена
+              </label>
+              <Input type="number" name="price" placeholder="Введите цену" />
+              <label>Не указывайте цену если отдаете питомца даром</label>
+            </Form.Item>
+            <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
+              <label htmlFor="phone_number" id="phone_number">
+                Контакты
+              </label>
+              <Input type="tel" name="phone_number" placeholder="Номер" />
+            </Form.Item>
+            <Form.Item name="description" showValidateSuccess={true} hasFeedback={true}>
+              <label htmlFor="description" id="description">
+                Описание
+              </label>
+              <Input.TextArea
+                className="description"
+                name="description"
+                placeholder="Расскажите о питомце"
+              />
+            </Form.Item>
+            <div className="old-photos">
+              {announ?.photos &&
+                announ?.photos.map((photo) => {
                   return (
-                    <Select.Option key={category.slug} value={category.slug}>
-                      {category.title}
+                    <Image
+                      className="image-corusel"
+                      preview={false}
+                      key={photo.id}
+                      src={photo.image_url}
+                    />
+                  )
+                })}
+            </div>
+            <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
+              <div className="display-files">
+                <div className="files">
+                  <label>
+                    <Input
+                      className="input-file"
+                      multiple
+                      type="file"
+                      name="photos"
+                      placeholder="Описание"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          photoChange(e.target.files)
+                        }
+                      }}
+                    />
+                    <span className="text">Изменить Фотографии</span>
+                  </label>
+                </div>
+                {count > 0 && <p>{`Количество фотографий ${count}`}</p>}
+              </div>
+              <label className="ten-photo">
+                Вы можете загрузить до 10 фотографий в формате JPG или PNG. Максимальный
+                размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся
+                новые!
+              </label>
+            </Form.Item>
+            <Form.Item name="location" showValidateSuccess={true} hasFeedback={true}>
+              <label>Местоположение</label>
+              <Select
+                defaultValue={announ?.location}
+                name="location"
+                placement="bottomRight"
+              >
+                {locations.map((loc) => {
+                  return (
+                    <Select.Option key={loc} value={loc}>
+                      {loc}
                     </Select.Option>
                   )
                 })}
-            </Select>
-          </Form.Item>
-          <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="title" id="title">
-              Название объявления
-            </label>
-            <Input name="title" placeholder="Введите название" />
-          </Form.Item>
-          <Form.Item name="price" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="price" id="price">
-              Цена
-            </label>
-            <Input type="number" name="price" placeholder="Введите цену" />
-            <label>Не указывайте цену если отдаете питомца даром</label>
-          </Form.Item>
-          <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="phone_number" id="phone_number">
-              Контакты
-            </label>
-            <Input type="tel" name="phone_number" placeholder="Номер" />
-          </Form.Item>
-          <Form.Item name="description" showValidateSuccess={true} hasFeedback={true}>
-            <label htmlFor="description" id="description">
-              Описание
-            </label>
-            <Input.TextArea
-              className="description"
-              name="description"
-              placeholder="Расскажите о питомце"
-            />
-          </Form.Item>
-          <div className="old-photos">
-            {announ?.photos &&
-              announ?.photos.map((photo) => {
-                return (
-                  <Image
-                    className="image-corusel"
-                    preview={false}
-                    key={photo.id}
-                    src={photo.image_url}
-                  />
-                )
-              })}
-          </div>
-          <Form.Item name="photos" showValidateSuccess={true} hasFeedback={true}>
-            <div className="display-files">
-              <div className="files">
-                <label>
-                  <Input
-                    className="input-file"
-                    multiple
-                    type="file"
-                    name="photos"
-                    placeholder="Описание"
-                    onChange={photoChange}
-                  />
-                  <span className="text">Изменить Фотографии</span>
-                </label>
-              </div>
-              {count > 0 && <p>{`Количество фотографий ${count}`}</p>}
-            </div>
-            <label className="ten-photo">
-              Вы можете загрузить до 10 фотографий в формате JPG или PNG. Максимальный
-              размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся
-              новые!
-            </label>
-          </Form.Item>
-          <Form.Item name="location" showValidateSuccess={true} hasFeedback={true}>
-            <label>Местоположение</label>
-            <Select
-              defaultValue={announ?.location}
-              name="location"
-              placement="bottomRight"
-            >
-              {locations.map((loc) => {
-                return (
-                  <Select.Option key={loc} value={loc}>
-                    {loc}
-                  </Select.Option>
-                )
-              })}
-            </Select>
-          </Form.Item>
-          <SubmitButton type="primary">Редактировать</SubmitButton>
-        </Form>
-      </Formik>}
+              </Select>
+            </Form.Item>
+            <SubmitButton type="primary">Редактировать</SubmitButton>
+          </Form>
+        </Formik>
+      )}
       <Popconfirm
         title="УДАЛЕНИЕ"
         description="Хотите удалить объявление?"

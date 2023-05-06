@@ -15,53 +15,45 @@ import { errorHandler } from '@utils/errorHandler'
 import dlike from '../../assets/blike.png'
 import blike from '../../assets/like.png'
 import no_foto from '../../assets/no_photo.jpg'
-import {FavoritesType, PostAnnouncementTypes } from '../../types/types'
+import { FavoritesType, PostAnnouncementTypes } from '../../types/types'
 
 import './announcement.scss'
-
-
 
 const { Title, Text, Paragraph } = Typography
 
 export const Announcements: React.FC = () => {
   const navigate = useNavigate()
-  const [like,setLike] = useState<boolean>(false)
+  const [like, setLike] = useState<boolean>(false)
   const { userInfo } = useTypedSelector((state) => state.auth)
-  const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
+  const [announ, setAnnoun] = useState<PostAnnouncementTypes>()
   const { id } = useParams()
   const carouselRef = useRef<CarouselRef>(null)
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
 
-  useEffect(() => {
-    favorites().then(res => setAnnouncement(res))
-  }, [])
-
-  const findLike = announcement && announcement.find(item => item.announcement === announ?.slug)
-  
   const handleLike = () => {
-    setLike(like => !like)
+    setLike((like) => !like)
     likeAnnoun(announ?.slug)
   }
 
-  useEffect(() => {
-    if(findLike?.is_favorite) {
-      setLike(true)
-      console.log('dwadaw', like);
-      
-    }
-  }, [])
-  
   useLayoutEffect(() => {
-    (async () =>  {
+    ;(async () => {
       try {
         const res = await api.get<PostAnnouncementTypes>(`/announcements/${id}/`)
+        if (userInfo && userInfo.email) {
+          const favo = await favorites()
+          if (favo) {
+            const findLike =
+              favo && favo.find((item) => item.announcement == res?.data.slug)
+            setLike(!!findLike)
+            setAnnouncement(favo)
+          }
+        }
         setAnnoun(res.data)
       } catch (error: AxiosError | any) {
         errorHandler(error)
       }
     })()
   }, [id])
-
 
   const handlePrev = () => {
     if (carouselRef.current) {
@@ -75,7 +67,7 @@ export const Announcements: React.FC = () => {
     }
   }
 
-  const clickGoTo = (current: number) => { 
+  const clickGoTo = (current: number) => {
     if (carouselRef.current) {
       carouselRef.current.goTo(current)
     }
@@ -90,8 +82,12 @@ export const Announcements: React.FC = () => {
     >
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
-        <Col>
-          {userInfo?.id === announ?.user && (findLike?.is_favorite === like) ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />}
+        <Col style={{ display: userInfo?.email ? 'flex' : 'none' }}>
+          {like ? (
+            <img src={blike} onClick={handleLike} alt="like" />
+          ) : (
+            <img src={dlike} onClick={handleLike} />
+          )}
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
           ) : null}
@@ -102,31 +98,50 @@ export const Announcements: React.FC = () => {
           <Row>
             <Row className="big-image">
               <Col>
-                {
-                  announ?.photos &&  announ.photos.length > 0 ? <Carousel  ref={carouselRef}>
-                  {announ?.photos && announ?.photos.map(photo => <Image width={713} className='image-corusel' preview={false} src={photo.image_url} key={photo.id} />)}
-                </Carousel> :
+                {announ?.photos && announ.photos.length > 0 ? (
                   <Carousel ref={carouselRef}>
-                    {[1,2,3].map((photo, index) => <Image className='image-corusel' width={713} preview={false} src={no_foto} key={index} />)}
+                    {announ?.photos &&
+                      announ?.photos.map((photo) => (
+                        <Image
+                          width={713}
+                          className="image-corusel"
+                          preview={false}
+                          src={photo.image_url}
+                          key={photo.id}
+                        />
+                      ))}
                   </Carousel>
-                }
+                ) : (
+                  <Carousel ref={carouselRef}>
+                    {[1, 2, 3].map((photo, index) => (
+                      <Image
+                        className="image-corusel"
+                        width={713}
+                        preview={false}
+                        src={no_foto}
+                        key={index}
+                      />
+                    ))}
+                  </Carousel>
+                )}
                 <LeftOutlined onClick={handlePrev} />
                 <RightOutlined onClick={handleNext} />
               </Col>
             </Row>
             <Row className="slides__img">
               <Col>
-                {announ?.photos && announ?.photos.map((photo, index) => {
-                  return (
-                    <Image
-                      className='image-corusel'
-                      onClick={() => clickGoTo(index)}
-                      preview={false}
-                      key={index}
-                      src={photo.image_url}
-                    />
-                  )
-                })}
+                {announ?.photos &&
+                  announ?.photos.map((photo, index) => {
+                    return (
+                      <Image
+                        className="image-corusel"
+                        onClick={() => clickGoTo(index)}
+                        preview={false}
+                        key={index}
+                        src={photo.image_url}
+                      />
+                    )
+                  })}
               </Col>
             </Row>
           </Row>
@@ -161,30 +176,38 @@ export const Announcements: React.FC = () => {
         </div>
         <div className="sider">
           <Text>{announ === null ? 'бесплатно ДЭЭ' : `${announ?.price} KGS`}</Text>
-          <Row className='sider-i'>
-            <Image preview={false} src={announ?.user_photo ? announ?.user_photo : '/public/dogg.jpg'} />
+          <Row className="sider-i">
+            <Image
+              preview={false}
+              src={announ?.user_photo ? announ?.user_photo : '/public/dogg.jpg'}
+            />
             <Text>{announ?.user_name}</Text>
           </Row>
           <Row className="phone">
             <Text>Номер телефона</Text>
             <Text>{announ?.phone_number}</Text>
           </Row>
-          {
-            userInfo?.id !== announ?.user ? <Button
-            onClick={() => {
-              if (userInfo?.email) {
-                console.log(userInfo)
-                navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id, photo: announ?.user_photo, name: announ?.user_name } })
-              } else {
-                toast.warning('авторизуйтесь')
-              }
-            }}
-          >
-            Связаться
-          </Button>
-          :
-          null
-          }
+          {userInfo?.id !== announ?.user ? (
+            <Button
+              onClick={() => {
+                if (userInfo?.email) {
+                  console.log(userInfo)
+                  navigate('/chats', {
+                    state: {
+                      anoun: announ?.slug,
+                      id: userInfo.id,
+                      photo: announ?.user_photo,
+                      name: announ?.user_name,
+                    },
+                  })
+                } else {
+                  toast.warning('авторизуйтесь')
+                }
+              }}
+            >
+              Связаться
+            </Button>
+          ) : null}
         </div>
       </div>
     </motion.div>
