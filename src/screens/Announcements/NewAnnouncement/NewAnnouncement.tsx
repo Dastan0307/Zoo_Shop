@@ -90,7 +90,7 @@ export const NewAnnouncement = () => {
         },
       })
 
-      message.success(`создал ${data.title}`)
+      message.success(`Вы создали объявление ${data.title}`)
       console.log(data)
       setTimeout(() => {
         navigate(`/`)

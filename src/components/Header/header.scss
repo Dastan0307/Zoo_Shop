@@ -2,7 +2,10 @@
   display: grid;
   grid-template-columns: 1fr auto;
   background: white;
-  max-width: 1800px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 180px;
+  padding: 0;
 
   .header__logo {
     color: #333333;
@@ -12,9 +15,8 @@
   }
 
   .header__list {
-    display: grid;
-    column-gap: 50px;
-    grid-template-columns: repeat(6, auto);
+    display: flex;
+    column-gap: 30px;
 
     a {
       color: #333333;

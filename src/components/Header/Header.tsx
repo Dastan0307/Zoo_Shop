@@ -50,13 +50,15 @@ export const Header = () => {
               <Link to={'/chats'} className='header__link-ms_inside'>Сообщения</Link>
               <Link to={'/favorites'} className='header__link-ms_inside'>Избранные</Link>
 
-              <Link to={'/profile'} className='header__link-nm_inside'> <Image style={{borderRadius: '100%'}}  preview={false}  src={user.image ? user.image : TomHoland } alt="error" width={40} height={40} /> {user.first_name}</Link>
+              <Link to={'/profile'} className='header__link-nm_inside'> <Image style={{borderRadius: '100%'}}  preview={false}  src={user.image ? user.image : '/public/dogg.jpg' } alt="error" width={40} height={40} /> {user.first_name}</Link>
             </>
             ):(
               <Link to={'/login'} className='header__link-avatar_inside'>Войти</Link>
             )
             }
-        <Link
+        {
+          user &&
+          <Link
           to={{
             pathname: '/new-announcement'
           }}
@@ -67,6 +69,7 @@ export const Header = () => {
             Новое объявление
           </PrimaryButton>
         </Link>
+        }
       </Col>
       <Col onClick={() => setNav(!nav)} className='mobile-btn'>
         {nav ? <CloseOutlined className='menu-icon'/> : <MenuOutlined className='menu-icon' />}

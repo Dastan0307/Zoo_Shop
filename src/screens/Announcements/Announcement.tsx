@@ -93,8 +93,7 @@ export const Announcements: React.FC = () => {
       <Row className="title">
         <Title level={2}>{announ?.title}</Title>
         <Col>
-          {userInfo && (findLike?.is_favorite === like) ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />
-          }
+          {userInfo?.id === announ?.user && (findLike?.is_favorite === like) ? <img src={blike} onClick={handleLike} alt='like'/> : <img src={dlike} onClick={handleLike} />}
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
           ) : null}
@@ -164,8 +163,8 @@ export const Announcements: React.FC = () => {
         </div>
         <div className="sider">
           <Text>{announ === null ? 'бесплатно ДЭЭ' : `${announ?.price} KGS`}</Text>
-          <Row>
-            <Image src={announ?.user_photo} />
+          <Row className='sider-i'>
+            <Image preview={false} src={announ?.user_photo ? announ?.user_photo : '/public/dogg.jpg'} />
             <Text>{announ?.user_name}</Text>
           </Row>
           <Row className="phone">

@@ -42,28 +42,26 @@
 
 
   .data-select {
-    width: 438px;
+    width: 100%;
+    max-width: 438px;
     height: 40px;
     display: block;
   }
 
   .ant-select {
-    width: 438px;
+    width: 100%;
+    max-width: 438px;
     display: block;
     margin: 16px 0; 
   }
 
   .ant-input-affix-wrapper {
-    width: 438px;
+    width: 100%;
+    max-width: 438px;
     height: 40px;
     display: flex;
   }
 
-  // .ant-input {
-  //   width: 438px;
-  //   height: 40px;
-  // }
-  
 
   label {
     color: #828282;
@@ -75,7 +73,8 @@
   }
 
   .description {
-    min-width: 622px;
+    width: 100%;
+    max-width: 622px;
     min-height: 250px;
     text-align: start;
   }
@@ -109,7 +108,8 @@
 }
 
 .old-photos {
-  width: 570px;
+  width: 100%;
+  max-width: 570px;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
@@ -128,24 +128,16 @@
     h2 {
       font-size: 40px;
     }
-    .ant-input-affix-wrapper {
-      width: 100%;
-      max-width: 338px;
-      height: 40px;
-      display: flex;
-    }
-  
-    .old-photos {
-      width: 700px;
-      .ant-image-img {
-        width: 123px;
-        height: 123px;
-        gap: 10px;
-      }
-    }
   }
 
- 
+  .old-photos {
+
+    .ant-image-img {
+      width: 123px;
+      height: 123px;
+      gap: 10px;
+    }
+  }
 
 }
 
@@ -155,24 +147,8 @@
     h2 {
       font-size: 30px;
     }
-
-    .ant-select {
-      width: 420px;
-      display: block;
-      margin: 16px 0; 
-    }
-    .description {
-      min-width: 522px;
-      min-height: 250px;
-    }
-    .ant-input-affix-wrapper {
-      width: 338px;
-      height: 40px;
-      display: flex;
-    }
   }
   .old-photos {
-    width: 300px;
 
     .ant-image-img {
       width: 93px;
@@ -181,45 +157,21 @@
     }
   }
 
-  label {
-    width: 470px;
-  }
 }
 
 @media (max-width: 450) {
   .newannoun {
     margin: 10px;
-    .ant-input-affix-wrapper {
-      width: 258px;
-      height: 40px;
-      display: flex;
-    }
-
-    .ant-select {
-      width: 420px;
-      display: block;
-      margin: 16px 0; 
-    }
+    
     h2 {
       font-size: 20px;
     }
-    .description {
-      min-width: 420px;
-      min-height: 250px;
+    .old-photos {
+      .ant-image-img {
+        width: 93px;
+        height: 93px;
+      }
     }
-  }
-
-  .old-photos {
-    width: 350px;
-
-    .ant-image-img {
-      width: 93px;
-      height: 93px;
-    }
-  }
-
-  label {
-    width: 420px;
   }
 }
 
@@ -229,36 +181,12 @@
     h2 {
       font-size: 16px;
     }
-
-    .ant-input-affix-wrapper {
-      width: 258px;
-      height: 40px;
-      display: flex;
+    .old-photos {
+      .ant-image-img {
+        width: 93px;
+        height: 93px;
+        gap: 10px;
+      }
     }
-
-    .ant-select {
-      width: 258px;
-      display: block;
-      margin: 16px 0; 
-    }
-
-    .description {
-      min-width: 290px;
-      min-height: 250px;
-    }
-  }
-
-  .old-photos {
-    width: 300px;
-
-    .ant-image-img {
-      width: 93px;
-      height: 93px;
-      gap: 10px;
-    }
-  }
-
-  label {
-    width: 290px;
   }
 }
