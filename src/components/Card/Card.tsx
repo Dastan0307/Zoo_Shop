@@ -23,7 +23,6 @@ const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
   const { created_at, location, user_name, photos } = value
-  console.log(value)
 
   const handleLike = () => {
     setLike((item) => !item)

@@ -21,6 +21,9 @@
         margin: 0 !important;
         font-size: 12px !important;
         font-weight: 300;
+        max-width: 80px;
+        overflow: hidden;
+        height: 20px;
       }
     }
   }
@@ -60,6 +63,8 @@
     .sidebar_user_item_info_status {
       font-size: 14px;
       font-weight: 300;
+      overflow: hidden !important;
+      max-width: 100px !important;
     }
   }
 }

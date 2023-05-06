@@ -15,7 +15,7 @@ export const cardApi = {
     return response.data
 
   },
-};
+}
 
 export default api
 

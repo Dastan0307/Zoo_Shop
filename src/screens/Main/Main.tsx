@@ -17,7 +17,12 @@ import { color, motion } from 'framer-motion'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { CloseOutlined, MenuOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  MenuOutlined,
+  MenuUnfoldOutlined,
+  SearchOutlined,
+} from '@ant-design/icons'
 import { AnnouncementApi } from '@api/AnnouncementApi'
 import { CardMain, CardOrg } from '@components/index'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
@@ -108,6 +113,7 @@ export const Main = () => {
     >
       <Row className="main_wrapper-search">
         <Input
+          suffix={<SearchOutlined />}
           placeholder="Поиск"
           className="main_search"
           ref={searchInput}
@@ -153,7 +159,7 @@ export const Main = () => {
         <Row className="main_type_wrapper">
           <Col md={12} xs={24}>
             <Card
-              className="main_type"
+              className={`main_type ${mainType == 'announ' && 'active_type'}`}
               onClick={() => {
                 setMainType('announ')
               }}
@@ -166,7 +172,7 @@ export const Main = () => {
           </Col>
           <Col md={12} xs={24}>
             <Card
-              className="main_type_2"
+              className={`main_type_2 ${mainType == 'org' && 'active_type_2'}`}
               onClick={() => {
                 setMainType('org')
               }}

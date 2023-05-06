@@ -176,7 +176,7 @@ export const Announcements: React.FC = () => {
             onClick={() => {
               if (userInfo?.email) {
                 console.log(userInfo)
-                navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id } })
+                navigate('/chats', { state: { anoun: announ?.slug, id: userInfo.id, photo: announ?.user_photo, name: announ?.user_name } })
               } else {
                 toast.warning('авторизуйтесь')
               }

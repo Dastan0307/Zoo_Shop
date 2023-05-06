@@ -2,9 +2,11 @@ import { Button, Image, message, Popconfirm, Typography } from 'antd'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
+import { motion } from 'framer-motion'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
 
@@ -13,8 +15,6 @@ import { CategoriesType, CategoryType, PostAnnouncementTypes } from '../../../ty
 
 import './newAnnouncement.scss'
 
-import { motion } from 'framer-motion'
-import { useGetAnnouncementQuery } from '@store/announcements/getAnnoun'
 const { Title } = Typography
 
 type PostAnnouncementTypess = {
@@ -36,40 +36,35 @@ export const EditAnnouncement = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [count, setCount] = useState<number>(0)
   const { announcement } = useParams()
-  const [announ, setAnnoun ] = useState<PostAnnouncementTypes>()
-  const [categories, setCategories] = useState<CategoryType[]> ([])
-  const {data} = useGetAnnouncementQuery(announcement)
+  const [announ, setAnnoun] = useState<PostAnnouncementTypes>()
+  const [categories, setCategories] = useState<CategoryType[]>([])
+  const { data } = useGetAnnouncementQuery(announcement)
+  const [loader, setLoader] = useState<boolean>(true)
   const navigate = useNavigate()
 
-
   useLayoutEffect(() => {
-    (async () => {
-      try {
-        const res = await api.get<CategoriesType>(`/categories/`)
-        setCategories(res.data.results)
-      } catch (error: AxiosError | any) {
-        errorHandler(error)
-      }
-    })()
-  }, [announcement])
-  useEffect(() => {
-    (async () =>  {
+    ;(async () => {
+      setLoader(true)
       const token = localStorage.getItem('access_token')
       try {
-        api.get<PostAnnouncementTypes>(
+        const res = await api.get<CategoriesType>(`/categories/`)
+        const data = await api.get<PostAnnouncementTypes>(
           `/announcements/${announcement}/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
-        ).then((data) => setAnnoun(data.data))
+        )
+        setAnnoun(data.data)
+        setCategories(res.data.results)
+        setLoader(false)
       } catch (error: AxiosError | any) {
         errorHandler(error)
+        setLoader(false)
       }
     })()
   }, [])
-
 
   const confirm = async () => {
     const token = localStorage.getItem('access_token')
@@ -89,10 +84,8 @@ export const EditAnnouncement = () => {
   }
 
   const cancel = () => {
-    message.error('Отменено!');
-  };
-
-  
+    message.error('Отменено!')
+  }
 
   const initialValues: PostAnnouncementTypess = {
     title: data?.title,
@@ -180,12 +173,9 @@ export const EditAnnouncement = () => {
       className="newannoun"
     >
       <Title level={2}>Редактировать</Title>
-      <Formik
+      {!loader && <Formik
         initialValues={announ ? announ : initialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          submitForm(values)
-          setSubmitting(false)
-        }}
+        onSubmit={submitForm}
         validationSchema={AnnouncementValidate}
       >
         <Form>
@@ -261,9 +251,10 @@ export const EditAnnouncement = () => {
               </div>
               {count > 0 && <p>{`Количество фотографий ${count}`}</p>}
             </div>
-            <label className='ten-photo'>
-              Вы можете загрузить до 10 фотографий в формате JPG или PNG.
-              Максимальный размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся новые!
+            <label className="ten-photo">
+              Вы можете загрузить до 10 фотографий в формате JPG или PNG. Максимальный
+              размер фото — 25MB. После загрузки фотографий старые исчезнут, появятся
+              новые!
             </label>
           </Form.Item>
           <Form.Item name="location" showValidateSuccess={true} hasFeedback={true}>
@@ -284,7 +275,7 @@ export const EditAnnouncement = () => {
           </Form.Item>
           <SubmitButton type="primary">Редактировать</SubmitButton>
         </Form>
-      </Formik>
+      </Formik>}
       <Popconfirm
         title="УДАЛЕНИЕ"
         description="Хотите удалить объявление?"

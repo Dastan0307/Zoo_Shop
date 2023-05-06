@@ -1,14 +1,16 @@
-import { Image, Input, Layout, List, Row, Space, Typography } from 'antd'
+import { Image, Layout, List, Row, Space, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
-import { motion } from 'framer-motion'
+import { Formik } from 'formik'
+import { Form,Input } from 'formik-antd'
+import { easeOut, motion } from 'framer-motion'
 import moment from 'moment'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
-import { FastBackwardFilled, LeftOutlined } from '@ant-design/icons'
+import { LeftOutlined } from '@ant-design/icons'
 
 import SendIcon from '../../../public/chat/send.svg'
 import { ChatApi, getChatsProps } from '../../api/Chat'
@@ -36,15 +38,16 @@ export const Chat = () => {
   const id = useTypedSelector((state) => state.auth.userInfo?.id)
   const [currentChat, setCurrentChat] = useState<getChatsProps | null>(null)
   const [currentAnnoun, setCurrentAnnoun] = useState<AnnounType>()
+  const [value, setValue] = useState<string>('')
   const [chats, setChats] = useState<getChatsProps[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [viewChat, setViewChat] = useState<boolean>(true)
   const [ws, setWs] = useState<WebSocket | null>(null)
   const mobileScreen = useMediaQuery({ query: '(max-width: 768px)' })
-  // new WebSocket(`ws://104.199.175.143/ws/chat`)
+  const scrollBar = useRef<HTMLUListElement>(null)
+
   const changeChat = (user: getChatsProps) => {
     if (ws) {
-      console.log('work')
       ws.close()
       setMessages([])
     }
@@ -55,13 +58,15 @@ export const Chat = () => {
   if (ws) {
     ws.onmessage = async (event) => {
       const data = JSON.parse(event.data)
-      setCurrentAnnoun(data.announcement as AnnounType)
+      if (data.announcement) {
+        setCurrentAnnoun(data.announcement as AnnounType)
+      }
       const chats = await ChatApi.getChats()
-      console.log(data)
-
       //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setMessages([...messages!, ...data.messages])
-
+      if (scrollBar.current) {
+        // console.log(scrollBar.sc);
+      }
       if (chats) {
         setChats(chats?.data)
       }
@@ -80,7 +85,12 @@ export const Chat = () => {
   }
   useEffect(() => {
     if (params?.state?.anoun) {
-      setCurrentChat({ announcement: params.state.anoun, customer: params.state.id })
+      setCurrentChat({
+        announcement: params.state.anoun,
+        customer: params.state.id,
+        photo: params.state.photo,
+        other_name: params.state.name,
+      })
       setViewChat(false)
       setWs(new WebSocket(`wss://zoonet.me/ws/chat/${id}_${params.state.anoun}/`))
       return
@@ -95,6 +105,7 @@ export const Chat = () => {
       }
       return
     }
+
     setTimeout(() => {
       getDataChats()
     }, 700)
@@ -105,17 +116,22 @@ export const Chat = () => {
   }, [ws])
 
   const userChat = 'true'
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == 'Enter') {
-      if (ws) {
-        ws.send(
-          JSON.stringify({
-            message: e.currentTarget.value,
-            author_id: id,
-            // seller_id: '3',
-          }),
-        )
-      }
+  const handleInput = (e: { input: string }) => {
+    console.log(e);
+    
+    if (ws) {
+      ws.send(
+        JSON.stringify({
+          message: e.input,
+          author_id: id,
+          // seller_id: '3',
+        }),
+      )
+    }
+  }
+  const scrollBottom = (e: HTMLUListElement) => {
+    if (e) {
+      e.scrollTop = e.scrollHeight
     }
   }
 
@@ -124,10 +140,6 @@ export const Chat = () => {
       setViewChat(true)
     }
   }, [mobileScreen])
-
-  // console.log(viewChat)
-  // console.log(mobileScreen)
-
   return (
     <Layout className="chat">
       <Sider
@@ -183,48 +195,50 @@ export const Chat = () => {
         {currentChat ? (
           <>
             <Row justify="space-between" className="chat_header">
-              <Row style={{ display: mobileScreen ? 'flex' : 'none' }}>
-                <LeftOutlined
-                  onClick={() => setViewChat(true)}
-                  style={{ fontSize: '24px' }}
-                />
+              <Row>
+                <Row style={{ display: mobileScreen ? 'flex' : 'none' }}>
+                  <LeftOutlined
+                    onClick={() => setViewChat(true)}
+                    style={{ fontSize: '24px' }}
+                  />
+                </Row>
+                <div className="sidebar_user_item">
+                  <Image
+                    className="sidebar_user_item_image"
+                    preview={false}
+                    height={46}
+                    width={46}
+                    src={currentChat.photo ? currentChat.photo : '/dogg.jpg'}
+                  />
+                  <div className="sidebar_user_item_info">
+                    <Typography.Title className="sidebar_user_item_info_name">
+                      {currentChat.other_name ? currentChat.other_name : 'gost'}
+                    </Typography.Title>
+                  </div>
+                </div>
               </Row>
-              <div className="sidebar_user_item">
-                <Image
-                  className="sidebar_user_item_image"
-                  preview={false}
-                  height={46}
-                  width={46}
-                  src={currentChat.photo ? currentChat.photo : '/dogg.jpg'}
-                />
-                <div className="sidebar_user_item_info">
-                  <Typography.Title className="sidebar_user_item_info_name">
-                    {currentChat.other_name ? currentChat.other_name : 'gost'}
-                  </Typography.Title>
-                  <Typography.Text className="sidebar_user_item_info_status">
-                    {currentChat?.last_message?.content}
-                  </Typography.Text>
+
+              <Link to={`/announcement/${currentAnnoun?.slug}`}>
+                <div className="sidebar_user_item">
+                  <Image
+                    className="sidebar_user_item_image image-card"
+                    preview={false}
+                    height={45}
+                    width={45}
+                    src={currentAnnoun?.photo ? currentAnnoun.photo : '/dog.png'}
+                  />
+                  <div className="sidebar_user_item_info">
+                    <Typography.Text className="sidebar_user_item_info_status2">
+                      {currentAnnoun?.title}
+                    </Typography.Text>
+                    <Typography.Title className="sidebar_user_item_info_name2">
+                      {currentAnnoun?.price}
+                    </Typography.Title>
+                  </div>
                 </div>
-              </div>
-              <div className="sidebar_user_item">
-                <Image
-                  className="sidebar_user_item_image image-card"
-                  preview={false}
-                  height={45}
-                  width={45}
-                  src={currentAnnoun?.photo ? currentAnnoun.photo : '/dog.png'}
-                />
-                <div className="sidebar_user_item_info">
-                  <Typography.Text className="sidebar_user_item_info_status2">
-                    {currentAnnoun?.title}
-                  </Typography.Text>
-                  <Typography.Title className="sidebar_user_item_info_name2">
-                    {currentAnnoun?.price}
-                  </Typography.Title>
-                </div>
-              </div>
+              </Link>
             </Row>
-            <ul className="chat_message">
+            <ul className="chat_message" ref={scrollBottom}>
               {userChat ? (
                 messages &&
                 messages.map((value, index) => <ChatMessage {...value} key={index} />)
@@ -233,14 +247,31 @@ export const Chat = () => {
               )}
             </ul>
             <Row className="chat_content_input">
-              <Input
-                // onChange={(e) => setValue(e.target.value)}
-                // onClick={(e) => handleInput()}
-                onKeyDown={handleInput}
-                suffix={
-                  <Image style={{ cursor: 'pointer' }} src={SendIcon} preview={false} />
-                }
-              />
+              <Formik
+                initialValues={{ input: '' }}
+                onSubmit={(e, { resetForm }) => {
+                  handleInput(e)
+                  resetForm()
+                }}
+              >
+                  <Form style={{width: '100%'}}>
+                    <Form.Item name='input' style={{width: '100%'}} >
+                    <Input
+                    style={{width: '100%'}}
+                      name="input"
+                      suffix={
+                        <Image
+                          /* onClick={() => handleSubmit()} */
+                          style={{ cursor: 'pointer' }}
+                          src={SendIcon}
+                          preview={false}
+                        />
+                      }
+                    />
+                    </Form.Item>
+                    
+                  </Form>
+              </Formik>
             </Row>
           </>
         ) : (
@@ -258,7 +289,6 @@ type chatMessage = {
 }
 
 const ChatMessage = (value: chatMessage) => {
-  
   return (
     <motion.li
       initial={{ opacity: 0 }}
@@ -266,15 +296,15 @@ const ChatMessage = (value: chatMessage) => {
       transition={{ duration: 0.5 }}
       className="chat_message_item"
     >
-        <Image
-          className="chat_message_item_image"
-          preview={false}
-          height={40}
-          width={40}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          src={value.user_image}
-        />
+      <Image
+        className="chat_message_item_image"
+        preview={false}
+        height={40}
+        width={40}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        src={value.user_image}
+      />
       <div className="chat_message_item_info">
         <Typography.Title className="sidebar_user_item_info_name">
           {value.name}
