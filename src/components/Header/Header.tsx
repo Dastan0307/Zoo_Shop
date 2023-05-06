@@ -1,14 +1,9 @@
 import { Col, Image, Typography } from 'antd'
 import { Header as HeaderWrapper } from 'antd/es/layout/layout'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
-
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons'
-import { API_URL } from '@api/index'
-
-import TomHoland from '../../assets/A.png'
-import like from '../../assets/like.png'
 import { RootState } from '../../store/store'
 import { PrimaryButton } from '..'
 
@@ -17,17 +12,17 @@ import './header.scss'
 const { Text } = Typography
 
 export const Header = () => {
-  const [nav, setNav] = useState<boolean>(false)
+  const [nav, setNav] = useState(false)
   const { userInfo } = useTypedSelector((state: RootState) => state.auth)
   const user = userInfo
 
-  console.log(user)
-
-  const [menu, setMenu] = useState(true)
-  const header = menu ? 'header header_close' : 'header'
+  const handleMenu = () => {
+    setNav(nav => !nav)
+  }
+  console.log(nav);
 
   return (
-    <HeaderWrapper className={header}>
+    <HeaderWrapper className='header'>
       <Link className="header__logo" to="/">
         Zoo.Net
       </Link>
@@ -77,13 +72,15 @@ export const Header = () => {
           </Link>
         )}
       </Col>
-      <Col onClick={() => {setNav(!nav); setMenu(!menu)}  } className="mobile-btn">
+      <Col onClick={() => setNav(!nav)} className="mobile-btn">
+      
         {nav ? (
           <CloseOutlined className="menu-icon" />
         ) : (
           <MenuOutlined className="menu-icon" />
         )}
       </Col>
+      <button style={{opacity: 0}} onClick={() => setNav(nav => nav!)}>daws</button>
     </HeaderWrapper>
   )
 }

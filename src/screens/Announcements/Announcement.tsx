@@ -50,8 +50,6 @@ export const Announcements: React.FC = () => {
       
     }
   }, [])
-
-
   
   useLayoutEffect(() => {
     (async () =>  {
