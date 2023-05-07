@@ -172,16 +172,8 @@ export const ProfilePage = () => {
                 </motion.div>
               ))
             ) : (
-              <Typography.Title
-                level={4}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Image preview={false} src="/noData.png.png" width={100} /> пока нет ваших
-                обьявлений(
+              <Typography.Title style={{ textAlign: 'center' }} level={3}>
+                <Image src="/noData.png" /> Нету обьявлений.
               </Typography.Title>
             )}
           </Col>

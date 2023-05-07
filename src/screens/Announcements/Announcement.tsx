@@ -81,12 +81,18 @@ export const Announcements: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <Row className="title">
-        <Title style={{marginBottom: 0}}  level={2}>{announ?.title}</Title>
+        <Title style={{ marginBottom: 0 }} level={2}>
+          {announ?.title}
+        </Title>
         <Col style={{ display: userInfo?.email ? 'flex' : 'none' }}>
-          {like ? (
-            <img src={blike} onClick={handleLike} alt="like" />
+          {userInfo?.date_joined ? (
+            like ? (
+              <img src={blike} onClick={handleLike} alt="like" />
+            ) : (
+              <img src={dlike} onClick={handleLike} />
+            )
           ) : (
-            <img src={dlike} onClick={handleLike} />
+            ''
           )}
           {userInfo?.id === announ?.user ? (
             <Link to={`/edit-announcement/${announ?.slug}`}>Редактировать</Link>
@@ -103,7 +109,11 @@ export const Announcements: React.FC = () => {
                     {announ?.photos &&
                       announ?.photos.map((photo) => (
                         // <div key={photo.id}>
-                          <Image key={photo.id} className="image-corusel" src={photo.image_url} />
+                        <Image
+                          key={photo.id}
+                          className="image-corusel"
+                          src={photo.image_url}
+                        />
                         // </div>
                       ))}
                   </Carousel>
@@ -124,7 +134,7 @@ export const Announcements: React.FC = () => {
               </Col>
             </Row>
             <Row className="slides__img">
-              <div className='slides_width' >
+              <div className="slides_width">
                 {announ?.photos &&
                   announ?.photos.map((photo, index) => {
                     return (

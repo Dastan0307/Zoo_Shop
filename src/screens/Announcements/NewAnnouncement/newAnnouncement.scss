@@ -2,7 +2,9 @@
   margin: 50px auto;
   max-width: 1080px;
   width: 100%;
-
+  @media screen and (max-width: 768px) {
+    padding: 0 15px;
+  }
   .display-files {
     display: flex;
     align-items: end;
@@ -13,15 +15,15 @@
       overflow: hidden;
       width: 163px;
       height: 163px;
-      background: #D9D9D9;
+      background: #d9d9d9;
       border-radius: 10px;
       color: #fff;
       text-align: center;
-  
+
       .input-file {
         opacity: 0;
       }
-  
+
       label {
         display: block;
         position: absolute;
@@ -34,14 +36,12 @@
     }
 
     p {
-      color: #FFD02b;
+      color: #ffd02b;
       font-size: 16px;
       font-weight: 400;
       margin: 0;
     }
-
   }
-
 
   .data-select {
     width: 100%;
@@ -54,7 +54,7 @@
     width: 100%;
     max-width: 438px;
     display: block;
-    margin: 16px 0; 
+    margin: 16px 0;
   }
 
   .ant-input-affix-wrapper {
@@ -63,7 +63,6 @@
     height: 40px;
     display: flex;
   }
-
 
   label {
     color: #828282;
@@ -87,8 +86,6 @@
     background-color: rgb(230, 28, 28);
     width: 157px;
   }
-
-  
 }
 
 .ant-popover-inner {
@@ -105,8 +102,6 @@
   .ant-popconfirm-description {
     color: #000000;
   }
-
-  
 }
 
 .old-photos {
@@ -125,46 +120,38 @@
 
 @media (max-width: 800px) {
   .newannoun {
-    margin: 10px;
-
     h2 {
       font-size: 40px;
     }
   }
 
   .old-photos {
-
     .ant-image-img {
       width: 123px;
       height: 123px;
       gap: 10px;
     }
   }
-
 }
 
 @media (max-width: 600px) {
   .newannoun {
-    margin: 10px;
+    // margin: 10px;
     h2 {
       font-size: 30px;
     }
   }
   .old-photos {
-
     .ant-image-img {
       width: 93px;
       height: 93px;
       gap: 10px;
     }
   }
-
 }
 
 @media (max-width: 450) {
   .newannoun {
-    margin: 10px;
-    
     h2 {
       font-size: 20px;
     }
@@ -179,7 +166,6 @@
 
 @media (max-width: 320px) {
   .newannoun {
-    margin: 10px;
     h2 {
       font-size: 16px;
     }

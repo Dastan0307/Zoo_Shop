@@ -6,7 +6,9 @@
   max-width: 1080px;
   margin: 0 auto;
   padding: 0;
-
+  @media screen and (max-width: 768px) {
+    padding: 0 15px;
+  }
   .header__logo {
     color: #333333;
     font-size: 24px;

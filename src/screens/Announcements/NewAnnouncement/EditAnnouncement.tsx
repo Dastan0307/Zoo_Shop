@@ -162,7 +162,7 @@ export const EditAnnouncement = () => {
           <Form>
             <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
               <label>Категория</label>
-              <Select name="category" defaultValue={announ?.category}>
+              <Select name="category" style={{margin: 0}} defaultValue={announ?.category}>
                 {categories &&
                   categories.map((category) => {
                     return (

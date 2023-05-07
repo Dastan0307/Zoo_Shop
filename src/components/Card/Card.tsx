@@ -17,10 +17,11 @@ import './card.scss'
 type CardType = {
   value: AnnouncementCardType
   type: 'profile' | 'main'
+  removeFavorite: (slug: string) => void
 }
 
 const { Title, Text, Paragraph } = Typography
-export const CardMain = ({ value, type }: CardType) => {
+export const CardMain = ({ value, type, removeFavorite }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
   const { created_at, location, user_name, photos } = value
 
@@ -32,7 +33,7 @@ export const CardMain = ({ value, type }: CardType) => {
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5,  }}
     >
       <Card
         className="CardAnnoun"
@@ -55,20 +56,20 @@ export const CardMain = ({ value, type }: CardType) => {
             />
           </Col>
           <Col className="CardAnnoun-wrapper_content">
-            <Link to={`/announcement/${value.slug}`} key={value.slug}>
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                <ClockCircleOutlined /> {moment(created_at).format('dddd')}
-              </Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>
+              <ClockCircleOutlined /> {moment(created_at).format('dddd')}
+            </Text>
 
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBottom: -13,
-                  marginTop: -3,
-                }}
-              >
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: -13,
+                marginTop: -3,
+              }}
+            >
+              <Link to={`/announcement/${value.slug}`} key={value.slug}>
                 <Title
                   className="title-s"
                   level={4}
@@ -76,44 +77,51 @@ export const CardMain = ({ value, type }: CardType) => {
                 >
                   {value.title}
                 </Title>
-              </div>
-              <Text strong style={{ fontSize: 18 }}>
-                {value.price == '-1.00' ? 'Договорная' : `${value.price} KGS`}
-              </Text>
-              <Paragraph
-                className="paragraph"
-                style={{ width: '100%', fontSize: '16px', height: '60px' }}
-              >
-                {value.description}
-              </Paragraph>
-              {type == 'main' ? (
-                <div style={{ display: 'flex', gap: '7px' }}>
-                  <Image
-                    className="card_user-photo"
-                    src={`${value.user_photo ? value.user_photo : '/dogg.jpg'}`}
-                  />
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                    }}
+              </Link>
+            </div>
+            <Text strong style={{ fontSize: 18 }}>
+              {value.price == '-1.00' ? 'Договорная' : `${value.price} KGS`}
+            </Text>
+            <Paragraph
+              className="paragraph"
+              style={{ width: '100%', fontSize: '16px', height: '60px' }}
+            >
+              {value.description}
+            </Paragraph>
+            <Row justify={'space-between'}>
+              <div style={{ display: 'flex', gap: '7px' }}>
+                <Image
+                  className="card_user-photo"
+                  src={`${value.user_photo ? value.user_photo : '/dogg.jpg'}`}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Typography.Title
+                    style={{ margin: 0, fontSize: '14px', fontWeight: 600 }}
                   >
-                    <Typography.Title
-                      style={{ margin: 0, fontSize: '14px', fontWeight: 600 }}
-                    >
-                      {user_name}
-                    </Typography.Title>
-                    <Typography.Text
-                      style={{ color: '#828282', margin: 0, fontSize: '12px' }}
-                    >
-                      <img src="/Location.svg" height={'12px'} width={'10px'} alt="" />{' '}
-                      {location}
-                    </Typography.Text>
-                  </div>
+                    {user_name}
+                  </Typography.Title>
+                  <Typography.Text
+                    style={{ color: '#828282', margin: 0, fontSize: '12px' }}
+                  >
+                    <img src="/Location.svg" height={'12px'} width={'10px'} alt="" />{' '}
+                    {location}
+                  </Typography.Text>
                 </div>
-              ) : (
+              </div>
+
+              {type == 'profile' && (
                 <Button
+                  onClick={() => {
+                    if (value.slug) {
+                      removeFavorite(value.slug)
+                    }
+                  }}
                   style={{
                     color: '#333333',
                     marginTop: 4,
@@ -121,10 +129,10 @@ export const CardMain = ({ value, type }: CardType) => {
                     fontSize: 12,
                   }}
                 >
-                  Изменить
+                  Удалить
                 </Button>
               )}
-            </Link>
+            </Row>
           </Col>
         </Row>
       </Card>
