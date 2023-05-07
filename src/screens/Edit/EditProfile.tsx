@@ -168,6 +168,7 @@ const EditProfile = () => {
           <Input
             placeholder=" Номер"
             className="inpNum"
+            type='number'
             value={phone_number}
             onChange={(e) => setPhone(e.target.value)}
           />
