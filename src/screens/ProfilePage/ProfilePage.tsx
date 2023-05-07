@@ -115,7 +115,6 @@ export const ProfilePage = () => {
                     style={{
                       width: '100%',
                       border: 'none',
-                      // height: 235,
                       padding: 0,
                       background: '#ffffff',
                     }}
@@ -126,7 +125,6 @@ export const ProfilePage = () => {
                           className="CardProfile_img"
                           alt="example"
                           src={card?.photos[0] ? card.photos[0].image_url : '/dogg.jpg'}
-                          // style={{ width: 215, height: 195, borderRadius: 6 }}
                         />
                       </Col>
                       <Col className="CardProfile-wrapper_content">
