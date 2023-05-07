@@ -334,7 +334,7 @@ export const Main = () => {
           {mainType == 'announ' ? (
             announ && announ[0] ? (
               announ.map((value) => (
-                <CardMain key={value.slug} value={value} type="main" />
+                <CardMain removeFavorite={() => ''}  key={value.slug} value={value} type="main" />
               ))
             ) : (
               <motion.div
