@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Col,
+  Empty,
   Image,
   Input,
   InputRef,
@@ -194,8 +195,10 @@ export const Main = () => {
         )}{' '}
       </Row>
       <Layout style={{ display: 'flex', gap: '30px', overflow: 'hidden' }}>
+      {mobile ? <div onClick={() => setMobile(false)} className='close-menu'></div> : null}
         <Sider className="sideBar" style={{ left: mobile ? '0%' : '-100%' }}>
           {mainType == 'announ' ? (
+            <>
             <Row>
               <Col style={{ width: '100%' }}>
                 <Row className="sideBar_title">
@@ -277,6 +280,8 @@ export const Main = () => {
                 </Select>
               </Col>
             </Row>
+            
+            </>
           ) : (
             <Row className="sideBar_org">
               <Col>
@@ -343,9 +348,7 @@ export const Main = () => {
                 transition={{ duration: 0.5 }}
                 style={{ display: 'flex', justifyContent: 'center' }}
               >
-                <Typography.Title level={4}>
-                  <Image src="/noData.png.png" width={100} /> нет результатов(
-                </Typography.Title>
+                <Empty description='Обяъвления не найдены'/>
               </motion.div>
             )
           ) : (

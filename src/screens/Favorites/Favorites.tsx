@@ -13,7 +13,7 @@ import {
 import { errorHandler } from '@utils/errorHandler'
 
 import api from '../../api/index'
-import { Image, Typography } from 'antd'
+import { Empty, Image, Typography } from 'antd'
 
 function Favorites() {
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])
@@ -49,7 +49,7 @@ function Favorites() {
               value={{ ...announsment, photos }}
             />
           ))
-        : <Typography.Title style={{textAlign:'center'}} level={3}> <Image src='/noData.png' /> Нету обьявлений.</Typography.Title>}
+        : <Empty description='Обяъвления отсутствуют'/>}
     </motion.div>
   )
 }

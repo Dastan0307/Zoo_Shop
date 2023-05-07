@@ -1,4 +1,4 @@
-import { Button, Card, Col, Image, Row, Typography } from 'antd'
+import { Button, Card, Col, Empty, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
 import moment from 'moment'
 import { useLayoutEffect, useState } from 'react'
@@ -60,6 +60,7 @@ export const ProfilePage = () => {
                 <MenuOutlined style={{ fontSize: 20 }} />
               )}
             </Row>
+            { mobile ? <div className='close-menu' onClick={() => setMobile(false)}></div> : null}
             <Row
               gutter={[20, 20]}
               style={{ marginTop: 30, left: mobile ? '0%' : '-100%' }}
@@ -170,9 +171,7 @@ export const ProfilePage = () => {
                 </motion.div>
               ))
             ) : (
-              <Typography.Title style={{ textAlign: 'center' }} level={3}>
-                <Image src="/noData.png" /> Нету обьявлений.
-              </Typography.Title>
+              <Empty description='Обяъвления отсутствуют'/>
             )}
           </Col>
         ) : (
