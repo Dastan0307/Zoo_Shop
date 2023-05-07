@@ -54,8 +54,8 @@ input:-webkit-autofill:active {
 
 .image-corusel {
   aspect-ratio: 3/2;
-  object-fit: cover;
-  width: 713px;
+  object-fit: contain;
+  width: 100%;
 }
 
 .title-s {

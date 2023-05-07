@@ -189,22 +189,16 @@ const EditProfile = () => {
             onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
           />
           <div className="editProfile_wrapper_btn">
-            <button disabled={accessBtn} className="btn" onClick={() => postBtn()}>
+            <button disabled={accessBtn} style={{marginTop: '12px'}} className="btn" onClick={() => postBtn()}>
               Подтвердить
             </button>
           </div>
         </div>
       </div>
       <>
-        {nameCard ? (
           <Name setNameCard={setNameCard} nameCard={nameCard} />
-        ) : '' || descCard ? (
           <Description setDescCard={setDescCard} descCard={descCard} />
-        ) : '' || passwordCard ? (
           <Password setPasswordCard={setPasswordCard} passwordCard={passwordCard} />
-        ) : (
-          ''
-        )}
       </>
     </Col>
   )

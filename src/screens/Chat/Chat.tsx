@@ -2,20 +2,24 @@ import { Image, Layout, List, Row, Space, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import { Formik } from 'formik'
-import { Form,Input } from 'formik-antd'
+import { Form, Input } from 'formik-antd'
 import { easeOut, motion } from 'framer-motion'
-import moment from 'moment'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import Moment from 'react-moment'
 import { useMediaQuery } from 'react-responsive'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useTypedSelector } from 'src/hooks'
 
 import { LeftOutlined } from '@ant-design/icons'
 
+import 'moment/locale/ru'
+
 import SendIcon from '../../../public/chat/send.svg'
 import { ChatApi, getChatsProps } from '../../api/Chat'
 
 import './chat.scss'
+
+import moment from 'moment'
 
 type AnnounType = {
   author: string
@@ -117,8 +121,8 @@ export const Chat = () => {
 
   const userChat = 'true'
   const handleInput = (e: { input: string }) => {
-    console.log(e);
-    
+    console.log(e)
+
     if (ws) {
       ws.send(
         JSON.stringify({
@@ -150,9 +154,6 @@ export const Chat = () => {
         <List className="chat-sidebar_user">
           {chats.map((user, index) => (
             <List.Item
-              // initial={{ opacity: 0 }}
-              // whileInView={{ opacity: 1 }}
-              // transition={{ duration: 0.5 }}
               key={index}
               onClick={() => {
                 changeChat(user)
@@ -181,7 +182,7 @@ export const Chat = () => {
               </Row>
               <div>
                 <span className="sidebar_user_item_info_status">
-                  {moment(user.last_message?.date).format('L')}
+                  {moment(user.last_message?.date).utcOffset('+1200').format('LL')}
                 </span>
               </div>
             </List.Item>
@@ -229,7 +230,13 @@ export const Chat = () => {
                   />
                   <div className="sidebar_user_item_info">
                     <Typography.Text className="sidebar_user_item_info_status2">
-                      {currentAnnoun?.title}
+                      {mobileScreen
+                        ? `${currentAnnoun?.title.slice(0, 10)}...`
+                        : `${
+                            currentAnnoun?.title && currentAnnoun?.title.length > 35
+                              ? currentAnnoun?.title.slice(0, 35)
+                              : currentAnnoun?.title
+                          }`}
                     </Typography.Text>
                     <Typography.Title className="sidebar_user_item_info_name2">
                       {currentAnnoun?.price}
@@ -254,10 +261,10 @@ export const Chat = () => {
                   resetForm()
                 }}
               >
-                  <Form style={{width: '100%'}}>
-                    <Form.Item name='input' style={{width: '100%'}} >
+                <Form style={{ width: '100%' }}>
+                  <Form.Item name="input" style={{ width: '100%' }}>
                     <Input
-                    style={{width: '100%'}}
+                      style={{ width: '100%' }}
                       name="input"
                       suffix={
                         <Image
@@ -268,14 +275,19 @@ export const Chat = () => {
                         />
                       }
                     />
-                    </Form.Item>
-                    
-                  </Form>
+                  </Form.Item>
+                </Form>
               </Formik>
             </Row>
           </>
         ) : (
-          'Выберите чат'
+          <Row
+            justify={'center'}
+            align={'middle'}
+            style={{ height: '100%', fontSize: 16, color: '#828282' }}
+          >
+            Выберите чат
+          </Row>
         )}
       </Content>
     </Layout>
@@ -318,7 +330,7 @@ const ChatMessage = (value: chatMessage) => {
           <Image src="/chat/readed.svg" />
           <Image src="/chat/read.svg" />
         </span> */}
-        <span>{moment(value.date).format('LT')}</span>
+        <span>{moment(value.date).utcOffset('+1200').format('HH:mm')}</span>
       </div>
     </motion.li>
   )

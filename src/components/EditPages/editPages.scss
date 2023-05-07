@@ -33,7 +33,7 @@
     align-items: flex-start;
     padding: 0px;
     gap: 20px;
-    width: 306px;
+    width: 100%;
     
     span {
         font-style: normal;
@@ -46,7 +46,7 @@
         color: #828282;
     }
     input {
-        width: 306px;
+        width: 100%;
         height: 40px;
         left: 0px;
         top: 32px;
@@ -90,7 +90,7 @@
   }
 
   .descInp {
-    width: 306px;
+    width: 100%;
     height: 150px;
     left: 0px;
     top: 32px;

@@ -36,7 +36,6 @@ export const App = () => {
           <Route path="/papers" element={<Papers />} />
           <Route path="/papers/:id" element={<Paper />} />
           <Route path="/papers/:id" element={<AboutUs />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/favorites" element={<Favorites />} />
         </Route>
         <Route element={<Layout footer={false} />}>

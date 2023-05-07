@@ -81,7 +81,7 @@ export const Announcements: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <Row className="title">
-        <Title level={2}>{announ?.title}</Title>
+        <Title style={{marginBottom: 0}}  level={2}>{announ?.title}</Title>
         <Col style={{ display: userInfo?.email ? 'flex' : 'none' }}>
           {like ? (
             <img src={blike} onClick={handleLike} alt="like" />
@@ -97,18 +97,14 @@ export const Announcements: React.FC = () => {
         <div className="main__img">
           <Row>
             <Row className="big-image">
-              <Col>
+              <Col style={{ textAlign: 'center' }}>
                 {announ?.photos && announ.photos.length > 0 ? (
                   <Carousel ref={carouselRef}>
                     {announ?.photos &&
                       announ?.photos.map((photo) => (
-                        <Image
-                          width={713}
-                          className="image-corusel"
-                          preview={false}
-                          src={photo.image_url}
-                          key={photo.id}
-                        />
+                        // <div key={photo.id}>
+                          <Image key={photo.id} className="image-corusel" src={photo.image_url} />
+                        // </div>
                       ))}
                   </Carousel>
                 ) : (
@@ -116,7 +112,6 @@ export const Announcements: React.FC = () => {
                     {[1, 2, 3].map((photo, index) => (
                       <Image
                         className="image-corusel"
-                        width={713}
                         preview={false}
                         src={no_foto}
                         key={index}
@@ -129,7 +124,7 @@ export const Announcements: React.FC = () => {
               </Col>
             </Row>
             <Row className="slides__img">
-              <Col>
+              <div className='slides_width' >
                 {announ?.photos &&
                   announ?.photos.map((photo, index) => {
                     return (
@@ -142,7 +137,7 @@ export const Announcements: React.FC = () => {
                       />
                     )
                   })}
-              </Col>
+              </div>
             </Row>
           </Row>
           <div className="description">

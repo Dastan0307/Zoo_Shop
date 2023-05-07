@@ -38,7 +38,7 @@ import { debounce } from '@utils/debounce'
 import './main.scss'
 
 export const Main = () => {
-  const [params, setParams] = useState<AnnouncementFilterType>({})
+  const [params, setParams] = useState<AnnouncementFilterType>({lower_price: '0'})
   const [orgParams, setOrgParams] = useState<OrgParams>({})
   const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
   const [orgs, setOrgs] = useState<OrganizarionType[]>([])
@@ -60,7 +60,7 @@ export const Main = () => {
       setParams({
         ...params,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        [e.target.name]: +e.target.dataset.value!,
+        [e.target.name]: e.target.dataset.value == '0' ? '0' : e.target.dataset.value,
       })
     }
     setParams({ ...params, [e.target.name]: e.target.value })
@@ -253,7 +253,7 @@ export const Main = () => {
                   Договорная
                 </Button>
               </Col>
-              <Col style={{ width: '100%' }}>
+              <Col style={{ width: '100%', marginTop: '20px' }}>
                 <Typography.Title level={5}>Город/Регион</Typography.Title>
                 {/* <Input
                 placeholder="Весь Кыргызстан"

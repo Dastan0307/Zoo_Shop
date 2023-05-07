@@ -1,5 +1,7 @@
 .paper {
-  margin: 50px 100px;
+  margin: 50px auto;
+  max-width: 1080px;
+  width: 100%;
 
   .paper__title {
     font-size: 66px;
@@ -21,9 +23,10 @@
     font-weight: 700;
     display: block;
     margin-bottom: 20px;
-  } 
+  }
 
-  div.ant-typography, li {
+  div.ant-typography,
+  li {
     font-size: 16px;
     font-weight: 400;
     color: #333333;
@@ -57,7 +60,6 @@
     }
 
     .paper__start {
-  
       .ant-image-img {
         height: 280px;
         align-self: start;
@@ -71,9 +73,9 @@
     .paper__main {
       margin-right: 0;
     }
-  
+
     .paper__footer {
-      margin-right:0;
+      margin-right: 0;
     }
   }
 }
@@ -102,8 +104,6 @@
       margin-right: 0;
     }
   }
-
-  
 }
 @media (max-width: 414px) {
   .paper {
@@ -125,17 +125,15 @@
     }
 
     .paper__footer {
-      margin-right:0;
+      margin-right: 0;
     }
   }
-  
 }
 @media (max-width: 320px) {
   .paper {
     margin: 0;
 
     .paper__start {
-
       .ant-image-img {
         height: 200px;
         margin-bottom: 20px;
@@ -154,5 +152,4 @@
       margin-right: 0;
     }
   }
-  
 }

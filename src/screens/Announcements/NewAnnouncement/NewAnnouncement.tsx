@@ -1,14 +1,17 @@
-import { Typography, message } from 'antd'
+import { message,Typography } from 'antd'
 import { AxiosError } from 'axios'
 import { Formik } from 'formik'
-import { useState } from 'react'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
 import { errorHandler } from '@utils/errorHandler'
 import { AnnouncementValidate } from '@utils/validate'
+
 import api from '../../../api'
-import { useNavigate } from 'react-router-dom'
-import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
-import { motion } from 'framer-motion'
+
 import './newAnnouncement.scss'
 
 const { Title } = Typography
@@ -29,7 +32,7 @@ type PostAnnouncementTypes = {
 
 export const NewAnnouncement = () => {
   const [count, setCount] = useState<number>(0)
-  const { data } = useGetCategoriesQuery('s')
+  const { data } = useGetCategoriesQuery('a')
   const categories = data?.results
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const navigate = useNavigate()

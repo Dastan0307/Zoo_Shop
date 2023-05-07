@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios'
+import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
 import { CardMain } from '@components/index'
@@ -24,10 +25,10 @@ function Favorites() {
     })
   }, [])
 
-  console.log(announcement)
-
   return (
-    <div className="announcements">
+    <motion.div initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}  className="announcements">
       {announcement && announcement[0]
         ? announcement.map(({ photos, announsment }) => (
             <CardMain
@@ -37,7 +38,7 @@ function Favorites() {
             />
           ))
         : null}
-    </div>
+    </motion.div>
   )
 }
 

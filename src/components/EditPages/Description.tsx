@@ -1,15 +1,16 @@
-import { Card, Typography } from 'antd'
+import { Card, Input, Modal, Row, Typography } from 'antd'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTypedDispatch } from 'src/hooks'
 
 import { changeDesc } from '@store/EditUser/editSlice'
 
+import { PrimaryButton } from '..'
 import { setCredentials } from '../../store/features/auth/authSlice'
 import { RootState } from '../../store/store'
-import { PrimaryButton } from '..'
 
 import './editPages.scss'
+import Paragraph from 'antd/es/skeleton/Paragraph'
 
 const { Text } = Typography
 
@@ -30,32 +31,41 @@ const Description = ({ setDescCard, descCard }: any) => {
   }
 
   return (
-    <>
-      {descCard && <div className="overlay" />}
-      <div className="card">
-        <Card className="name_card">
-          <Text className="card_title">Описание профиля</Text>
+    <Modal
+      open={descCard}
+      onCancel={() => setDescCard(false)}
+      cancelButtonProps={{ hidden: true }}
+      closable={false}
+      okButtonProps={{ hidden: true }}
+      style={{ maxWidth: '336px' }}
+      footer={false}
+    >
+          <Typography.Paragraph style={{textAlign: 'center'}}  className="card_title">Описание профиля</Typography.Paragraph>
           <div className="inps">
             <Text>Описание</Text>
-            <input
-              type="text"
+            <Input.TextArea
               value={about_user}
               onChange={(e) => setDesc(e.target.value)}
-              className="descInp"
-            />
+              style={{
+                minHeight: '180px',
+                fontSize: '14px',
+                color: '#333333',
+                fontWeight: '300',
+              }}
+            ></Input.TextArea>
           </div>
           <PrimaryButton
-            style={{ width: 306, height: 40, marginTop: 30 }}
+            style={{ width: '100%', height: 40, marginTop: 30 }}
             onClick={() => handleDesc()}
           >
             Сохранить
           </PrimaryButton>
-          <button className="btn" onClick={() => setDescCard(false)}>
-            Отменить
-          </button>
-        </Card>
-      </div>
-    </>
+          <Row justify={'center'}>
+            <Typography.Paragraph style={{marginTop: '20px', marginBottom: 0, cursor: 'pointer' }}  className="btn" onClick={() => setDescCard(false)}>
+              Отменить
+            </Typography.Paragraph>
+          </Row>
+    </Modal>
   )
 }
 

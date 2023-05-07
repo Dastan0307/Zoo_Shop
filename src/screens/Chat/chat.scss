@@ -53,6 +53,7 @@
     border-bottom: 1px solid #f2f2f2;
     padding-bottom: 26px;
     padding-left: 20px;
+    // flex-wrap: nowrap;
     .sidebar_user_item {
       align-items: center;
     }
@@ -133,4 +134,9 @@
 .chat-sidebar_user{
   list-style: none;
   padding: 0 20px;
+}
+.sidebar_user_item_info_status2{
+  // max-width: 100px;
+  // overflow: hidden;
+  height: 20px;
 }

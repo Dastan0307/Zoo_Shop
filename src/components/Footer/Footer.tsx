@@ -86,7 +86,7 @@ export const Footer = () => {
           </Link>
         </Col>
         <Col className="gutter-row" span={5}>
-          <Link to={''} onClick={() => setIsModalOpen(true)} className="footer__link">
+          <Link to={'#'} onClick={() => setIsModalOpen(true)} className="footer__link">
             Оставить отзыв
           </Link>
         </Col>
