@@ -9,7 +9,7 @@ import {
 
 export const announcementApi = createApi({
   reducerPath: 'announcementsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://zoonet.me' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://zoointer.net' }),
   endpoints: (builder) => ({
     getAnnouncement: builder.query<AnnouncementTypes, string | undefined>({
       query: (id) => `/announcements/${id}/`,

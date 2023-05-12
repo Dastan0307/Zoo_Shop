@@ -1,0 +1,42 @@
+services:
+  main_app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: main_app
+    ports:
+      - "5173:5173"
+      - "3000:3000"
+    command: sh -c "npm run dev"
+
+
+  nginx:
+      build: 
+        dockerfile: Dockerfile
+        context: ./docker_nginx/nginx
+      container_name: nginx
+      volumes:
+        - ./certbot/conf:/etc/letsencrypt
+        - ./certbot/www:/var/www/certbot
+        - etc-letsencrypt:/etc/letcsencrypt
+      depends_on:
+        - main_app
+      ports:
+        - "80:80"
+        - "443:443"
+      restart: always
+
+
+  # certbot:
+  #     image: certbot/certbot
+  #     container_name: certbot
+  #     volumes: 
+  #       - ./certbot/conf:/etc/letsencrypt
+  #       - ./certbot/www:/var/www/certbot
+  #     command: certonly --webroot -w /var/www/certbot --force-renewal --email lalavitohack@gmail.com -d enactusanimals.com --agree-tos
+
+
+volumes:
+  etc-letsencrypt:
+
+    

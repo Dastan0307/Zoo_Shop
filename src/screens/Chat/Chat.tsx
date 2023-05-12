@@ -55,7 +55,7 @@ export const Chat = () => {
       ws.close()
       setMessages([])
     }
-    setWs(new WebSocket(`wss://zoonet.me/ws/chat/${user.customer}_${user.announcement}/`))
+    setWs(new WebSocket(`wss://zoointer.net/ws/chat/${user.customer}_${user.announcement}/`))
     setCurrentChat(user)
   }
 
@@ -96,7 +96,7 @@ export const Chat = () => {
         other_name: params.state.name,
       })
       setViewChat(false)
-      setWs(new WebSocket(`wss://zoonet.me/ws/chat/${id}_${params.state.anoun}/`))
+      setWs(new WebSocket(`wss://zoointer.net/ws/chat/${id}_${params.state.anoun}/`))
       return
     }
   }, [])
