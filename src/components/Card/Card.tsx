@@ -57,7 +57,7 @@ export const CardMain = ({ value, type, removeFavorite }: CardType) => {
           </Col>
           <Col className="CardAnnoun-wrapper_content">
             <Text type="secondary" style={{ fontSize: 12 }}>
-              <ClockCircleOutlined /> {moment(created_at).format('dddd')}
+              <ClockCircleOutlined /> {moment(created_at).format('MM.DD.YYYY')}
             </Text>
 
             <div
