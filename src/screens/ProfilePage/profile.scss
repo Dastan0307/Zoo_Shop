@@ -32,14 +32,15 @@
   transition: 0.2s;
 }
 
-.profile__line {
-  width: 0px;
-  height: 763;
-  border: 1px solid #f2f2f2;
-  margin-top: 22px;
-  margin-right: 30px;
-  margin-left: 45px;
-}
+// .profile__line {
+//   width: 0px;
+//   height: 763;
+//   border: 
+//   margin-top: 22px;
+//   margin-right: 30px;
+//   margin-left: 45px;
+  
+// }
 
 .profile {
   position: relative !important;
@@ -66,6 +67,7 @@
 .profile__card {
   width: 100% !important;
   border: none;
+  border-right: 1px solid #f2f2f2be !important;
   @media screen and (max-width: 768px) {
     width: 100% !important;
     display: flex !important;

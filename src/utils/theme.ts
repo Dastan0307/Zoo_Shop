@@ -31,6 +31,6 @@ export const theme: ThemeConfig = {
     },
     Image:{
       borderRadius: 6
-    }
+    },
   },
 }

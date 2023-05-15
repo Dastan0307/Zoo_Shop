@@ -5,6 +5,7 @@ import type { CategoriesType } from './../../../types/types'
 
 export const categoryApi = createApi({
   reducerPath: 'category',
+  keepUnusedDataFor: 10,
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
   }),

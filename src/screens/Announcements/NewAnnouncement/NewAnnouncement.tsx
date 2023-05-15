@@ -32,7 +32,7 @@ type PostAnnouncementTypes = {
 
 export const NewAnnouncement = () => {
   const [count, setCount] = useState<number>(0)
-  const { data } = useGetCategoriesQuery('a')
+  const { data } = useGetCategoriesQuery('')
   const categories = data?.results
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const navigate = useNavigate()

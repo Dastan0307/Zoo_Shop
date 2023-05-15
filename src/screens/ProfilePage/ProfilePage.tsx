@@ -39,8 +39,7 @@ export const ProfilePage = () => {
   const MobileQuery = useMediaQuery({ query: '(max-width:968px)' })
 
   return (
-    <div className="profile">
-      <Row>
+      <Row className="profile">
         <Col xs={23} md={8} className="profile_card_wrapper">
           <Card className="profile__card">
             <Image
@@ -60,7 +59,9 @@ export const ProfilePage = () => {
                 <MenuOutlined style={{ fontSize: 20 }} />
               )}
             </Row>
-            { mobile ? <div className='close-menu' onClick={() => setMobile(false)}></div> : null}
+            {mobile ? (
+              <div className="close-menu" onClick={() => setMobile(false)}></div>
+            ) : null}
             <Row
               gutter={[20, 20]}
               style={{ marginTop: 30, left: mobile ? '0%' : '-100%' }}
@@ -101,7 +102,7 @@ export const ProfilePage = () => {
         </Col>
         {MobileQuery ? '' : <div className="profile__line"></div>}
         {!profileType ? (
-          <Col xs={24} md={14} className="profile__card_main">
+          <Col xs={24} md={16} className="profile__card_main">
             {userInfo?.users_announsments.length ? (
               userInfo?.users_announsments?.map((card) => (
                 <motion.div
@@ -110,9 +111,9 @@ export const ProfilePage = () => {
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card
+                  <Row
                     className="CardProfile"
-                    hoverable
+                    // hoverable
                     style={{
                       width: '100%',
                       border: 'none',
@@ -167,17 +168,16 @@ export const ProfilePage = () => {
                         </Link>
                       </Col>
                     </Row>
-                  </Card>
+                  </Row>
                 </motion.div>
               ))
             ) : (
-              <Empty description='Обяъвления отсутствуют'/>
+              <Empty description="Обяъвления отсутствуют" />
             )}
           </Col>
         ) : (
           <EditProfile />
         )}
       </Row>
-    </div>
   )
 }

@@ -5,8 +5,9 @@ COPY . /app
 WORKDIR /app
 
 RUN yarn install
-# RUN yarn build
+RUN yarn build
+# RUN yarn preview
 
-EXPOSE 3000
+EXPOSE 4173
 
 

@@ -52,7 +52,7 @@ const Name = ({ setNameCard, nameCard }: any) => {
       <Input bordered={false} type="file" onChange={(e) => setPhoto(e.currentTarget.files)} />
       <Row justify={'center'}>
         <Col style={{textAlign: 'center'}} >
-          <Image src={TomHoland} alt="error" width={70} height={70} />
+          <Image style={{borderRadius: '100%'}}  src={userInfo?.image} alt="error" width={70} height={70} />
           <Typography.Paragraph className="card_name">
             {user.first_name}
           </Typography.Paragraph>

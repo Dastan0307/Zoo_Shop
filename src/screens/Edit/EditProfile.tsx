@@ -74,7 +74,7 @@ const EditProfile = () => {
   }
 
   return (
-    <Col xs={24} md={12}>
+    <Col xs={24} md={16}>
       <div className="edit">
         <div className="personal_data">
           <Row gutter={[16, 18]}>
@@ -109,32 +109,6 @@ const EditProfile = () => {
           <Row className="gutter-row" style={{ margin: '70px 0px 17px 0px' }}>
             <Text className="main__title">Добавить адрес</Text>
           </Row>
-          {/* <Row className="address_gutter_wrapper">
-            <Col xs={12} md={24} className="adress_gutter_type">
-              <input
-                type="radio"
-                value="Хостелы/приюты"
-                onChange={(e) => setSelectType(e.target.value)} 
-                id="type1"
-              />
-              <Text className="address_gutter_list"> Хостелы/приюты</Text>
-            </Col>
-            <Col xs={12} md={24} className="adress_gutter_type">
-              <input type="radio" id="type1" 
-              onChange={(e) => setSelectType(e.target.value)} value="Зоомагазины" />
-              <Text className="address_gutter_list"> Зоомагазины</Text>
-            </Col>
-            <Col xs={12} md={24} className="adress_gutter_type">
-              <input type="radio" id="type1"
-              onChange={(e) => setSelectType(e.target.value)}  value="Ветклиники" />
-              <Text className="address_gutter_list"> Ветклиники</Text>
-            </Col>
-            <Col xs={12} md={24} className="adress_gutter_type">
-              <input type="radio" id="type1"
-              onChange={(e) => setSelectType(e.target.value)}  value="Зооняни" />
-              <Text className="address_gutter_list"> Зооняни</Text>
-            </Col>
-          </Row> */}
           <Row>
             <Radio.Group name="radiogroup" onChange={setSelectType} defaultValue={1}>
               <Radio value={'hostel'}>Хостелы/приюты</Radio>
