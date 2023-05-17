@@ -40,7 +40,7 @@ export const AboutUs = () => {
           </Typography.Paragraph>
         </Col>
         <Col md={12} >
-          <Image preview={false} style={{ height: '300px', objectFit: 'cover' }} src={Rectangle} />
+          <Image preview={false} style={{ height: '300px', objectFit: 'cover' }} src='/Rectangle.png' />
         </Col>
       </Row>
       <List header="Наши цели:" bordered={false} className="about_content_list">
