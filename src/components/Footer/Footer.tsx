@@ -48,10 +48,10 @@ export const Footer = () => {
               </Typography.Title>
             </List.Item>
             <List.Item className="footer_link">
-              Copyright ©️ 2023 ZooNet. All Right Reserved,
+              copyright ©️ 2023 ZooNet
             </List.Item>
-            <List.Item className="footer_link">Privacy Policy</List.Item>
-            <List.Item className="footer_link">Terms of use</List.Item>
+            <List.Item className="footer_link">privacy Policy</List.Item>
+            <List.Item className="footer_link">terms of use</List.Item>
           </List>
         </Col>
         <Col>
@@ -77,7 +77,6 @@ export const Footer = () => {
         <Col>
           <List className='footer_list'>
             <List.Item className="footer_title head_list">Обратная связь</List.Item>
-            <List.Item className="footer_link">наша миссия</List.Item>
             <List.Item className="footer_link" onClick={() => setIsModalOpen(true)}>
               оставить отзыв
             </List.Item>

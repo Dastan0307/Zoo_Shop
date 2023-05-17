@@ -133,6 +133,7 @@ export const Main = () => {
               style={{
                 fontSize: '22px',
                 color: mainType == 'announ' ? '#FFD02b' : '#333333',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 setMainType('announ')
@@ -147,6 +148,7 @@ export const Main = () => {
               style={{
                 fontSize: '22px',
                 color: mainType == 'org' ? '#FFD02b' : '#333333',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 setMainType('org')
@@ -165,7 +167,7 @@ export const Main = () => {
                 setMainType('announ')
               }}
             >
-              <Typography.Title level={3}>Питомцы</Typography.Title>
+              <Typography.Title style={{cursor: 'pointer'}}  level={3}>Питомцы</Typography.Title>
               <Typography.Text className="main_type_text">
                 Выберите питомца по душе
               </Typography.Text>
@@ -178,7 +180,7 @@ export const Main = () => {
                 setMainType('org')
               }}
             >
-              <Typography.Title level={3}>Организации</Typography.Title>
+              <Typography.Title  style={{cursor: 'pointer'}}  level={3}>Организации</Typography.Title>
               <Typography.Text className="main_type_text">
                 Ветеринарные клиники, <br /> зоомагазины и приюты
               </Typography.Text>
