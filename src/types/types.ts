@@ -89,7 +89,8 @@ export interface CategoryType {
 export interface OrgParams {
   location?: string
   search?: string
-  adress_type?: string
+  adress_type?: string,
+  page?: number
 }
 
 export interface AnnouncementFilterType {

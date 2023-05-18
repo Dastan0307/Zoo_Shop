@@ -9,6 +9,7 @@ import { Footer, Header, Layout } from './components'
 import {
   AboutUs,
   Announcements,
+  Contacts,
   EditAnnouncement,
   Login,
   Main,
@@ -37,6 +38,7 @@ export const App = () => {
           <Route path="/papers/:id" element={<Paper />} />
           <Route path="/papers/:id" element={<AboutUs />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/contacts" element={<Contacts />} />
         </Route>
         <Route element={<Layout footer={false} />}>
           <Route path="/chats" element={<Chat />} />

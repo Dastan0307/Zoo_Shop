@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 
+import { orgsTypes } from '@screens/index'
 import {
   AnnouncementCardType,
   AnnouncementFilterType,
@@ -21,7 +22,7 @@ export class AnnouncementApi {
   }
   static async getOrganization(body: OrganizarionParamsType) {
     try {
-      const data = api.get<OrganizarionApiType>('/catalog/', { params: body })
+      const data = api.get<orgsTypes>('/catalog/', { params: body })
       return data
     } catch (error: AxiosError | any) {
       errorHandler(error)

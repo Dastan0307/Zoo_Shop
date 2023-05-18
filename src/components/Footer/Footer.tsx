@@ -41,23 +41,23 @@ export const Footer = () => {
     <FooterWrapper className="footer">
       <Row justify={'space-between'}>
         <Col>
-          <List className='footer_list' >
+          <List className="footer_list">
             <List.Item className="head_list">
               <Typography.Title level={4} style={{ margin: 0 }}>
                 Zoo.Net
               </Typography.Title>
             </List.Item>
-            <List.Item className="footer_link">
-              copyright ©️ 2023 ZooNet
-            </List.Item>
+            <List.Item className="footer_link">copyright ©️ 2023 ZooNet</List.Item>
             <List.Item className="footer_link">privacy Policy</List.Item>
             <List.Item className="footer_link">terms of use</List.Item>
           </List>
         </Col>
         <Col>
-          <List className='footer_list'>
+          <List className="footer_list">
             <List.Item className="footer_title head_list">Компания</List.Item>
-            <List.Item className="footer_link" onClick={() => navigate('/about-us')} >о нас</List.Item>
+            <List.Item className="footer_link" onClick={() => navigate('/about-us')}>
+              о нас
+            </List.Item>
             <List.Item className="footer_link">отзывы</List.Item>
             <List.Item className="footer_link" onClick={() => navigate('/papers')}>
               статьи
@@ -65,22 +65,32 @@ export const Footer = () => {
           </List>
         </Col>
         <Col>
-          <List className='footer_list'>
+          <List className="footer_list">
             <List.Item className="footer_title head_list">Объявления</List.Item>
-            <List.Item className="footer_link" onClick={() => navigate('/')} >объявления</List.Item>
-            <List.Item className="footer_link" onClick={() => navigate('/new-announcement')} >новое объявление</List.Item>
+            <List.Item className="footer_link" onClick={() => navigate('/')}>
+              объявления
+            </List.Item>
+            <List.Item
+              className="footer_link"
+              onClick={() => navigate('/new-announcement')}
+            >
+              новое объявление
+            </List.Item>
             <List.Item className="footer_link" onClick={() => navigate('/login')}>
               войти
             </List.Item>
           </List>
         </Col>
         <Col>
-          <List className='footer_list'>
+          <List className="footer_list">
             <List.Item className="footer_title head_list">Обратная связь</List.Item>
+            <List.Item className="footer_link">стать волонтёром</List.Item>
             <List.Item className="footer_link" onClick={() => setIsModalOpen(true)}>
               оставить отзыв
             </List.Item>
-            <List.Item className="footer_link">контакты</List.Item>
+            <List.Item className="footer_link" onClick={() => navigate('/contacts')}>
+              контакты
+            </List.Item>
           </List>
         </Col>
       </Row>

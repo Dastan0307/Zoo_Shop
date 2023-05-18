@@ -8,6 +8,7 @@ import {
   InputRef,
   Layout,
   List,
+  Pagination,
   Row,
   Select,
   Typography,
@@ -38,11 +39,18 @@ import { debounce } from '@utils/debounce'
 
 import './main.scss'
 
+export type orgsTypes = {
+  count: number
+  next: string
+  previous: number | null
+  results: OrganizarionType[]
+}
+
 export const Main = () => {
-  const [params, setParams] = useState<AnnouncementFilterType>({lower_price: '0'})
+  const [params, setParams] = useState<AnnouncementFilterType>({ lower_price: '0' })
   const [orgParams, setOrgParams] = useState<OrgParams>({})
   const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
-  const [orgs, setOrgs] = useState<OrganizarionType[]>([])
+  const [orgs, setOrgs] = useState<orgsTypes>()
   const [mobile, setMobile] = useState<boolean>(true)
 
   const MobileQuery = useMediaQuery({ query: '(max-width:800px)' })
@@ -81,9 +89,12 @@ export const Main = () => {
     const getData = async () => {
       const data = await AnnouncementApi.getAnnouncement(params)
       if (data?.data) {
+        console.log(data)
+
         setAnnoun(data?.data)
       }
     }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     getData()
   }, [params])
 
@@ -91,8 +102,10 @@ export const Main = () => {
     const getData = async () => {
       const data = await AnnouncementApi.getOrganization(orgParams)
       if (data?.data) {
-        setOrgs(data?.data.results)
+        console.log(data)
+        setOrgs(data?.data)
       }
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
     getData()
   }, [orgParams])
@@ -133,7 +146,7 @@ export const Main = () => {
               style={{
                 fontSize: '22px',
                 color: mainType == 'announ' ? '#FFD02b' : '#333333',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
               onClick={() => {
                 setMainType('announ')
@@ -148,7 +161,7 @@ export const Main = () => {
               style={{
                 fontSize: '22px',
                 color: mainType == 'org' ? '#FFD02b' : '#333333',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
               onClick={() => {
                 setMainType('org')
@@ -167,7 +180,9 @@ export const Main = () => {
                 setMainType('announ')
               }}
             >
-              <Typography.Title style={{cursor: 'pointer'}}  level={3}>Питомцы</Typography.Title>
+              <Typography.Title style={{ cursor: 'pointer' }} level={3}>
+                Питомцы
+              </Typography.Title>
               <Typography.Text className="main_type_text">
                 Выберите питомца по душе
               </Typography.Text>
@@ -180,7 +195,9 @@ export const Main = () => {
                 setMainType('org')
               }}
             >
-              <Typography.Title  style={{cursor: 'pointer'}}  level={3}>Организации</Typography.Title>
+              <Typography.Title style={{ cursor: 'pointer' }} level={3}>
+                Организации
+              </Typography.Title>
               <Typography.Text className="main_type_text">
                 Ветеринарные клиники, <br /> зоомагазины и приюты
               </Typography.Text>
@@ -197,92 +214,94 @@ export const Main = () => {
         )}{' '}
       </Row>
       <Layout style={{ display: 'flex', gap: '30px', overflow: 'hidden' }}>
-      {mobile ? <div onClick={() => setMobile(false)} className='close-menu'></div> : null}
+        {mobile ? (
+          <div onClick={() => setMobile(false)} className="close-menu"></div>
+        ) : null}
         <Sider className="sideBar" style={{ left: mobile ? '0%' : '-100%' }}>
           {mainType == 'announ' ? (
             <>
-            <Row>
-              <Col style={{ width: '100%' }}>
-                <Row className="sideBar_title">
-                  <div>
-                    <Typography.Title level={4}>Категории</Typography.Title>
-                  </div>
-                  <Typography.Text onClick={() => cleanParams()}>
-                    Очистить
-                  </Typography.Text>
-                </Row>
-                <List>
-                  {categories &&
-                    categories.map((value, index) => (
-                      <List.Item
-                        className="category_list_item active"
-                        style={{ border: 'none' }}
-                        onClick={() => handleSetParamsValue2(value)}
-                        key={index}
-                      >
-                        <span
-                          style={{
-                            color: params.category == value.slug ? '#FFD02b' : '#333333',
-                          }}
+              <Row>
+                <Col style={{ width: '100%' }}>
+                  <Row className="sideBar_title">
+                    <div>
+                      <Typography.Title level={4}>Категории</Typography.Title>
+                    </div>
+                    <Typography.Text onClick={() => cleanParams()}>
+                      Очистить
+                    </Typography.Text>
+                  </Row>
+                  <List>
+                    {categories &&
+                      categories.map((value, index) => (
+                        <List.Item
+                          className="category_list_item active"
+                          style={{ border: 'none' }}
+                          onClick={() => handleSetParamsValue2(value)}
+                          key={index}
                         >
-                          {value.title}
-                        </span>
-                      </List.Item>
-                    ))}
-                </List>
-              </Col>
-              <Col>
-                <Typography.Title level={5}>Цена</Typography.Title>
-                <div style={{ display: 'flex', gap: '7px' }}>
-                  <Input
-                    type="number"
-                    style={{ height: '42px' }}
-                    placeholder="От"
-                    name="lower_price"
-                    ref={lowerPriceInput}
-                    onChange={debouncedOnChange}
-                  />
-                  <Input
-                    type="number"
-                    style={{ height: '42px' }}
-                    placeholder="До"
-                    name="higher_price"
-                    ref={higherPriceInput}
-                    onChange={debouncedOnChange}
-                  />
-                </div>
-                <Button
-                  style={{ width: '100%', height: '42px', marginTop: '7px' }}
-                  onClick={handlePriceButton}
-                >
-                  Договорная
-                </Button>
-              </Col>
-              <Col style={{ width: '100%', marginTop: '20px' }}>
-                <Typography.Title level={5}>Город/Регион</Typography.Title>
-                {/* <Input
+                          <span
+                            style={{
+                              color:
+                                params.category == value.slug ? '#FFD02b' : '#333333',
+                            }}
+                          >
+                            {value.title}
+                          </span>
+                        </List.Item>
+                      ))}
+                  </List>
+                </Col>
+                <Col>
+                  <Typography.Title level={5}>Цена</Typography.Title>
+                  <div style={{ display: 'flex', gap: '7px' }}>
+                    <Input
+                      type="number"
+                      style={{ height: '42px' }}
+                      placeholder="От"
+                      name="lower_price"
+                      ref={lowerPriceInput}
+                      onChange={debouncedOnChange}
+                    />
+                    <Input
+                      type="number"
+                      style={{ height: '42px' }}
+                      placeholder="До"
+                      name="higher_price"
+                      ref={higherPriceInput}
+                      onChange={debouncedOnChange}
+                    />
+                  </div>
+                  <Button
+                    style={{ width: '100%', height: '42px', marginTop: '7px' }}
+                    onClick={handlePriceButton}
+                  >
+                    Договорная
+                  </Button>
+                </Col>
+                <Col style={{ width: '100%', marginTop: '20px' }}>
+                  <Typography.Title level={5}>Город/Регион</Typography.Title>
+                  {/* <Input
                 placeholder="Весь Кыргызстан"
                 name="location"
                 onChange={debouncedOnChange}
               /> */}
-                <Select
-                  className="select"
-                  style={{ width: '100%' }}
-                  size={'large'}
-                  placeholder="Весь Кыргызстан"
-                  onChange={setSelectLocation}
-                  optionLabelProp="label"
-                >
-                  <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
-                  <Select.Option value={'Ош'}>Ош</Select.Option>
-                  <Select.Option value={'Нарын'}>Нарын</Select.Option>
-                  <Select.Option value={'Иссык-Куль'}>Иссык-Куль</Select.Option>
-                  <Select.Option value={'Баткен'}>Баткен</Select.Option>
-                  <Select.Option value={'Джалал-Абад'}>Джалал-Абад</Select.Option>
-                </Select>
-              </Col>
-            </Row>
-            
+                  <Select
+                    className="select"
+                    style={{ width: '100%' }}
+                    size={'large'}
+                    placeholder="Весь Кыргызстан"
+                    onChange={setSelectLocation}
+                    optionLabelProp="label"
+                  >
+                    <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
+                    <Select.Option value={'Ош'}>Ош</Select.Option>
+                    <Select.Option value={'Нарын'}>Нарын</Select.Option>
+                    <Select.Option value={'Иссык-Куль'}>Иссык-Куль</Select.Option>
+                    <Select.Option value={'Баткен'}>Баткен</Select.Option>
+                    <Select.Option value={'Джалал-Абад'}>Джалал-Абад</Select.Option>
+                  </Select>
+                </Col>
+              </Row>
             </>
           ) : (
             <Row className="sideBar_org">
@@ -340,9 +359,24 @@ export const Main = () => {
         <Content className="main-content">
           {mainType == 'announ' ? (
             announ && announ[0] ? (
-              announ.map((value) => (
-                <CardMain removeFavorite={() => ''}  key={value.slug} value={value} type="main" />
-              ))
+              <>
+                {announ.map((value) => (
+                  <CardMain
+                    removeFavorite={() => ''}
+                    key={value.slug}
+                    value={value}
+                    type="main"
+                  />
+                ))}
+                {/* {announ[0] && (
+                  <Pagination
+                    style={{ marginTop: '20px' }}
+                    defaultCurrent={1}
+                    // onChange={(page) => setOrgParams({ ...orgParams, page })}
+                    total={announ.length}
+                  />
+                )} */}
+              </>
             ) : (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -350,11 +384,23 @@ export const Main = () => {
                 transition={{ duration: 0.5 }}
                 style={{ display: 'flex', justifyContent: 'center' }}
               >
-                <Empty description='Обяъвления не найдены'/>
+                <Empty description="Обяъвления не найдены" />
               </motion.div>
             )
           ) : (
-            orgs && orgs.map((value) => <CardOrg key={value.id} {...value} />)
+            <Row style={{ flexDirection: 'column' }} align={'stretch'} >
+              {orgs && orgs.results.map((value) => <CardOrg key={value.id} {...value} />)}
+              {orgs?.results[0] && (
+                <Row justify={'center'} > 
+                  <Pagination
+                    style={{ marginTop: '20px' }}
+                    defaultCurrent={orgParams.page ? orgParams.page : 1 }
+                    onChange={(page) => setOrgParams({ ...orgParams, page })}
+                    total={orgs.count}
+                  />
+                </Row>
+              )}
+            </Row>
           )}
         </Content>
       </Layout>
