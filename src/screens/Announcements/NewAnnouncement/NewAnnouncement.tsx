@@ -1,9 +1,9 @@
-import { Button, message,Typography } from 'antd'
+import { Button, message, Typography } from 'antd'
 import { AxiosError } from 'axios'
 import { Formik } from 'formik'
 import { Form, Input, Select, SubmitButton } from 'formik-antd'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
@@ -13,6 +13,9 @@ import { AnnouncementValidate } from '@utils/validate'
 import api from '../../../api'
 
 import './newAnnouncement.scss'
+
+import { toast } from 'react-toastify'
+import { useTypedSelector } from 'src/hooks'
 
 const { Title } = Typography
 type PostAnnouncementTypes = {
@@ -33,8 +36,9 @@ type PostAnnouncementTypes = {
 export const NewAnnouncement = () => {
   const [count, setCount] = useState<number>(0)
   const { data } = useGetCategoriesQuery('')
+  const { userInfo } = useTypedSelector((store) => store.auth)
   const categories = data?.results
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const navigate = useNavigate()
   const initialValues: PostAnnouncementTypes = {
     title: '',
@@ -58,17 +62,17 @@ export const NewAnnouncement = () => {
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setCount(e.target.files.length)
-      setSelectedFiles(e.target.files);
+      setSelectedFiles(e.target.files)
     }
   }
 
   const submitForm = async (data: PostAnnouncementTypes) => {
-    console.log(data);
-    
+    console.log(data)
+
     const token = localStorage.getItem('access_token')
     const photos: File[] = []
-    if(selectedFiles) {
-      for(let i = 0; i < selectedFiles?.length; i++) {
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles?.length; i++) {
         photos.push(selectedFiles[i])
       }
     }
@@ -79,12 +83,12 @@ export const NewAnnouncement = () => {
     formData.append('category', data.category)
     formData.append('price', data.price!)
     formData.append('phone_number', data.phone_number)
-    for(let i = 0; i<photos?.length; i++) {
+    for (let i = 0; i < photos?.length; i++) {
       formData.append(`photos`, photos[i], photos[i].name)
     }
-    console.log(data);
+    console.log(data)
 
-    data = {...data, photos: selectedFiles}
+    data = { ...data, photos: selectedFiles }
     try {
       await api.post('announcements/', formData, {
         headers: {
@@ -98,11 +102,17 @@ export const NewAnnouncement = () => {
       setTimeout(() => {
         navigate(`/`)
       }, 1500)
-
     } catch (error: AxiosError | any) {
       errorHandler(error)
     }
   }
+
+  useEffect(() => {
+    if (!userInfo?.first_name) {
+      navigate('/')
+      toast.warning('авторизуйтесь')
+    }
+  }, [])
 
   return (
     <motion.div
@@ -124,13 +134,14 @@ export const NewAnnouncement = () => {
           <Form.Item name="category" showValidateSuccess={true} hasFeedback={true}>
             <label>Категория</label>
             <Select name="category">
-              {categories && categories.map((category) => {
-                return (
-                  <Select.Option key={category.slug} value={category.slug}>
-                    {category.title}
-                  </Select.Option>
-                )
-              })}
+              {categories &&
+                categories.map((category) => {
+                  return (
+                    <Select.Option key={category.slug} value={category.slug}>
+                      {category.title}
+                    </Select.Option>
+                  )
+                })}
             </Select>
           </Form.Item>
           <Form.Item name="title" showValidateSuccess={true} hasFeedback={true}>
@@ -143,20 +154,16 @@ export const NewAnnouncement = () => {
             <label htmlFor="price" id="price">
               Цена
             </label>
-            <Input type='number' name="price" placeholder="Введите цену" />
+            <Input type="number" name="price" placeholder="Введите цену" />
             <label>Не указывайте цену, если отдаете питомца даром</label>
           </Form.Item>
           <Form.Item name="phone_number" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="phone_number" id="phone_number">
               Контакты
             </label>
-            <Input type='tel' name="phone_number" placeholder="+996(YYY)-XXX-XXX"/>
+            <Input type="tel" name="phone_number" placeholder="+996(YYY)-XXX-XXX" />
           </Form.Item>
-          <Form.Item
-            name="description"
-            showValidateSuccess={true}
-            hasFeedback={true}
-          >
+          <Form.Item name="description" showValidateSuccess={true} hasFeedback={true}>
             <label htmlFor="description" id="description">
               Описание
             </label>
@@ -170,34 +177,28 @@ export const NewAnnouncement = () => {
             <label htmlFor="photos" id="photos">
               Фотографии
             </label>
-            <div className='display-files'>
-              <div className='files'>
+            <div className="display-files">
+              <div className="files">
                 <label>
                   <Input
-                    className='input-file'
+                    className="input-file"
                     multiple
                     type="file"
                     name="photos"
                     placeholder="Описание"
                     onChange={photoChange}
                   />
-                  <span className='text'>Добавить Фотографии</span>
+                  <span className="text">Добавить Фотографии</span>
                 </label>
               </div>
-              {
-                count > 0 && <p>{`Количество фотографии ${count}`}</p>
-              }
+              {count > 0 && <p>{`Количество фотографии ${count}`}</p>}
             </div>
             <label>
-              Вы можете загрузить до 10 фотографий в формате JPG или PNG.
-              Максимальный размер фото — 25MB.
+              Вы можете загрузить до 10 фотографий в формате JPG или PNG. Максимальный
+              размер фото — 25MB.
             </label>
           </Form.Item>
-          <Form.Item
-            name="location"
-            showValidateSuccess={true}
-            hasFeedback={true}
-          >
+          <Form.Item name="location" showValidateSuccess={true} hasFeedback={true}>
             <Select name="location" placement="bottomRight">
               {locations.map((loc) => {
                 return (
@@ -214,9 +215,6 @@ export const NewAnnouncement = () => {
     </motion.div>
   )
 }
-
-
-
 
 // import { Typography } from 'antd'
 // import { AxiosError } from 'axios'
@@ -277,7 +275,7 @@ export const NewAnnouncement = () => {
 //   ]
 
 //   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  
+
 //   const [value, setValue] = useState({
 //     title: '',
 //     price: '',
@@ -287,11 +285,7 @@ export const NewAnnouncement = () => {
 //     location: ''
 //   })
 
-
 //   console.log(value);
-  
-
-  
 
 //   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
 //     setValue({
@@ -342,11 +336,10 @@ export const NewAnnouncement = () => {
 //     }
 //   };
 
-
 //   return (
 //     <div className="newannoun">
 //       <Title level={2}>Новое объявление</Title>
-      
+
 //         <form onSubmit={handleSubmit} onChange={handleChange}>
 //           <select className='data-select' name='category'>
 //             <option value={"dogs"}>dogs</option>

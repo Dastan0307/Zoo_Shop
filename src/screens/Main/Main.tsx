@@ -214,7 +214,7 @@ export const Main = () => {
         )}{' '}
       </Row>
       <Layout style={{ display: 'flex', gap: '30px', overflow: 'hidden' }}>
-        {mobile ? (
+        {MobileQuery && mobile ? (
           <div onClick={() => setMobile(false)} className="close-menu"></div>
         ) : null}
         <Sider className="sideBar" style={{ left: mobile ? '0%' : '-100%' }}>
@@ -388,13 +388,13 @@ export const Main = () => {
               </motion.div>
             )
           ) : (
-            <Row style={{ flexDirection: 'column' }} align={'stretch'} >
+            <Row style={{ flexDirection: 'column' }} align={'stretch'}>
               {orgs && orgs.results.map((value) => <CardOrg key={value.id} {...value} />)}
               {orgs?.results[0] && (
-                <Row justify={'center'} > 
+                <Row justify={'center'}>
                   <Pagination
                     style={{ marginTop: '20px' }}
-                    defaultCurrent={orgParams.page ? orgParams.page : 1 }
+                    defaultCurrent={orgParams.page ? orgParams.page : 1}
                     onChange={(page) => setOrgParams({ ...orgParams, page })}
                     total={orgs.count}
                   />
