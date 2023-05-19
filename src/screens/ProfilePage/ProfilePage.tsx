@@ -21,14 +21,14 @@ const { Title, Text, Paragraph } = Typography
 
 export const ProfilePage = () => {
   const dispatch = useTypedDispatch()
-  const { userInfo } = useTypedSelector((state: RootState) => state.auth)
+  const { userInfo } = useTypedSelector((state) => state.auth)
   const [mobile, setMobile] = useState<boolean>(true)
   const [profileType, setProfileType] = useState<boolean>(false)
   const navigate = useNavigate()
   useLayoutEffect(() => {
     const getCurrentUser = async () => {
       if (userInfo) {
-        const data = await AuthApi.getCurrentUser(userInfo.id)
+        const data = await AuthApi.getCurrentUser(userInfo.id) 
         if (data?.status == 200) {
           dispatch(setCredentials(data?.data))
         }
