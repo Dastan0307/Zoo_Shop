@@ -24,7 +24,7 @@ const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type, removeFavorite }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
   const { created_at, location, user_name, photos } = value
-
+  
   const handleLike = () => {
     setLike((item) => !item)
   }
@@ -51,7 +51,7 @@ export const CardMain = ({ value, type, removeFavorite }: CardType) => {
             <Image
               className="CardAnnoun_img"
               alt="example"
-              src={photos[0] ? photos[0].image_url : '/dog.png'}
+              src={photos ? photos[0].image_url : '/dog.png'}
               // style={{ width: 215, height: 195, borderRadius: 6 }}
             />
           </Col>

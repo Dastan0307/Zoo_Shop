@@ -46,10 +46,17 @@ export type orgsTypes = {
   results: OrganizarionType[]
 }
 
+export type announTypes = {
+  count: number
+  next: string
+  previous: number | null
+  results: AnnouncementCardType[]
+}
+
 export const Main = () => {
   const [params, setParams] = useState<AnnouncementFilterType>({ lower_price: '0' })
   const [orgParams, setOrgParams] = useState<OrgParams>({})
-  const [announ, setAnnoun] = useState<AnnouncementCardType[]>([])
+  const [announ, setAnnoun] = useState<announTypes>()
   const [orgs, setOrgs] = useState<orgsTypes>()
   const [mobile, setMobile] = useState<boolean>(true)
 
@@ -86,29 +93,23 @@ export const Main = () => {
   }
 
   useEffect(() => {
-    const getData = async () => {
+    const getData1 = async () => {
       const data = await AnnouncementApi.getAnnouncement(params)
       if (data?.data) {
-        console.log(data)
-
         setAnnoun(data?.data)
       }
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    getData()
-  }, [params])
-
-  useEffect(() => {
     const getData = async () => {
       const data = await AnnouncementApi.getOrganization(orgParams)
       if (data?.data) {
-        console.log(data)
         setOrgs(data?.data)
       }
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
+    getData1()
     getData()
-  }, [orgParams])
+  }, [orgParams, params])
 
   useEffect(() => {
     if (!MobileQuery) {
@@ -358,9 +359,9 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {mainType == 'announ' ? (
-            announ && announ[0] ? (
+            announ && announ.results[0] ? (
               <>
-                {announ.map((value) => (
+                {announ.results.map((value) => (
                   <CardMain
                     removeFavorite={() => ''}
                     key={value.slug}
@@ -368,14 +369,16 @@ export const Main = () => {
                     type="main"
                   />
                 ))}
-                {/* {announ[0] && (
-                  <Pagination
-                    style={{ marginTop: '20px' }}
-                    defaultCurrent={1}
-                    // onChange={(page) => setOrgParams({ ...orgParams, page })}
-                    total={announ.length}
-                  />
-                )} */}
+                {announ.count && (
+                  <Row justify={'center'}>
+                    <Pagination
+                      style={{ marginTop: '20px' }}
+                      defaultCurrent={1}
+                      onChange={(page) => setParams({ ...params, page })}
+                      total={announ.count}
+                    />
+                  </Row>
+                )}
               </>
             ) : (
               <motion.div

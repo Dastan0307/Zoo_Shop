@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 
-import { orgsTypes } from '@screens/index'
+import { announTypes, orgsTypes } from '@screens/index'
 import {
   AnnouncementCardType,
   AnnouncementFilterType,
@@ -14,7 +14,7 @@ import api from './index'
 export class AnnouncementApi {
   static async getAnnouncement(body: AnnouncementFilterType) {
     try {
-      const data = api.get<AnnouncementCardType[]>('/announcements/', { params: body })
+      const data = api.get<announTypes>('/announcements/', { params: body })
       return data
     } catch (error: AxiosError | any) {
       errorHandler(error)
@@ -29,24 +29,3 @@ export class AnnouncementApi {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
