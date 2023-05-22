@@ -20,6 +20,7 @@ import {
   Recovery,
   RecoveryFinish,
   Register,
+  Volunteer,
 } from './screens'
 
 export const App = () => {
@@ -30,6 +31,7 @@ export const App = () => {
         <Route element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/announcement/:id" element={<Announcements />} />
           <Route path="/new-announcement" element={<NewAnnouncement />} />

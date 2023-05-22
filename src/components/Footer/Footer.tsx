@@ -39,8 +39,8 @@ export const Footer = () => {
   }
   return (
     <FooterWrapper className="footer">
-      <Row  justify={'space-between'}>
-        <div  className='footer_wrapper_list' >
+      <Row justify={'space-between'}>
+        <div className="footer_wrapper_list">
           <List className="footer_list">
             <List.Item className="head_list">
               <Typography.Title className="footer_head" level={4} style={{ margin: 0 }}>
@@ -58,7 +58,7 @@ export const Footer = () => {
             </List.Item>
           </List>
         </div>
-        <div className='footer_wrapper_list' >
+        <div className="footer_wrapper_list">
           <List className="footer_list">
             <List.Item className="footer_title head_list">
               <span>Компания</span>
@@ -74,7 +74,7 @@ export const Footer = () => {
             </List.Item>
           </List>
         </div>
-        <div className='footer_wrapper_list' >
+        <div className="footer_wrapper_list">
           <List className="footer_list">
             <List.Item className="footer_title head_list">
               <span>Объявления</span>
@@ -93,12 +93,12 @@ export const Footer = () => {
             </List.Item>
           </List>
         </div>
-        <div className='footer_wrapper_list' >
+        <div className="footer_wrapper_list">
           <List className="footer_list">
             <List.Item className="footer_title head_list">
               <span>Обратная связь</span>
             </List.Item>
-            <List.Item className="footer_link">
+            <List.Item className="footer_link" onClick={() => navigate('/volunteer')}>
               <span>стать волонтёром</span>
             </List.Item>
             <List.Item className="footer_link" onClick={() => setIsModalOpen(true)}>

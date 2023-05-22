@@ -79,11 +79,11 @@ export const Main = () => {
         [e.target.name]: e.target.dataset.value == '0' ? '0' : e.target.dataset.value,
       })
     }
-    setParams({ ...params, [e.target.name]: e.target.value })
+    setParams({ ...params, [e.target.name]: e.target.value, page: 1 })
   }
   const handleSetParamsValue2 = (value: CategoryType) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    setParams({ ...params, category: value.slug })
+    setParams({ ...params, category: value.slug, page: 1 })
   }
   const cleanParams = () => {
     setParams({})
@@ -134,7 +134,7 @@ export const Main = () => {
           ref={searchInput}
           onChange={(e) =>
             mainType == 'org'
-              ? setOrgParams({ ...orgParams, search: e.target.value })
+              ? setOrgParams({ ...orgParams, search: e.target.value, page: 1 })
               : debouncedOnChange(e)
           }
           name="search"
@@ -320,7 +320,7 @@ export const Main = () => {
                         className="category_list_item active"
                         style={{ border: 'none' }}
                         onClick={(e) =>
-                          setOrgParams({ ...orgParams, adress_type: value.slug })
+                          setOrgParams({ ...orgParams, adress_type: value.slug, page: 1 })
                         }
                         key={index}
                       >
@@ -373,8 +373,8 @@ export const Main = () => {
                   <Row justify={'center'}>
                     <Pagination
                       style={{ marginTop: '20px' }}
-                      defaultCurrent={1}
-                      onChange={(page) => setParams({ ...params, page })}
+                      defaultCurrent={params.page ? params.page : 1}
+                      onChange={(page) => setParams({ page })}
                       total={announ.count}
                     />
                   </Row>
