@@ -4,6 +4,7 @@ import Sider from 'antd/es/layout/Sider'
 import { Formik } from 'formik'
 import { Form, Input } from 'formik-antd'
 import { easeOut, motion } from 'framer-motion'
+import moment from 'moment'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Moment from 'react-moment'
 import { useMediaQuery } from 'react-responsive'
@@ -18,8 +19,6 @@ import SendIcon from '../../../public/chat/send.svg'
 import { ChatApi, getChatsProps } from '../../api/Chat'
 
 import './chat.scss'
-
-import moment from 'moment'
 
 type AnnounType = {
   author: string

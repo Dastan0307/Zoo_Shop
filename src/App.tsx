@@ -14,6 +14,7 @@ import {
   Login,
   Main,
   NewAnnouncement,
+  OrgPage,
   Paper,
   Papers,
   ProfilePage,
@@ -30,6 +31,7 @@ export const App = () => {
       <Routes key={location.pathname} location={location}>
         <Route element={<Layout />}>
           <Route index element={<Main />} />
+          <Route path='/org/:id' element={<OrgPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/about-us" element={<AboutUs />} />

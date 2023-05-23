@@ -53,7 +53,7 @@
 
 @media (max-width: 1024px) {
   .paper {
-    margin: 25px 50px;
+    margin: 50px auto;
 
     .paper__title {
       font-size: 36px;
@@ -81,7 +81,8 @@
 }
 @media (max-width: 600px) {
   .paper {
-    margin: 25px 50px;
+    padding: 0 20px;
+    margin: 50px auto;
 
     span.ant-typography {
       font-size: 18px;
@@ -107,7 +108,7 @@
 }
 @media (max-width: 414px) {
   .paper {
-    margin: 25px 50px;
+    margin: 50px auto;
 
     span.ant-typography {
       font-size: 18px;
@@ -131,7 +132,7 @@
 }
 @media (max-width: 320px) {
   .paper {
-    margin: 0;
+    margin: 50px auto;
 
     .paper__start {
       .ant-image-img {

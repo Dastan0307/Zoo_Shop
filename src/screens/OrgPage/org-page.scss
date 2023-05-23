@@ -1,0 +1,19 @@
+.OrgaPage{
+    max-width: 1080px;
+    width: 100%;
+    margin: 50px auto;
+}
+
+
+.rating{
+    padding-right: 10px;
+    @media screen and (max-width: 768px) {
+        padding-left: 20px;
+    }
+}
+
+.center-inst{
+    @media screen and (max-width: 768px) {
+        justify-content: center !important;
+    }
+}

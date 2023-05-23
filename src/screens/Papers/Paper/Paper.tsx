@@ -1,53 +1,51 @@
-import { Col, Row, Typography, Image } from 'antd'
+import { Col, Image, Row, Typography } from 'antd'
+
 import './paper.scss'
+
 import { motion } from 'framer-motion'
-import { useParams } from 'react-router-dom'
-import { ShortDescription } from '@typess/types'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import { getNewsById } from '@store/papers/papers'
+import { ShortDescription } from '@typess/types'
 
 const { Title, Text, Paragraph } = Typography
-const arr: number[] = [1,2,3]
-
-
+const arr: number[] = [1, 2, 3]
 
 export const Paper = () => {
   const [paper, setPaper] = useState<ShortDescription | null>(null)
   const { id } = useParams()
-  
+
   useEffect(() => {
-    getNewsById(id).then(res => setPaper(res))
+    getNewsById(id).then((res) => setPaper(res))
   }, [id])
 
-  console.log(paper);
-  
-  
+  console.log(paper)
+
   return (
-    <motion.div initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    transition={{ duration: 0.5 }} className='paper'>
-      <Title className='paper__title'>{paper?.title}</Title>
-      <Row className='paper__start'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="paper"
+    >
+      <Title className="paper__title" level={3} >{paper?.title}</Title>
+      <Row className="paper__start">
         <Col>
           <div>
-            <Text></Text>
-            <Paragraph>
-              {paper?.body}
-            </Paragraph>
-          </div>
-          <div>
-            <Text>Правила вакцинации собак</Text>
-            <Paragraph>
-              {paper?.short_description}
-            </Paragraph>
+            <Paragraph>{paper?.body}</Paragraph>
+            <Paragraph>{paper?.body1}</Paragraph>
+            <Paragraph>{paper?.body2}</Paragraph>
+            <Paragraph>{paper?.body3}</Paragraph>
           </div>
         </Col>
         <Col>
           <Image
             preview={false}
+            style={{ objectFit: 'cover' }}
             src={paper?.image}
-            alt='animal'
-            />
+            alt="animal"
+          />
         </Col>
       </Row>
       {/* <Row className='paper__main'>
@@ -85,7 +83,5 @@ export const Paper = () => {
         </Paragraph>
       </Row> */}
     </motion.div>
-    
   )
 }
-

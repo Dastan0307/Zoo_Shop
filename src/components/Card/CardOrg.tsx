@@ -1,20 +1,20 @@
 import { Card, Col, Image, Row, Typography } from 'antd'
 import Devider from 'antd/es/divider'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 import { OrganizarionType } from '@typess/types'
 
 import './card-org.scss'
 
-export const CardOrg = ({
-  adress,
-  image,
-  title,
-  location,
-  phone_number,
-  adress_type,
-  user,
-}: OrganizarionType) => {
+export const CardOrg = (values: OrganizarionType) => {
+  const { adress, image, title, location, phone_number, adress_type, user } = values
+  const navigate = useNavigate()
+  const handleClick = () => {
+    navigate(`/org/${values.id}`, {
+      state: { ...values },
+    })
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -28,7 +28,12 @@ export const CardOrg = ({
           </div>
           <div className="card-org_content">
             <Row justify={'space-between'}>
-              <Typography.Title level={5} className="card-org_title">
+              <Typography.Title
+                style={{ cursor: 'pointer' }}
+                level={5}
+                onClick={() => handleClick()}
+                className="card-org_title"
+              >
                 {title}
               </Typography.Title>
               <a

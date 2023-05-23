@@ -27,6 +27,11 @@ import {
 } from '@ant-design/icons'
 import { AnnouncementApi } from '@api/AnnouncementApi'
 import { CardMain, CardOrg } from '@components/index'
+import {
+  useGetAnnouncementQuery,
+  useGetAnnouncementsQuery,
+  useGetOrganizarionsQuery,
+} from '@store/announcements/getAnnoun'
 import { useGetCategoriesQuery } from '@store/features/category/categorySevice'
 import {
   AnnouncementCardType,
@@ -59,16 +64,13 @@ export const Main = () => {
   const [announ, setAnnoun] = useState<announTypes>()
   const [orgs, setOrgs] = useState<orgsTypes>()
   const [mobile, setMobile] = useState<boolean>(true)
-
+  const orgsData = useGetOrganizarionsQuery(orgParams)
+  const announData = useGetAnnouncementsQuery(params)
   const MobileQuery = useMediaQuery({ query: '(max-width:800px)' })
 
   const [mainType, setMainType] = useState<'announ' | 'org'>('announ')
   const res = useGetCategoriesQuery('1').currentData
   const categories = res?.results
-
-  const searchInput = useRef<InputRef>(null)
-  const lowerPriceInput = useRef<InputRef>(null)
-  const higherPriceInput = useRef<InputRef>(null)
 
   const handleSetParamsValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.dataset.key == 'lower_price' || e.target.dataset.key == 'lower_price') {
@@ -92,24 +94,26 @@ export const Main = () => {
     setParams({ ...params, lower_price: '-1', higher_price: '-1' })
   }
 
-  useEffect(() => {
-    const getData1 = async () => {
-      const data = await AnnouncementApi.getAnnouncement(params)
-      if (data?.data) {
-        setAnnoun(data?.data)
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    }
-    const getData = async () => {
-      const data = await AnnouncementApi.getOrganization(orgParams)
-      if (data?.data) {
-        setOrgs(data?.data)
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    }
-    getData1()
-    getData()
-  }, [orgParams, params])
+  // useEffect(() => {
+  //   const getData1 = async () => {
+  //     const data = await AnnouncementApi.getAnnouncement(params)
+  //     if (data?.data) {
+  //       setAnnoun(data?.data)
+  //     }
+  //     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  //   }
+  //   const getData = async () => {
+  //     const data = await AnnouncementApi.getOrganization(orgParams)
+
+  //     if (data?.data) {
+  //       console.log(data.data)
+  //       setOrgs(data?.data)
+  //     }
+  //     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  //   }
+  //   // getData1()
+  //   // getData()
+  // }, [orgParams, params])
 
   useEffect(() => {
     if (!MobileQuery) {
@@ -131,7 +135,6 @@ export const Main = () => {
           suffix={<SearchOutlined />}
           placeholder="Поиск"
           className="main_search"
-          ref={searchInput}
           onChange={(e) =>
             mainType == 'org'
               ? setOrgParams({ ...orgParams, search: e.target.value, page: 1 })
@@ -260,7 +263,6 @@ export const Main = () => {
                       style={{ height: '42px' }}
                       placeholder="От"
                       name="lower_price"
-                      ref={lowerPriceInput}
                       onChange={debouncedOnChange}
                     />
                     <Input
@@ -268,7 +270,6 @@ export const Main = () => {
                       style={{ height: '42px' }}
                       placeholder="До"
                       name="higher_price"
-                      ref={higherPriceInput}
                       onChange={debouncedOnChange}
                     />
                   </div>
@@ -292,6 +293,7 @@ export const Main = () => {
                     size={'large'}
                     placeholder="Весь Кыргызстан"
                     onChange={setSelectLocation}
+                    value={params.location}
                     optionLabelProp="label"
                   >
                     <Select.Option value={'Бишкек'}>Бишкек</Select.Option>
@@ -306,8 +308,15 @@ export const Main = () => {
             </>
           ) : (
             <Row className="sideBar_org">
+              <Row className="sideBar_title" justify={'space-around'}>
+                <div>
+                  <Typography.Title level={4}>Категории</Typography.Title>
+                </div>
+                <Typography.Text onClick={() => setOrgParams({})}>
+                  Очистить
+                </Typography.Text>
+              </Row>
               <Col>
-                <Typography.Title level={4}>Категории</Typography.Title>
                 <List>
                   {categories &&
                     [
@@ -327,7 +336,7 @@ export const Main = () => {
                         <span
                           style={{
                             color:
-                              orgParams.adress_type == value.slug ? '#96e7b7' : '#333333',
+                              orgParams.adress_type == value.slug ? '#FFD02b' : '#333333',
                           }}
                         >
                           {value.title}
@@ -342,6 +351,7 @@ export const Main = () => {
                   className="select"
                   style={{ width: '100%' }}
                   size={'large'}
+                  value={orgParams.location}
                   placeholder="Весь Кыргызстан"
                   onChange={(value) => setOrgParams({ ...orgParams, location: value })}
                   optionLabelProp="label"
@@ -359,9 +369,9 @@ export const Main = () => {
         </Sider>
         <Content className="main-content">
           {mainType == 'announ' ? (
-            announ && announ.results[0] ? (
+            announData.data && announData.data.results[0] ? (
               <>
-                {announ.results.map((value) => (
+                {announData.data.results.map((value) => (
                   <CardMain
                     removeFavorite={() => ''}
                     key={value.slug}
@@ -369,13 +379,13 @@ export const Main = () => {
                     type="main"
                   />
                 ))}
-                {announ.count && (
+                {announData.data.count && (
                   <Row justify={'center'}>
                     <Pagination
                       style={{ marginTop: '20px' }}
                       defaultCurrent={params.page ? params.page : 1}
                       onChange={(page) => setParams({ page })}
-                      total={announ.count}
+                      total={announData.data.count}
                     />
                   </Row>
                 )}
@@ -392,14 +402,17 @@ export const Main = () => {
             )
           ) : (
             <Row style={{ flexDirection: 'column' }} align={'stretch'}>
-              {orgs && orgs.results.map((value) => <CardOrg key={value.id} {...value} />)}
-              {orgs?.results[0] && (
+              {orgsData.data &&
+                orgsData.data.results.map((value) => (
+                  <CardOrg key={value.id} {...value} />
+                ))}
+              {orgsData.data && orgsData.data.results[0] && (
                 <Row justify={'center'}>
                   <Pagination
                     style={{ marginTop: '20px' }}
                     defaultCurrent={orgParams.page ? orgParams.page : 1}
                     onChange={(page) => setOrgParams({ ...orgParams, page })}
-                    total={orgs.count}
+                    total={orgsData.data.count}
                   />
                 </Row>
               )}

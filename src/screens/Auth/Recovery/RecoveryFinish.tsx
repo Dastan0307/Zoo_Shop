@@ -86,7 +86,7 @@ export const RecoveryFinish = () => {
                   type="password"
                   bordered={false}
                   className="auth_item_input"
-                  placeholder="Введите почту"
+                  placeholder="Новый пароль"
                 />
               </Form.Item>
               <Form.Item
@@ -100,7 +100,7 @@ export const RecoveryFinish = () => {
                   type="password"
                   bordered={false}
                   className="auth_item_input"
-                  placeholder="Введите почту"
+                  placeholder="Потвердите пароль"
                 />
               </Form.Item>
               <SubmitButton

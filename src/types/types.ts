@@ -58,16 +58,16 @@ export interface AnnouncementTypes {
       image_url: string | undefined
     },
   ]
-  title: string 
-  price: string 
-  description: string 
-  phone_number: string 
-  location: string 
+  title: string
+  price: string
+  description: string
+  phone_number: string
+  location: string
   created_at?: string | undefined
   updated_at?: string | undefined
   views_count?: number | undefined
-  category: string 
-  user_name: string 
+  category: string
+  user_name: string
   user_photo: string | null
 }
 
@@ -89,7 +89,7 @@ export interface CategoryType {
 export interface OrgParams {
   location?: string
   search?: string
-  adress_type?: string,
+  adress_type?: string
   page?: number
 }
 
@@ -167,12 +167,17 @@ export interface OrganizarionType {
   id: number
   user: string
   adress: string
-  adress_type: string
+  adress_type: 'clinic' | 'zooshop' | 'hostel' | 'babysitter'
+  social_media: string
   title: string
   verified_adress: boolean
   image: string
   phone_number: string
   location: string
+  description: string
+  rating: number
+  schedule: string
+  web_site: string
 }
 
 export interface OrganizarionApiType {
@@ -217,6 +222,9 @@ export interface ShortDescription {
   slug: string
   title: string
   body: string
+  body1: string
+  body2: string
+  body3: string
   image: string
   short_description: string
 }
@@ -235,10 +243,10 @@ export interface FavoritesType {
   is_favorite: boolean
   user: number
   photos: {
-    id: number,
-    announcement: string,
-    image: string,
-    image_url: string,
+    id: number
+    announcement: string
+    image: string
+    image_url: string
   }[]
 }
 
