@@ -33,7 +33,7 @@ export const Volunteer = () => {
           </Typography.Paragraph>
         </Col>
         <Col xs={24} md={8} style={{ textAlign: 'center' }}>
-          <Image preview={false} height={250} src={'/public/users-alt.png'} />
+          <Image preview={false} height={250} src={'/users-alt.png'} />
         </Col>
       </Row>
     </motion.div>
