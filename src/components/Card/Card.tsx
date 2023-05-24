@@ -24,7 +24,7 @@ const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type, removeFavorite }: CardType) => {
   const [like, setLike] = useState<boolean>(false)
   const { created_at, location, user_name, photos } = value
-  
+
   const handleLike = () => {
     setLike((item) => !item)
   }
@@ -33,12 +33,14 @@ export const CardMain = ({ value, type, removeFavorite }: CardType) => {
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5,  }}
+      transition={{ duration: 0.5 }}
+      style={{ display: 'flex' }}
     >
       <Card
         className="CardAnnoun"
         hoverable
         style={{
+          flex: 1,
           width: '100%',
           border: 'none',
           // height: 235,
@@ -92,7 +94,7 @@ export const CardMain = ({ value, type, removeFavorite }: CardType) => {
               <div style={{ display: 'flex', gap: '7px' }}>
                 <Image
                   className="card_user-photo"
-                  src={`${value.user_photo ? value.user_photo : '/dogg.jpg'}`}
+                  src={`${value.user_photo ? value.user_photo : '/user-1.png'}`}
                 />
                 <div
                   style={{

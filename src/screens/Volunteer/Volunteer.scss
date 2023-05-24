@@ -6,3 +6,10 @@
     padding: 0 20px;
   }
 }
+
+.volunteer_telegram {
+  @media screen and (max-width: 768px) {
+    margin: 50px 0px;
+    justify-content: center !important;
+  }
+}

@@ -31,6 +31,11 @@ export const Volunteer = () => {
             Если хочешь стать волонтером и помогать животным, то переходи по ссылке и
             заполняй анкету!
           </Typography.Paragraph>
+          <Row className='volunteer_telegram'>
+          <Typography.Link   href="https://t.me/zoonetkg">
+            https://t.me/zoonetkg
+          </Typography.Link>
+          </Row>
         </Col>
         <Col xs={24} md={8} style={{ textAlign: 'center' }}>
           <Image preview={false} height={250} src={'/users-alt.png'} />

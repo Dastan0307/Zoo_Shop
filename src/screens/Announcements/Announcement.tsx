@@ -184,7 +184,7 @@ export const Announcements: React.FC = () => {
           <Row className="sider-i">
             <Image
               preview={false}
-              src={announ?.user_photo ? announ?.user_photo : '/public/dogg.jpg'}
+              src={announ?.user_photo ? announ?.user_photo : '/user-1.png'}
             />
             <Text>{announ?.user_name}</Text>
           </Row>
@@ -218,3 +218,4 @@ export const Announcements: React.FC = () => {
     </motion.div>
   )
 }
+// linear-gradient(262.43deg, #ffd02b -2.86%, #96e7b7 81.84%)
