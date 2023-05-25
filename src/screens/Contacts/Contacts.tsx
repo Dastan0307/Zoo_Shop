@@ -1,4 +1,4 @@
-import { Card, Col, Image, Row, Typography } from 'antd'
+import {Col, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
 
 import {
@@ -6,7 +6,6 @@ import {
   LaptopOutlined,
   MessageOutlined,
   PhoneOutlined,
-  PullRequestOutlined,
 } from '@ant-design/icons'
 
 import './contacts.scss'

@@ -1,22 +1,13 @@
-import { Empty, Image, Typography } from 'antd'
-import { AxiosError } from 'axios'
+import { Empty } from 'antd'
 import { motion } from 'framer-motion'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
 
 import { CardMain } from '@components/index'
 import { favorites, likeAnnoun } from '@store/favorites/favoriteId'
-import {
-  AnnouncementCardType,
-  CardType,
-  FavoritesAnnounsmentType,
-  FavoritesType,
-} from '@typess/types'
-import { errorHandler } from '@utils/errorHandler'
-
-import api from '../../api/index'
+import { FavoritesType } from '@typess/types'
 
 function Favorites() {
   const [announcement, setAnnouncement] = useState<FavoritesType[]>([])

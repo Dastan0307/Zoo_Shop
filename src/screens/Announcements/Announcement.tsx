@@ -1,9 +1,9 @@
 import { Button, Carousel, Col, Divider, Image, Layout, Row, Typography } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
-import { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError  } from 'axios'
 import { motion } from 'framer-motion'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import React, {  useLayoutEffect, useRef, useState } from 'react'
+import { Link,  useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useTypedSelector } from 'src/hooks'
 

@@ -1,15 +1,10 @@
 import { Button, Card, Col, Image, Row, Typography } from 'antd'
 import { motion } from 'framer-motion'
 import moment from 'moment'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { ClockCircleOutlined, HeartTwoTone } from '@ant-design/icons'
-import { API_URL } from '@api/index'
+import { ClockCircleOutlined } from '@ant-design/icons'
 import { AnnouncementCardType } from '@typess/types'
-
-import blike from '../../assets/like.png'
-import dlike from '../././../assets/blike.png'
 
 import './card-org.scss'
 import './card.scss'
@@ -22,12 +17,7 @@ type CardType = {
 
 const { Title, Text, Paragraph } = Typography
 export const CardMain = ({ value, type, removeFavorite }: CardType) => {
-  const [like, setLike] = useState<boolean>(false)
   const { created_at, location, user_name, photos } = value
-
-  const handleLike = () => {
-    setLike((item) => !item)
-  }
 
   return (
     <motion.div
